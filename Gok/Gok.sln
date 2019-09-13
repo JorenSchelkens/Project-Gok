@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gok.Server", "Gok\Server\Gok.Server.csproj", "{14DDC3AC-6CE4-410E-93A5-58B928D97975}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gok.Client", "Gok\Client\Gok.Client.csproj", "{5EE1EB1D-C457-4689-A093-592074503EB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14DDC3AC-6CE4-410E-93A5-58B928D97975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14DDC3AC-6CE4-410E-93A5-58B928D97975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14DDC3AC-6CE4-410E-93A5-58B928D97975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14DDC3AC-6CE4-410E-93A5-58B928D97975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE1EB1D-C457-4689-A093-592074503EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE1EB1D-C457-4689-A093-592074503EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE1EB1D-C457-4689-A093-592074503EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE1EB1D-C457-4689-A093-592074503EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF9B604E-DB5C-446B-952B-26B5F436D42A}
+	EndGlobalSection
+EndGlobal
