@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gok.Server", "Gok\Server\Go
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gok.Client", "Gok\Client\Gok.Client.csproj", "{5EE1EB1D-C457-4689-A093-592074503EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank", "Bank\Bank.csproj", "{7BB83301-F7E5-481D-AD81-6994D27B0DC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank", "Bank\Bank.csproj", "{7BB83301-F7E5-481D-AD81-6994D27B0DC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankTest", "BankTest\BankTest.csproj", "{247240A3-2D28-426A-B283-0C2652557890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankTest", "BankTest\BankTest.csproj", "{247240A3-2D28-426A-B283-0C2652557890}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gok.Shared", "Gok\Shared\Gok.Shared.csproj", "{759D27B6-1542-4C55-B542-234E34C898FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{247240A3-2D28-426A-B283-0C2652557890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{247240A3-2D28-426A-B283-0C2652557890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{247240A3-2D28-426A-B283-0C2652557890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{759D27B6-1542-4C55-B542-234E34C898FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{759D27B6-1542-4C55-B542-234E34C898FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{759D27B6-1542-4C55-B542-234E34C898FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{759D27B6-1542-4C55-B542-234E34C898FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

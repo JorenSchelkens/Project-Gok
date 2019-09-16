@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\Gok.Client.csproj" />
+    <ProjectReference Include="..\Shared\Gok.Shared.csproj" />
   </ItemGroup>
 
 </Project>
