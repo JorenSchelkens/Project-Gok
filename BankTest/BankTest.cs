@@ -1,12 +1,11 @@
 using System;
 using Xunit;
-using Bank;
 
 namespace BankTest
 {
     public class BankTest
    {
-        Bank.Bank bank = new Bank.Bank();
+        BankDomain.Bank bank = new BankDomain.Bank();
 
         [Fact]
         public void GeldOpUwAccountZettenViaDeBank()
@@ -26,6 +25,14 @@ namespace BankTest
             int temp = bank.Money.MuntenSaldo;
 
             Assert.Equal(50, temp);
+        }
+
+        [Fact]
+        public void HuidigSaldoAfdrukkenNaAfhalen()
+        {
+            bank.Afhalen(50);
+
+            Console.WriteLine(bank.Money.MuntenSaldo);
         }
     }
 }

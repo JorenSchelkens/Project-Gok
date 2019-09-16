@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bank
+namespace BankDomain
 {
     public class Money
     {
