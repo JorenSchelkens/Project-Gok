@@ -1,25 +1,35 @@
 ﻿using System;
 
-namespace Bank
+namespace BankDomain
 {
     public class Bank
     {
         public Money Money = new Money();
 
-        public void Storten(int munten)
+        public double Storten(double geld)
         {
+            int munten = OmzettenGeldNaarMunten(geld);
             this.Money.Storten(munten);
+            return munten;
         }
 
-        public int Omzetten(double geld)
+        public int OmzettenGeldNaarMunten(double geld)
         {
             int aantalMunten = Convert.ToInt32(geld * 100);
             return aantalMunten;
         }
 
-        public void Afhalen(int munten)
+        public double OmzettenMuntenNaarGeld(int munten)
         {
+            double saldo = Convert.ToDouble(munten / 100);
+            return saldo;
+        }
+
+        public double Afhalen(int munten)
+        {
+            double geld = OmzettenMuntenNaarGeld(munten);
             this.Money.MuntenSaldo -= munten;
+            return geld;
         }
 
         
