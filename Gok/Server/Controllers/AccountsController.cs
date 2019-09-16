@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationWithClientSideBlazor.Server.Controllers
+namespace Gok.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

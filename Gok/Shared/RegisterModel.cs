@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AuthenticationWithClientSideBlazor.Shared
+namespace Gok.Shared
 {
     public class RegisterModel
     {

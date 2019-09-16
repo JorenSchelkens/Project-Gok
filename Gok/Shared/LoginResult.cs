@@ -1,4 +1,4 @@
-﻿namespace AuthenticationWithClientSideBlazor.Shared
+﻿namespace Gok.Shared
 {
     public class LoginResult
     {

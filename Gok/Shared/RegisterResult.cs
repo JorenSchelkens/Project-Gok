@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AuthenticationWithClientSideBlazor.Shared
+namespace Gok.Shared
 {
     public class RegisterResult
     {

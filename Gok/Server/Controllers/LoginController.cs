@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthenticationWithClientSideBlazor.Server.Controllers
+namespace Gok.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
