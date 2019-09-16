@@ -4,7 +4,7 @@ namespace Bank
 {
     public class Bank
     {
-        Money Money = new Money();
+        public Money Money = new Money();
 
         public void Storten(int munten)
         {
@@ -21,5 +21,7 @@ namespace Bank
         {
             this.Money.MuntenSaldo -= munten;
         }
+
+        
     }
 }
