@@ -16,4 +16,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bank\BankDomain.csproj" />
+    <ProjectReference Include="..\BlackJackDomain\BlackJackDomain.csproj" />
+    <ProjectReference Include="..\CrashDomain\CrashDomain.csproj" />
+    <ProjectReference Include="..\HogerEnLagerDomain\HogerEnLagerDomain.csproj" />
+    <ProjectReference Include="..\RouletteDomain\RouletteDomain.csproj" />
+  </ItemGroup>
+
 </Project>

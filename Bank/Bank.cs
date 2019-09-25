@@ -4,7 +4,12 @@ namespace BankDomain
 {
     public class Bank
     {
-        public Money Money = new Money();
+        public Money Money;
+
+        public Bank(int Saldo)
+        {
+            this.Money = new Money(Saldo);
+        }
 
         public double Storten(double geld)
         {

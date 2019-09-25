@@ -4,7 +4,12 @@ namespace BankDomain
 {
     public class Money
     {
-        public int MuntenSaldo { get; set; } = 100;
+        public int MuntenSaldo { get; set; }
+
+        public Money(int MuntenSaldo)
+        {
+            this.MuntenSaldo = MuntenSaldo;
+        }
 
         public void Storten(int munten)
         {
