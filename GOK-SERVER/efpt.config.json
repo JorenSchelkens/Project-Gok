@@ -1,0 +1,1 @@
+﻿{"ContextClassName":"GOKContext","DefaultDacpacSchema":null,"IdReplace":false,"IncludeConnectionString":false,"OutputPath":"Data\\GOK","ProjectRootNamespace":"GOK_SERVER","SelectedToBeGenerated":0,"Tables":[{"HasPrimaryKey":true,"Name":"dbo.Gebruikers"}],"UseDatabaseNames":false,"UseFluentApiOnly":true,"UseHandleBars":false,"UseInflector":false}
