@@ -57,6 +57,10 @@ namespace GOK_SERVER
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddScoped<GebruikersService>();
+
+            services.AddFluentEmail("defaultsender@test.test")
+                    .AddRazorRenderer()
+                    .AddSmtpSender("localhost", 25);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
