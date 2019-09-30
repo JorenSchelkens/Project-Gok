@@ -5,7 +5,7 @@ namespace BankTest
 {
     public class BankTest
    {
-        BankDomain.Bank bank = new BankDomain.Bank();
+        BankDomain.Bank bank = new BankDomain.Bank(100);
 
         [Fact]
         public void GeldOpUwAccountZettenViaDeBank()

@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using GOK_SERVER.Areas.Identity;
 using GOK_SERVER.Data;
 using EmbeddedBlazorContent;
+using MatBlazor;
 
 namespace GOK_SERVER
 {
@@ -39,6 +40,16 @@ namespace GOK_SERVER
             services.AddDbContext<Data.GOK.GOKContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMatToaster(config =>
+            {
+                config.Position = MatToastPosition.BottomRight;
+                config.PreventDuplicates = true;
+                config.NewestOnTop = true;
+                config.ShowCloseButton = true;
+                config.MaximumOpacity = 95;
+                config.VisibleStateDuration = 3000;
+            });
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

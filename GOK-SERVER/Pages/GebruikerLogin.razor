@@ -5,7 +5,7 @@
 
 <h1>Login</h1>
 
-@if (Gebruiker == null)
+@if (Gebruiker.Naam == null)
 {
     <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
@@ -18,15 +18,12 @@ else
 {
     <table class="table">
         <tbody>
-            @foreach (var gebruiker in gebruikers)
-            {
                 <tr>
                     <td>@Gebruiker.Naam</td>
                     <td>@Gebruiker.Saldo</td>
                     <td>@Gebruiker.Email</td>
                     <td>@Gebruiker.DailyGiftDatum</td>
                 </tr>
-            }
         </tbody>
     </table>
 }

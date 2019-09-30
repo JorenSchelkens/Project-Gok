@@ -16,6 +16,11 @@ namespace BankDomain
             this.MuntenSaldo += munten;
         }
 
+        public void Afhalen(int munten)
+        {
+            this.MuntenSaldo -= munten;
+        }
+
 
     }
 }

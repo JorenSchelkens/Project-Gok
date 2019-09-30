@@ -1,0 +1,70 @@
+﻿@page "/bank"
+@using GOK_SERVER.Data
+@inherits OwningComponentBase<GebruikersService>
+
+@if (Bank == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p>Huidig Balans: @Gebruiker.Saldo</p>
+
+    <MatNumericUpDownField Label="Withdrawal"
+                           @bind-Value=@UpDownFieldWithdrawal
+                           DecimalPlaces=0
+                           Icon="attach_money"
+                           Minimum="1" Maximum="@Gebruiker.Saldo">
+
+    </MatNumericUpDownField>
+    <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
+
+    <br />
+    <br />
+
+    <MatNumericUpDownField Label="Deposit"
+                           @bind-Value=@UpDownFieldDeposit
+                           DecimalPlaces=0
+                           Icon="attach_money"
+                           Minimum="1" Maximum="5000">
+
+    </MatNumericUpDownField>
+    <MatButton OnClick="@Deposit" Raised="true">Deposit</MatButton>
+}
+
+@code {
+
+    [CascadingParameter]
+    public Data.GOK.Gebruikers Gebruiker { get; set; }
+
+    public Bank Bank;
+
+    decimal? UpDownFieldWithdrawal = null;
+    decimal? UpDownFieldDeposit = null;
+
+    protected override void OnInitialized()
+    {
+        Bank = new Bank(Gebruiker.Saldo);
+    }
+
+    public void Deposit()
+    {
+        int temp = (int) UpDownFieldDeposit.Value;
+        Bank.Money.Storten(temp);
+        updateGebruiker();
+    }
+
+    public void Withdrawal()
+    {
+        int temp = (int) UpDownFieldWithdrawal.Value;
+        Bank.Money.Afhalen(temp);
+        updateGebruiker();
+    }
+
+    private async void updateGebruiker()
+    {
+        Gebruiker.Saldo = Bank.Money.MuntenSaldo;
+        var result = await @Service.UpdateSaldoAsync(Gebruiker);
+    }
+
+}
