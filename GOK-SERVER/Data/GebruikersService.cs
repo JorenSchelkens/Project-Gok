@@ -25,11 +25,11 @@ namespace GOK_SERVER.Data
             return Task.FromResult(colGebruiker);
         }
 
-        public Task<bool> UpdateSaldoAsync(Gebruikers objGebruiker)
+        public Task<bool> UpdateSaldoAsync(Gebruikers objGebruiker, int spelersNummer)
         {
             var ExistingGebruiker =
                 _context.Gebruikers
-                .Where(x => x.Spelersnummer == objGebruiker.Spelersnummer)
+                .Where(x => x.Spelersnummer == spelersNummer)
                 .FirstOrDefault();
 
             if (ExistingGebruiker != null)
