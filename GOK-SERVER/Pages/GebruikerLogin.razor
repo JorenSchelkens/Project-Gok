@@ -5,7 +5,7 @@
 
 <h1>Login</h1>
 
-@if (Gebruiker.Naam == null)
+@if (HuidigeGebruiker.Naam == null)
 {
     <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
@@ -19,10 +19,10 @@ else
     <table class="table">
         <tbody>
                 <tr>
-                    <td>@Gebruiker.Naam</td>
-                    <td>@Gebruiker.Saldo</td>
-                    <td>@Gebruiker.Email</td>
-                    <td>@Gebruiker.DailyGiftDatum</td>
+                    <td>@HuidigeGebruiker.Naam</td>
+                    <td>@HuidigeGebruiker.Saldo</td>
+                    <td>@HuidigeGebruiker.Email</td>
+                    <td>@HuidigeGebruiker.DailyGiftDatum</td>
                 </tr>
         </tbody>
     </table>
@@ -31,7 +31,7 @@ else
 @code {
 
     [CascadingParameter]
-    public Data.GOK.Gebruikers Gebruiker { get; set; }
+    public Data.GOK.Gebruikers HuidigeGebruiker { get; set; }
 
     string Naam;
     string Wachtwoord;
@@ -40,6 +40,7 @@ else
     private async Task LoginAsync()
     {
         gebruikers = await @Service.GebruikerLoginAsync(Naam, Wachtwoord);
-        Gebruiker = gebruikers.First();
+        HuidigeGebruiker = gebruikers.First();
+
     }
 }

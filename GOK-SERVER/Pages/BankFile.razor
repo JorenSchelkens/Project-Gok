@@ -8,13 +8,13 @@
 }
 else
 {
-    <p>Huidig Balans: @Gebruiker.Saldo</p>
+    <p>Huidig Balans: @HuidigeGebruiker.Saldo @HuidigeGebruiker.Naam</p>
 
     <MatNumericUpDownField Label="Withdrawal"
                            @bind-Value=@UpDownFieldWithdrawal
                            DecimalPlaces=0
                            Icon="attach_money"
-                           Minimum="1" Maximum="@Gebruiker.Saldo">
+                           Minimum="1" Maximum="@HuidigeGebruiker.Saldo">
 
     </MatNumericUpDownField>
     <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
@@ -35,7 +35,7 @@ else
 @code {
 
     [CascadingParameter]
-    public Data.GOK.Gebruikers Gebruiker { get; set; }
+    public Data.GOK.Gebruikers HuidigeGebruiker { get; set; }
 
     public Bank Bank;
 
@@ -44,7 +44,7 @@ else
 
     protected override void OnInitialized()
     {
-        Bank = new Bank(Gebruiker.Saldo);
+        Bank = new Bank(HuidigeGebruiker.Saldo);
     }
 
     public void Deposit()
@@ -63,8 +63,8 @@ else
 
     private async void updateGebruiker()
     {
-        Gebruiker.Saldo = Bank.Money.MuntenSaldo;
-        var result = await @Service.UpdateSaldoAsync(Gebruiker);
+        HuidigeGebruiker.Saldo = Bank.Money.MuntenSaldo;
+        var result = await @Service.UpdateSaldoAsync(HuidigeGebruiker, HuidigeGebruiker.Spelersnummer);
     }
 
 }
