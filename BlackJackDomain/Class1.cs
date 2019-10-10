@@ -18,7 +18,10 @@ namespace BlackJackDomain
         {
             Boolean bust = false;
 
-            
+            if(som > 21)
+            {
+                bust = true;
+            }
 
             return bust;
         }
