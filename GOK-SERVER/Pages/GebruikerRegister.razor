@@ -1,0 +1,79 @@
+﻿@page "/gebruiker/register"
+@inherits OwningComponentBase<GebruikersService>
+@inject NavigationManager NavigationManager
+
+<h1>Register</h1>
+
+@if (!done)
+{
+    <MatTextField @bind-Value="@GebruikersNaam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
+    <MatTextField @bind-Value="@Email" Label="Email" FullWidth="true" Required="true" Type="email"></MatTextField>
+    <MatTextField @bind-Value="@Naam" Label="Naam" FullWidth="true" Required="true"></MatTextField>
+    <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
+    <MatCheckbox @bind-Checked="@Nieuwsbrief" Label="Nieuwsbrief?"></MatCheckbox>
+    <br />
+    <MatCheckbox @bind-Checked="@Notificaties" Label="Notificaties?"></MatCheckbox>
+
+    <br />
+    <br />
+
+    <MatButton OnClick="@RegisterAsync" Raised="true">Register</MatButton>
+}
+else
+{
+    <MatButton OnClick="@GaNaarLogin" Raised="true">Klik hier om in te loggen</MatButton>
+}
+
+
+@code {
+
+    public string Naam;
+    public string Email;
+    public string Wachtwoord;
+    public string GebruikersNaam;
+    public bool Nieuwsbrief;
+    public bool Notificaties;
+
+    public bool done = false;
+
+    public List<Gebruikers> gebruikers;
+    public Gebruikers huidig;
+
+    [CascadingParameter]
+    public CascadingClasses.HuidigeGebruikersNaam HuidigeGebruikersNaam { get; set; }
+
+    private async Task RegisterAsync()
+    {
+        Gebruikers objGebruiker = new Gebruikers();
+        objGebruiker.Naam = Naam;
+        objGebruiker.Email = Email;
+
+        Wachtwoord = DefaultClasses.Encryption.EncryptString(Wachtwoord);
+
+        objGebruiker.Wachtwoord = Wachtwoord;
+        objGebruiker.Gebruikersnaam = GebruikersNaam;
+
+        int nieuwsbrief = Nieuwsbrief ? 1 : 0;
+        int notificaties = Notificaties ? 1 : 0;
+
+        objGebruiker.Nieuwsbrief = nieuwsbrief;
+        objGebruiker.Notificaties = notificaties;
+
+        objGebruiker.Saldo = 100;
+        objGebruiker.DailyGiftDatum = DateTime.Now;
+        objGebruiker.Admin = 0;
+
+        objGebruiker.Spelersnummer = 0; //@Service.GeefVolgendSpelersNummer();
+
+        var result = await @Service.CreateGebruikerAsync(objGebruiker);
+
+        done = true;
+
+    }
+
+    public void GaNaarLogin()
+    {
+        NavigationManager.NavigateTo("/gebruiker/login");
+    }
+
+}

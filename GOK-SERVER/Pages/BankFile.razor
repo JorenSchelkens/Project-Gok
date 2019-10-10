@@ -8,13 +8,13 @@
 }
 else
 {
-    <p>Huidig Balans: @HuidigeGebruiker.Saldo @HuidigeGebruiker.Naam</p>
+    <p>Huidig Balans: @huidig.Saldo</p>
 
     <MatNumericUpDownField Label="Withdrawal"
                            @bind-Value=@UpDownFieldWithdrawal
                            DecimalPlaces=0
                            Icon="attach_money"
-                           Minimum="1" Maximum="@HuidigeGebruiker.Saldo">
+                           Minimum="1" Maximum="@huidig.Saldo">
 
     </MatNumericUpDownField>
     <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
@@ -35,16 +35,20 @@ else
 @code {
 
     [CascadingParameter]
-    public Data.GOK.Gebruikers HuidigeGebruiker { get; set; }
+    public CascadingClasses.HuidigeGebruikersNaam HuidigeGebruikersNaam { get; set; }
 
     public Bank Bank;
+    public List<Gebruikers> gebruikers;
+    public Gebruikers huidig;
 
     decimal? UpDownFieldWithdrawal = null;
     decimal? UpDownFieldDeposit = null;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Bank = new Bank(HuidigeGebruiker.Saldo);
+        gebruikers = await @Service.GebruikerLoginAsync(HuidigeGebruikersNaam.HuidigeNaam, HuidigeGebruikersNaam.Wachtwoord);
+        huidig = gebruikers.First();
+        Bank = new Bank(huidig.Saldo);
     }
 
     public void Deposit()
@@ -63,8 +67,8 @@ else
 
     private async void updateGebruiker()
     {
-        HuidigeGebruiker.Saldo = Bank.Money.MuntenSaldo;
-        var result = await @Service.UpdateSaldoAsync(HuidigeGebruiker, HuidigeGebruiker.Spelersnummer);
+        huidig.Saldo = Bank.Money.MuntenSaldo;
+        //var result = await @Service.UpdateSaldoAsync(HuidigeGebruiker, HuidigeGebruiker.Spelersnummer);
     }
 
 }
