@@ -1,4 +1,4 @@
-﻿<CascadingValue Value="@HuidigeGebruiker">
+﻿<CascadingValue Value="@HuidigeGebruikersNaam">
     <MatToastContainer />
     <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
@@ -16,6 +16,6 @@
 
 @code {
 
-    Data.GOK.Gebruikers HuidigeGebruiker { get; set; } = new Data.GOK.Gebruikers();
+    CascadingClasses.HuidigeGebruikersNaam HuidigeGebruikersNaam { get; set; } = new CascadingClasses.HuidigeGebruikersNaam();
 
 }
