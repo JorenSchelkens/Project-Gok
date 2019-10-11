@@ -1,8 +1,22 @@
 ﻿@page "/blackjack"
 
-    <h1 style="text-align:center">BlackJack</h1>
+<h1 style="text-align:center">Blackjack</h1>
+
+@if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+{
+    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel">genereer kaart</MatButton>
+}
+
+<p>
+    <MatNumericUpDownField Style=" position: absolute; left: 1400px; top: 750px;" Label="bedrag inzetten"
+                           @bind-Value=@testingNullableDecimal2
+                           DecimalPlaces=0
+                           Minimum=0 Maximum=100>
+    </MatNumericUpDownField>
+</p>
 
 @code{
 
-    
+    decimal? testingNullableDecimal2 = 0;
+
 }
