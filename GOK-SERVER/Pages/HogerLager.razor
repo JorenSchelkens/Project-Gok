@@ -1,22 +1,44 @@
 ﻿@page "/test"
 
-<h1 style="text-align: center">Hoger lager</h1>
+<h1 style="text-align: center;">Hoger lager</h1>
 
-@if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+@if (!spelGestart)
 {
-    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel">genereer kaart</MatButton>
+<div style="text-align: center; position: relative; top: 300px;">
+    <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
+</div>  
+         
 }
 
-<p>
-    <MatNumericUpDownField Style=" position: absolute; left: 1400px; top: 750px;" Label="bedrag inzetten"
-                           @bind-Value=@testingNullableDecimal2
-                           DecimalPlaces=0
-                           Minimum=0 Maximum=100>
+@if (laatAllesZien)
+{
+<div style="text-align: center; position: relative; top: 600px;">
+    <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                            @bind-Value=@testingNullableDecimal2
+                            DecimalPlaces=0
+                            Minimum=0 Maximum=100>
     </MatNumericUpDownField>
-</p>
+</div>
+        
+<div style="position: relative; top: 544px; left: 1300px;">
+    <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
+</div>
+        
+}
 
+
+<p style="font-size: 150px; position: relative; top: 200px">@spelerKaart</p>
+<p style="font-size: 150px; position: relative; top: 200px">@computerKaart</p>    
+
+@*
 <p style="text-align: center">@resultaat</p>
+
+<div style="text-align: center;">
+    <MatButton Unelevated="true">Speel opnieuw</MatButton>
+</div>
+
 <p>@winst</p>
+*@
 
 @code{
 
@@ -24,10 +46,32 @@
     public int spelerKaart, computerKaart;
     public int winst;
     public String resultaat;
+    public bool disabled = true;
+    public bool laatAllesZien = false;
+    public bool spelGestart = false;
 
     decimal? testingNullableDecimal2 = 0;
 
     public void startSpel()
+    {
+        laatAllesZien = true;
+        spelGestart = true;
+
+    }
+
+    public void checkIngevuldeWaarde()
+    {
+        if(testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+        {
+            disabled = false;
+        }
+        else
+        {
+            disabled = true;
+        }
+    }
+
+    public void startSpel2()
     {
         genereerSpelerKaart();
         genereerComputerKaart();
@@ -55,13 +99,13 @@
         }
         else if (spelerKaart < computerKaart)
         {
-
             winst -= waardeIngezet;
             resultaat = "je hebt verloren";
         }
         else
         {
             //winst blijft hetzelfde
+            resultaat = "gelijk";
         }
     }
 
