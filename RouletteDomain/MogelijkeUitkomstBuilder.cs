@@ -5,10 +5,10 @@ namespace RouletteDomain
 {
     public class MogelijkeUitkomstBuilder
     {
-        private List<MogelijkeUitkomst> list { get; set; }
-        private List<int> tteEerste { get; set; }
-        private List<int> tteTweede { get; set; }
-        private List<int> tteDerde { get; set; }
+        private static List<MogelijkeUitkomst> list { get; set; }
+        private static List<int> tteEerste { get; set; }
+        private static List<int> tteTweede { get; set; }
+        private static List<int> tteDerde { get; set; }
 
         public static List<MogelijkeUitkomst> Build()
         {
@@ -194,7 +194,7 @@ namespace RouletteDomain
                 list.Add(temp);
 
             }
-            return this.list;
+            return list;
         }
     }
 }
