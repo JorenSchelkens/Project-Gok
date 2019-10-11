@@ -2,35 +2,69 @@
 
 <h1 style="text-align: center">Hoger lager</h1>
 
-<MatButton Unelevated="true" OnClick="@genereerSpelerKaart">genereer kaart</MatButton>
-<p>@spelerKaart</p>
+@if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+{
+    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel">genereer kaart</MatButton>
+}
 
 <p>
-    <MatNumericUpDownField Label="bedrag inzetten"
+    <MatNumericUpDownField Style=" position: absolute; left: 1400px; top: 750px;" Label="bedrag inzetten"
                            @bind-Value=@testingNullableDecimal2
                            DecimalPlaces=0
                            Minimum=0 Maximum=100>
     </MatNumericUpDownField>
 </p>
 
-<p>@computerKaart</p>
-
+<p style="text-align: center">@resultaat</p>
+<p>@winst</p>
 
 @code{
 
     public Random random = new Random();
     public int spelerKaart, computerKaart;
+    public int winst;
+    public String resultaat;
+
+    decimal? testingNullableDecimal2 = 0;
+
+    public void startSpel()
+    {
+        genereerSpelerKaart();
+        genereerComputerKaart();
+        bepaalWinnaar();
+    }
 
     public void genereerSpelerKaart()
     {
         spelerKaart = random.Next(1, 13);
     }
 
-    decimal? testingNullableDecimal2 = null;
-
     public void genereerComputerKaart()
     {
         computerKaart = random.Next(1, 13);
     }
+
+    public void bepaalWinnaar()
+    {
+        int waardeIngezet = (int)testingNullableDecimal2.Value;
+
+        if (spelerKaart > computerKaart)
+        {
+            winst += (waardeIngezet * 2);
+            resultaat = "Je hebt gewonnen";
+        }
+        else if (spelerKaart < computerKaart)
+        {
+
+            winst -= waardeIngezet;
+            resultaat = "je hebt verloren";
+        }
+        else
+        {
+            //winst blijft hetzelfde
+        }
+    }
+
+
 
 }
