@@ -1,6 +1,8 @@
 ﻿@page "/crash"
 @using CrashDomain
 
+@if (temp)
+{
     <p>
         <MatNumericUpDownField Label="Inzet:"
                                @bind-Value=@testingNullableDecimal1
@@ -16,20 +18,28 @@
                                DecimalPlaces="2">
         </MatNumericUpDownField>
     </p>
-    
+
     <br />
 
-    <MatButton OnClick="@Click" Raised="true">Start game</MatButton>
-   
+} else
+{
+
+}
+
+
+<MatButton OnClick="@Click" Raised="true">Start game</MatButton>
+
 
 @code {
 
     decimal? testingNullableDecimal1 = 0;
     decimal? testingNullableDecimal2 = 0;
 
+    public bool temp = true;
+
     void Click()
     {
-
+        temp = false;
     }
 
 
