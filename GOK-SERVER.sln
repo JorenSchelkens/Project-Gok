@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RouletteDomain", "RouletteD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CascadingClasses", "CascadingClasses\CascadingClasses.csproj", "{E479478A-960F-41C4-9754-B1D85AB49EAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultClasses", "DefaultClasses\DefaultClasses.csproj", "{73EC1C83-6507-4533-9842-4007165487EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultClasses", "DefaultClasses\DefaultClasses.csproj", "{73EC1C83-6507-4533-9842-4007165487EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

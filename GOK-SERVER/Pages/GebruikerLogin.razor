@@ -1,28 +1,25 @@
 ﻿@page "/gebruiker/login"
-@using GOK_SERVER.Data
-@using GOK_SERVER.Data.GOK
-@inherits OwningComponentBase<GebruikersService>
 
 <h1>Login</h1>
 
-@if (HuidigeGebruikersNaam.HuidigeNaam == null)
+@if (Gebruiker == null)
 {
     <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
 
     <br /><br />
 
-    <MatButton OnClick="@LoginAsync" Raised="true">Login</MatButton>
+    <MatButton OnClick="@Login" Raised="true">Login</MatButton>
 }
 else
 {
     <table class="table">
         <tbody>
                 <tr>
-                    <td>@huidig.Naam</td>
-                    <td>@huidig.Saldo</td>
-                    <td>@huidig.Email</td>
-                    <td>@huidig.DailyGiftDatum</td>
+                    <td>@Gebruiker.Naam</td>
+                    <td>@Gebruiker.Saldo</td>
+                    <td>@Gebruiker.Email</td>
+                    <td>@Gebruiker.DailyGiftDatum</td>
                 </tr>
         </tbody>
     </table>
@@ -30,23 +27,19 @@ else
 
 @code {
 
-    [CascadingParameter]
-    public CascadingClasses.HuidigeGebruikersNaam HuidigeGebruikersNaam { get; set; }
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+    public DefaultClasses.Gebruiker Gebruiker;
 
     string Naam;
     string Wachtwoord;
-    public List<Gebruikers> gebruikers;
-    public Gebruikers huidig;
 
-    private async Task LoginAsync()
+    protected override void OnInitialized()
     {
+        DBConnection = new DefaultClasses.DBConnection();
+    }
 
-        var Temp = DefaultClasses.Encryption.EncryptString(Wachtwoord);
-        gebruikers = await @Service.GebruikerLoginAsync(Naam, Temp);
-        huidig = gebruikers.First();
-
-        HuidigeGebruikersNaam.HuidigeNaam = huidig.Gebruikersnaam;
-        HuidigeGebruikersNaam.Wachtwoord = huidig.Wachtwoord;
-
+    private void Login()
+    {
+        Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
     }
 }

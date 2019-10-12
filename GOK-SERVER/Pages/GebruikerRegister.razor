@@ -1,5 +1,4 @@
 ﻿@page "/gebruiker/register"
-@inherits OwningComponentBase<GebruikersService>
 @inject NavigationManager NavigationManager
 
 <h1>Register</h1>
@@ -17,7 +16,7 @@
     <br />
     <br />
 
-    <MatButton OnClick="@RegisterAsync" Raised="true">Register</MatButton>
+    <MatButton OnClick="@Register" Raised="true">Register</MatButton>
 }
 else
 {
@@ -26,6 +25,9 @@ else
 
 
 @code {
+
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+    public DefaultClasses.Gebruiker Gebruiker;
 
     public string Naam;
     public string Email;
@@ -36,39 +38,15 @@ else
 
     public bool done = false;
 
-    public List<Gebruikers> gebruikers;
-    public Gebruikers huidig;
-
-    [CascadingParameter]
-    public CascadingClasses.HuidigeGebruikersNaam HuidigeGebruikersNaam { get; set; }
-
-    private async Task RegisterAsync()
+    protected override void OnInitialized()
     {
-        Gebruikers objGebruiker = new Gebruikers();
-        objGebruiker.Naam = Naam;
-        objGebruiker.Email = Email;
+        DBConnection = new DefaultClasses.DBConnection();
+    }
 
-        Wachtwoord = DefaultClasses.Encryption.EncryptString(Wachtwoord);
-
-        objGebruiker.Wachtwoord = Wachtwoord;
-        objGebruiker.Gebruikersnaam = GebruikersNaam;
-
-        int nieuwsbrief = Nieuwsbrief ? 1 : 0;
-        int notificaties = Notificaties ? 1 : 0;
-
-        objGebruiker.Nieuwsbrief = nieuwsbrief;
-        objGebruiker.Notificaties = notificaties;
-
-        objGebruiker.Saldo = 100;
-        objGebruiker.DailyGiftDatum = DateTime.Now;
-        objGebruiker.Admin = 0;
-
-        objGebruiker.Spelersnummer = 0; //@Service.GeefVolgendSpelersNummer();
-
-        var result = await @Service.CreateGebruikerAsync(objGebruiker);
-
+    private void Register()
+    {
+        DBConnection.RegistreerGebruiker(Naam, Email, Wachtwoord, GebruikersNaam, Nieuwsbrief? 1 : 0, Notificaties? 1 : 0);
         done = true;
-
     }
 
     public void GaNaarLogin()
