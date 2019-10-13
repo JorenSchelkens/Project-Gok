@@ -1,6 +1,4 @@
 ﻿@page "/bank"
-@using GOK_SERVER.Data
-@inherits OwningComponentBase<GebruikersService>
 
 @if (Bank == null)
 {
@@ -8,13 +6,13 @@
 }
 else
 {
-    <p>Huidig Balans: @huidig.Saldo</p>
+    <p>Huidig Balans: @HuidigeGebruiker.Saldo</p>
 
     <MatNumericUpDownField Label="Withdrawal"
                            @bind-Value=@UpDownFieldWithdrawal
                            DecimalPlaces=0
                            Icon="attach_money"
-                           Minimum="1" Maximum="@huidig.Saldo">
+                           Minimum="1" Maximum="@HuidigeGebruiker.Saldo">
 
     </MatNumericUpDownField>
     <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
@@ -35,7 +33,8 @@ else
 @code {
 
     [CascadingParameter]
-    public CascadingClasses.HuidigeGebruikersNaam HuidigeGebruikersNaam { get; set; }
+    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
+    public DefaultClasses.DBConnection DBConnection { get; set; }
 
     public Bank Bank;
     public List<Gebruikers> gebruikers;
@@ -44,31 +43,25 @@ else
     decimal? UpDownFieldWithdrawal = null;
     decimal? UpDownFieldDeposit = null;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        gebruikers = await @Service.GebruikerLoginAsync(HuidigeGebruikersNaam.HuidigeNaam, HuidigeGebruikersNaam.Wachtwoord);
-        huidig = gebruikers.First();
-        Bank = new Bank(huidig.Saldo);
-    }
+        DBConnection = new DefaultClasses.DBConnection();
+        Bank = new Bank(HuidigeGebruiker.Saldo);
+    } 
 
     public void Deposit()
     {
-        int temp = (int) UpDownFieldDeposit.Value;
-        Bank.Money.Storten(temp);
-        updateGebruiker();
+
     }
 
     public void Withdrawal()
     {
-        int temp = (int) UpDownFieldWithdrawal.Value;
-        Bank.Money.Afhalen(temp);
-        updateGebruiker();
+
     }
 
-    private async void updateGebruiker()
+    private void updateGebruiker()
     {
-        huidig.Saldo = Bank.Money.MuntenSaldo;
-        //var result = await @Service.UpdateSaldoAsync(HuidigeGebruiker, HuidigeGebruiker.Spelersnummer);
+        
     }
 
 }

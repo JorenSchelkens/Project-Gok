@@ -14,5 +14,19 @@ namespace DefaultClasses
         public int Admin { get; set; }
         public int Nieuwsbrief { get; set; }
         public int Notificaties { get; set; }
+
+        public void Update(int spelersnummer, string gebruikersnaam, string naam, string email, string wachtwoord, int saldo, DateTime dailyGiftDatum, int admin, int nieuwsbrief, int notificaties)
+        {
+            Spelersnummer = spelersnummer;
+            Gebruikersnaam = gebruikersnaam;
+            Naam = naam;
+            Email = email;
+            Wachtwoord = wachtwoord;
+            Saldo = saldo;
+            DailyGiftDatum = dailyGiftDatum;
+            Admin = admin;
+            Nieuwsbrief = nieuwsbrief;
+            Notificaties = notificaties;
+        }
     }
 }

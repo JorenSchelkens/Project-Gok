@@ -1,9 +1,58 @@
 ﻿@page "/gebruiker/profiel"
 
+    <table>
+        <tr>
+            <td><MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Gebruikersnaam"></MatTextField></td>
+            <td></td>
+            <td><MatButton OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton></td>
+            <MatDialog @bind-IsOpen="@dialog1IsOpen">
+                <MatDialogTitle>Geef de nieuwe gebruikersnaam in</MatDialogTitle>
+                <MatDialogContent>
+                    <MatTextField @bind-Value="@nieuweGebruikersNaam"></MatTextField>
+                </MatDialogContent>
+                <MatDialogActions>
+                    <MatButton OnClick="@(e => { dialog1IsOpen = false; })">Cancel</MatButton>
+                    <MatButton OnClick="@OkClick1">Submit</MatButton>
+                </MatDialogActions>
+            </MatDialog>
+        </tr>
+    </table>
 
+    <p>
+        <br /> <br />
+        <MatButton OnClick="@UpdateProfiel" Raised="true">Update profiel</MatButton>
+    </p>
 
 @code{
 
+    [CascadingParameter]
+    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
+    public DefaultClasses.DBConnection DBConnection { get; set; }
 
+    public bool dialog1IsOpen = false;
+
+    public string nieuweGebruikersNaam = null;
+
+    protected override void OnInitialized()
+    {
+        DBConnection = new DefaultClasses.DBConnection();
+    }
+
+    public void VeranderGebruikersnaam()
+    {
+        dialog1IsOpen = true;
+        nieuweGebruikersNaam = null;
+    }
+
+    public void OkClick1()
+    {
+        HuidigeGebruiker.Gebruikersnaam = nieuweGebruikersNaam;
+        dialog1IsOpen = false;
+    }
+
+    public void UpdateProfiel()
+    {
+        DBConnection.UpdateGebruiker(HuidigeGebruiker);
+    }
 
 }

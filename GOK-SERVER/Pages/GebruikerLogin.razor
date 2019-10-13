@@ -2,7 +2,7 @@
 
 <h1>Login</h1>
 
-@if (HuidigeGebruiker.Email == null)
+@if (HuidigeGebruiker.Gebruikersnaam == null)
 {
     <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
@@ -44,6 +44,6 @@ else
     private void Login()
     {
         Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
-        HuidigeGebruiker = Gebruiker;
+        HuidigeGebruiker.Update(Gebruiker.Spelersnummer, Gebruiker.Gebruikersnaam, Gebruiker.Naam, Gebruiker.Email, Gebruiker.Wachtwoord, Gebruiker.Saldo, Gebruiker.DailyGiftDatum, Gebruiker.Admin, Gebruiker.Nieuwsbrief, Gebruiker.Notificaties);
     }
 }
