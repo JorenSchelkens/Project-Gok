@@ -2,7 +2,7 @@
 
 <h1>Login</h1>
 
-@if (Gebruiker == null)
+@if (HuidigeGebruiker.Email == null)
 {
     <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
@@ -16,16 +16,19 @@ else
     <table class="table">
         <tbody>
                 <tr>
-                    <td>@Gebruiker.Naam</td>
-                    <td>@Gebruiker.Saldo</td>
-                    <td>@Gebruiker.Email</td>
-                    <td>@Gebruiker.DailyGiftDatum</td>
+                    <td>@HuidigeGebruiker.Naam</td>
+                    <td>@HuidigeGebruiker.Saldo</td>
+                    <td>@HuidigeGebruiker.Email</td>
+                    <td>@HuidigeGebruiker.DailyGiftDatum</td>
                 </tr>
         </tbody>
     </table>
 }
 
 @code {
+
+    [CascadingParameter]
+    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
     public DefaultClasses.Gebruiker Gebruiker;
@@ -41,5 +44,6 @@ else
     private void Login()
     {
         Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
+        HuidigeGebruiker = Gebruiker;
     }
 }

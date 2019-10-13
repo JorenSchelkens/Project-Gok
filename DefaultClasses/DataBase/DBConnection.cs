@@ -97,9 +97,8 @@ namespace DefaultClasses
             return gebruiker;
         }
 
-        public Gebruiker UpdateGebruiker()
+        public void UpdateGebruiker(Gebruiker gebruiker)
         {
-            Gebruiker gebruiker = new Gebruiker();
 
             try
             {
@@ -107,7 +106,13 @@ namespace DefaultClasses
                 {
                     connection.Open();
 
+                    string sqlCode = "UPDATE Gebruikers SET Gebruikersnaam ='" + gebruiker.Gebruikersnaam + "', Naam ='" + gebruiker.Naam + "', Email ='" + gebruiker.Email + "', Wachtwoord ='" + Encryption.EncryptString(gebruiker.Wachtwoord) +"', Saldo =" + gebruiker.Saldo + ", DailyGiftDatum ='" + gebruiker.DailyGiftDatum + "', Admin = " + gebruiker.Admin + ", Nieuwsbrief = " + gebruiker.Nieuwsbrief + ", Notificaties = " + gebruiker.Notificaties + "WHERE Spelersnummer = " + gebruiker.Spelersnummer + ";";
 
+                    using (var command = new SqlCommand(sqlCode, connection))
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+                        //Logger
+                    }
 
                     connection.Close();
                 }
@@ -116,10 +121,8 @@ namespace DefaultClasses
             catch (SqlException e)
             {
                 Error = e.ToString();
-                gebruiker = null;
             }
 
-            return gebruiker;
         }
     }
 }
