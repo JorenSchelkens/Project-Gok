@@ -54,7 +54,6 @@ namespace DefaultClasses
         public Gebruiker LogGebruikerIn(string gebruikersNaam, string wachtwoord)
         {
             Gebruiker gebruiker = new Gebruiker();
-            var temp = Encryption.EncryptString(wachtwoord);
 
             try
             {
