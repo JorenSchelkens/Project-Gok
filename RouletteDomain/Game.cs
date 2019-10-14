@@ -6,23 +6,105 @@ namespace RouletteDomain
 {
     public class Game
     {
-        public int muntenIngezet { get; set; }
-        public MogelijkeUitkomst opgegeveUitkomst { get; set; }
+        public List<int> muntenIngezet { get; set; }
+        public List<MogelijkeUitkomst> opgegeveUitkomsten { get; set; }
         public List<MogelijkeUitkomst> mogelijkeUitkomsten { get; set; }
         public MogelijkeUitkomst uitkomst { get; set; }
         // juiste gok maken 
-        public Game(string opgegeveTitel, int muntenIngezet)
+        public Game(string opgegeveTitel, List<int> muntenIngezet)
         {
             this.muntenIngezet = muntenIngezet;
 
             mogelijkeUitkomsten = MogelijkeUitkomstBuilder.Build();
-            opgegeveUitkomst = mogelijkeUitkomsten.Where(v => v.titel == opgegeveTitel).First();
-            //mogelijkuitkomsten genereren
-            //op basis van titel naar opgegeveuitkomst zoeken
+            opgegeveUitkomsten = mogelijkeUitkomsten.Where(v => v.titel == opgegeveTitel).ToList();
         }
-        public int controleerKleur()
+
+        public int StartSpel()
         {
-            return 0;
+            var random = new Random();
+            var randomGetal = random.Next(12, 49);
+
+            uitkomst = mogelijkeUitkomsten[randomGetal];
+
+            for (int i = 0; i < opgegeveUitkomsten.Count; i++)
+            {
+                Controleer(i);
+            }
+            return muntenIngezet.Sum();
+
         }
+
+        public bool Controleer(int i)
+        {
+            if (opgegeveUitkomsten[i] == uitkomst) {
+                muntenIngezet[i] = muntenIngezet[i] * 36;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].isNul == uitkomst.isNul) {
+                muntenIngezet[i] = muntenIngezet[i] * 36;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "rood" && opgegeveUitkomsten[i].isRood == uitkomst.isRood) {
+                muntenIngezet[i] = muntenIngezet[i]*2;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "zwart" && opgegeveUitkomsten[i].isRood == uitkomst.isRood)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 2;
+                return true;
+            }
+            if(opgegeveUitkomsten[i].titel=="even"&& opgegeveUitkomsten[i].even == uitkomst.even)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 2;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "oneven" && opgegeveUitkomsten[i].even == uitkomst.even)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 2;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "eersteTwaalf" && opgegeveUitkomsten[i].eersteTwaalf == uitkomst.eersteTwaalf) {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "tweedeTwaalf" && opgegeveUitkomsten[i].tweedeTwaalf == uitkomst.tweedeTwaalf)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "derdeTwaalf" && opgegeveUitkomsten[i].derdeTwaalf == uitkomst.derdeTwaalf)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "tweeTotEenEerste" && opgegeveUitkomsten[i].tweeToEenEerste == uitkomst.tweeToEenEerste)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "tweeTotEenTweede" && opgegeveUitkomsten[i].tweeToEenTweede == uitkomst.tweeToEenTweede)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "tweeTotEenDerde" && opgegeveUitkomsten[i].tweeToEenDerde == uitkomst.tweeToEenDerde)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "eenTotAchttien" && opgegeveUitkomsten[i].eenToAchttien == uitkomst.eenToAchttien)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            if (opgegeveUitkomsten[i].titel == "eenTotAchttien" && opgegeveUitkomsten[i].negentienTozesendertig == uitkomst.negentienTozesendertig)
+            {
+                muntenIngezet[i] = muntenIngezet[i] * 3;
+                return true;
+            }
+            muntenIngezet[i] = 0;           
+            return false;
+        }
+        
     }
 }
