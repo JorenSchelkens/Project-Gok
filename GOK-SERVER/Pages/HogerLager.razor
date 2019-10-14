@@ -1,45 +1,37 @@
 ﻿@page "/test"
 
-<h1 style="text-align: center;">Hoger lager</h1>
+<h1 style="text-align: center;">Hoger Lager</h1>
 
 @if (!spelGestart)
 {
-<div style="text-align: center; position: relative; top: 300px;">
-    <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
-</div>  
-         
+    <div style="text-align: center; position: relative; top: 300px;">
+        <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
+    </div>
+
 }
 
 @if (laatAllesZien)
 {
-<div style="text-align: center; position: relative; top: 600px;">
-    <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                            @bind-Value=@testingNullableDecimal2
-                            DecimalPlaces=0
-                            Minimum=1 Maximum=100>
-    </MatNumericUpDownField>
-</div>
-        
-<div style="position: relative; top: 544px; left: 1200px;">
-    <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
-</div>
+    <div style="text-align: center; position: relative; top: 600px;">
+        <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                               @bind-Value=@testingNullableDecimal2
+                               DecimalPlaces=0
+                               Minimum=1 Maximum=100>
+        </MatNumericUpDownField>
+    </div>
 
-<img src="@url" />
-        
+    <div style="position: relative; top: 544px; left: 1200px;">
+        <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
+    </div>
+
 }
 
-@*
-<p style="font-size: 150px; position: relative; top: 400px">@spelerKaart</p>
-<p style="font-size: 150px; position: relative; top: 400px">@computerKaart</p>    
+@if (toonKaarten)
+{
+    <img style="position: relative; top: 50px; left: 1200px; height: 400px;" src="@urlKaartSpeler" />
+    <img style="position: relative; top: 50px; height: 400px;" src="@urlKaartComputer" />
+}
 
-<p style="text-align: center">@resultaat</p>
-
-<div style="text-align: center;">
-    <MatButton Unelevated="true">Speel opnieuw</MatButton>
-</div>
-
-<p>@winst</p>
-*@
 
 @code{
 
@@ -50,19 +42,22 @@
     public bool disabled = true;
     public bool laatAllesZien = false;
     public bool spelGestart = false;
-    public List<string> urls { get; set; }
-    public string url;
+    public List<string> genereerUrl1 { get; set; }
+    public List<string> genereerUrl2 { get; set; }
+    public string urlKaartSpeler;
+    public string urlKaartComputer;
+    public bool toonKaarten = false;
 
     decimal? testingNullableDecimal2 = 0;
 
     protected override void OnInitialized()
     {
-        urls = DefaultClasses.UrlGenerator.GenerateUrls();
+        genereerUrl1 = DefaultClasses.UrlGenerator.GenerateUrls();
+        genereerUrl2 = DefaultClasses.UrlGenerator.GenerateUrls();
     }
 
     public void startSpel()
     {
-        url = urls[3];
         laatAllesZien = true;
         spelGestart = true;
 
@@ -70,7 +65,7 @@
 
     public void checkIngevuldeWaarde()
     {
-        if(testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+        if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
         {
             disabled = false;
         }
@@ -85,6 +80,10 @@
         genereerSpelerKaart();
         genereerComputerKaart();
         bepaalWinnaar();
+        urlKaartSpeler = genereerUrl1[spelerKaart];
+        urlKaartComputer = genereerUrl2[computerKaart];
+        toonKaarten = true;
+
     }
 
     public void genereerSpelerKaart()
