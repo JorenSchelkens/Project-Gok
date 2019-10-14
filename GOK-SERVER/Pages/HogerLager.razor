@@ -20,7 +20,7 @@
         </MatNumericUpDownField>
     </div>
 
-    <div style="position: relative; top: 544px; left: 1200px;">
+    <div style="text-align: center; position: relative; top: 625px;">
         <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
     </div>
 
@@ -28,8 +28,10 @@
 
 @if (toonKaarten)
 {
-    <img style="position: relative; top: 50px; left: 1200px; height: 400px;" src="@urlKaartSpeler" />
-    <img style="position: relative; top: 50px; height: 400px;" src="@urlKaartComputer" />
+    
+    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" alt="Jouw kaart:" src="@urlKaartSpeler" />
+
+    <img style="position: relative; top: 50px; left: -75px;  height: 400px;" alt="computer:" src="@urlKaartComputer" />
 }
 
 
