@@ -84,6 +84,20 @@ namespace RouletteDomain
             list.Add(tweeTotEenTweede);
             list.Add(tweeTotEenDerde);
 
+            MogelijkeUitkomst eenTotAchttien = new MogelijkeUitkomst("eenTotAchttien");
+            eenTotAchttien.eenToAchttien = true;
+            eenTotAchttien.negentienTozesendertig = false;
+            eenTotAchttien.eersteTwaalf = true;
+            eenTotAchttien.derdeTwaalf = false;
+            tweeTotEenDerde.isNul = false;
+
+            MogelijkeUitkomst negentienTozesendertig = new MogelijkeUitkomst("eenTotAchttien");
+            eenTotAchttien.eenToAchttien = false;
+            eenTotAchttien.negentienTozesendertig = true;
+            negentienTozesendertig.eersteTwaalf = true;
+            negentienTozesendertig.derdeTwaalf = true;
+            tweeTotEenDerde.isNul = false;
+
             //getallen invoegen
             for (int i = 0; i < 37; i++)
             {
