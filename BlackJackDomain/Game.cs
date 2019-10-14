@@ -11,17 +11,15 @@ namespace BlackJackDomain
         ArrayList lijstKaartenSpeler = new ArrayList();
         ArrayList lijstKaartenDealer = new ArrayList();
         private Boolean gewonnen{ get; set; }
-        private char kaart { get; set; }
         private double inzet{ get; set; }
         private int som { get; set; }
         private int somDealer { get; set; }
         
         
 
-        public Game(char kaart, double inzet)
+        public Game(double inzet)
         {
             gewonnen = false;
-            this.kaart = kaart;
             this.inzet = inzet;
             som = 0;
             somDealer = 0;
