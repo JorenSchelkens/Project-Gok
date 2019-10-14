@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace BlackJackDomain
 {
     
-    public class Blackjack
+    public class Game
     {
         Random rand = new Random();
         ArrayList lijstKaartenSpeler = new ArrayList();
@@ -18,7 +18,7 @@ namespace BlackJackDomain
         
         
 
-        public Blackjack(char kaart, double inzet)
+        public Game(char kaart, double inzet)
         {
             gewonnen = false;
             this.kaart = kaart;
@@ -27,7 +27,7 @@ namespace BlackJackDomain
             somDealer = 0;
         }
         
-        public void startSpel()
+        public void beginSpel()
         {
             int huidigeKaart = rand.Next(1, 10);
             if (huidigeKaart == 1)
