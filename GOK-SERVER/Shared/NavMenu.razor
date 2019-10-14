@@ -12,35 +12,42 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="gebruiker/login">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Login
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="gebruiker/register">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Register
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="gebruiker/profiel">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Profiel
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="bank">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Bank
-            </NavLink>
-        </li>
+
+        @if (HuidigeGebruiker.Gebruikersnaam == null)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="gebruiker/login">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Login
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="gebruiker/register">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Register
+                </NavLink>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="gebruiker/profiel">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Profiel
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="bank">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Bank
+                </NavLink>
+            </li>
+        }
+
     </ul>
 </div>
 
 @code {
+
+    [CascadingParameter]
+    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
+
     bool collapseNavMenu = true;
 
     string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
