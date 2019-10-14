@@ -16,21 +16,22 @@
     <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
                             @bind-Value=@testingNullableDecimal2
                             DecimalPlaces=0
-                            Minimum=0 Maximum=100>
+                            Minimum=1 Maximum=100>
     </MatNumericUpDownField>
 </div>
         
-<div style="position: relative; top: 544px; left: 1300px;">
+<div style="position: relative; top: 544px; left: 1200px;">
     <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
 </div>
+
+<img src="@url" />
         
 }
 
-
+@*
 <p style="font-size: 150px; position: relative; top: 400px">@spelerKaart</p>
 <p style="font-size: 150px; position: relative; top: 400px">@computerKaart</p>    
 
-@*
 <p style="text-align: center">@resultaat</p>
 
 <div style="text-align: center;">
@@ -49,11 +50,19 @@
     public bool disabled = true;
     public bool laatAllesZien = false;
     public bool spelGestart = false;
+    public List<string> urls { get; set; }
+    public string url;
 
     decimal? testingNullableDecimal2 = 0;
 
+    protected override void OnInitialized()
+    {
+        urls = DefaultClasses.UrlGenerator.GenerateUrls();
+    }
+
     public void startSpel()
     {
+        url = urls[3];
         laatAllesZien = true;
         spelGestart = true;
 
@@ -108,7 +117,5 @@
             resultaat = "gelijk";
         }
     }
-
-
 
 }

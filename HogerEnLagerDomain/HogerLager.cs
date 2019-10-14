@@ -10,6 +10,7 @@ namespace HogerEnLagerDomain
         private int computerKaart { get; set; }
         private int hoogsteKaart { get; set; }
 
+
         public int BerekenHoogsteKaart()
         {
             if(eigenKaart > computerKaart)
