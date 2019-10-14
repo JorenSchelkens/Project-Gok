@@ -1,34 +1,35 @@
 ﻿@page "/crash"
 @using CrashDomain
 
+    <h1 style="text-align: center;"> Crash Gambling </h1>    
+
+
 @if (temp)
 {
-    <p>
+    <div style="text-align: center; top: 600px;">
         <MatNumericUpDownField Label="Inzet:"
                                @bind-Value=@testingNullableDecimal1
                                Step="10"
                                DecimalPlaces="0">
         </MatNumericUpDownField>
-    </p>
+    </div>
 
-    <p>
+    <div style="text-align: center; top: 600px; left: 600px;">
         <MatNumericUpDownField Label="Automatisch stoppen op:"
                                @bind-Value=@testingNullableDecimal2
                                Step="1.00m"
                                DecimalPlaces="2">
         </MatNumericUpDownField>
-    </p>
-
-    <br />
+    </div>
 
 } else
 {
 
 }
 
-
-<MatButton OnClick="@Click" Raised="true">Start game</MatButton>
-
+<div style="text-align: center; position: relative; top: 300px;">
+    <MatButton OnClick="@Click" Raised="true">Start game</MatButton>
+</div>
 
 @code {
 
