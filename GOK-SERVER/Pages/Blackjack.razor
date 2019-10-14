@@ -7,21 +7,69 @@
     <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel">genereer kaart</MatButton>
 }
 
-<p>
-    <MatNumericUpDownField Style=" position: absolute; left: 1400px; top: 750px;" Label="bedrag inzetten"
-                           @bind-Value=@testingNullableDecimal2
-                           DecimalPlaces=0
-                           Minimum=0 Maximum=100>
-    </MatNumericUpDownField>
-</p>
+@if (!spelGestart)
+{
+    <div style="text-align: center; position: relative; top: 300px;">
+        <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
+    </div>
+
+}
+
+@if (laatZien)
+{
+    <div style="text-align: center; position: relative; top: 600px;">
+        <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                               @bind-Value=@testingNullableDecimal2
+                               DecimalPlaces=0
+                               Minimum=0 Maximum=100>
+        </MatNumericUpDownField>
+    </div>
+
+    <div style="position: relative; top: 544px; left: 1300px;">
+        <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
+    </div>
+
+}
 
 @code{
 
+    [CascadingParameter]
+    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
+
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+
     decimal? testingNullableDecimal2 = 0;
+
+    public bool spelGestart = false;
+    public bool laatZien = false;
+    public bool disabled = true;
+
+    public BlackJackDomain.Game Game { get; set; }
 
     public void startSpel()
     {
+        Game = new BlackJackDomain.Game(0.25);
+        spelGestart = true;
+        laatZien = true;
 
+    }
+
+    public void startSpel2()
+    {
+        HuidigeGebruiker.Saldo += 500;
+        DBConnection.UpdateGebruiker(HuidigeGebruiker);
+    }
+
+    public void checkIngevuldeWaarde()
+    {
+        if(testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+        {
+            disabled = false;
+        }
+        else
+        {
+            disabled = true;
+        }
     }
 
 }
