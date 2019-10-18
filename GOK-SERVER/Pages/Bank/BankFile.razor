@@ -6,7 +6,7 @@
 }
 else
 {
-    <p>Huidig Balans: @HuidigeGebruiker.Saldo</p>
+    <p>Huidig Balans: $@HuidigeGebruiker.Saldo</p>
 
     <MatNumericUpDownField Label="Withdrawal"
                            @bind-Value=@UpDownFieldWithdrawal
@@ -20,11 +20,12 @@ else
     <br />
     <br />
 
-    <MatNumericUpDownField Label="Deposit"
+    <MatNumericUpDownField Label="Deposit: 1$ = 100 munten"
                            @bind-Value=@UpDownFieldDeposit
-                           DecimalPlaces=0
+                           DecimalPlaces=2
+                           Step="1.00m"
                            Icon="attach_money"
-                           Minimum="1" Maximum="5000">
+                           Minimum="5.00m" Maximum="1000">
 
     </MatNumericUpDownField>
     <MatButton OnClick="@Deposit" Raised="true">Deposit</MatButton>
@@ -37,8 +38,6 @@ else
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     public Bank Bank;
-    public List<Gebruikers> gebruikers;
-    public Gebruikers huidig;
 
     decimal? UpDownFieldWithdrawal = null;
     decimal? UpDownFieldDeposit = null;
@@ -47,21 +46,23 @@ else
     {
         DBConnection = new DefaultClasses.DBConnection();
         Bank = new Bank(HuidigeGebruiker.Saldo);
-    } 
+    }
 
     public void Deposit()
     {
-
+        HuidigeGebruiker.Saldo = Bank.Storten((double)UpDownFieldDeposit.Value);
+        updateGebruiker();
     }
 
     public void Withdrawal()
     {
-
+        HuidigeGebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
+        updateGebruiker();
     }
 
     private void updateGebruiker()
     {
-        
+        DBConnection.UpdateGebruiker(HuidigeGebruiker);
     }
 
 }

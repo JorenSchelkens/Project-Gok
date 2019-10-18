@@ -1,4 +1,5 @@
 ﻿@page "/gebruiker/login"
+@inject NavigationManager NavigationManager
 
 <h1>Login</h1>
 
@@ -7,22 +8,14 @@
     <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
 
-    <br /><br />
+    <br />
+    <br />
 
     <MatButton OnClick="@Login" Raised="true">Login</MatButton>
 }
 else
 {
-    <table class="table">
-        <tbody>
-                <tr>
-                    <td>@HuidigeGebruiker.Gebruikersnaam</td>
-                    <td>@HuidigeGebruiker.Saldo</td>
-                    <td>@HuidigeGebruiker.Email</td>
-                    <td>@HuidigeGebruiker.DailyGiftDatum</td>
-                </tr>
-        </tbody>
-    </table>
+    GaNaarVolgende();
 }
 
 @code {
@@ -45,6 +38,11 @@ else
     {
         Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
         HuidigeGebruiker.Update(Gebruiker.Spelersnummer, Gebruiker.Gebruikersnaam, Gebruiker.Naam, Gebruiker.Email, Gebruiker.Wachtwoord, Gebruiker.Saldo, Gebruiker.DailyGiftDatum, Gebruiker.Admin, Gebruiker.Nieuwsbrief, Gebruiker.Notificaties);
-        StateHasChanged();
+        GaNaarVolgende();
+    }
+
+    public void GaNaarVolgende()
+    {
+        NavigationManager.NavigateTo("/gebruiker/profiel");
     }
 }

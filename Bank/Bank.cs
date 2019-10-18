@@ -4,18 +4,18 @@ namespace BankDomain
 {
     public class Bank
     {
-        public Money Money;
+        public int Saldo { get; set; }
 
-        public Bank(int Saldo)
+        public Bank(int saldo)
         {
-            this.Money = new Money(Saldo);
+            this.Saldo = saldo;
         }
 
-        public double Storten(double geld)
+        public int Storten(double geld)
         {
             int munten = OmzettenGeldNaarMunten(geld);
-            this.Money.Storten(munten);
-            return munten;
+            Saldo += munten;
+            return Saldo;
         }
 
         public int OmzettenGeldNaarMunten(double geld)
@@ -24,19 +24,11 @@ namespace BankDomain
             return aantalMunten;
         }
 
-        public double OmzettenMuntenNaarGeld(int munten)
+        public int Afhalen(int munten)
         {
-            double saldo = Convert.ToDouble(munten / 100);
-            return saldo;
+            Saldo -= munten;
+            return Saldo;
         }
-
-        public double Afhalen(int munten)
-        {
-            double geld = OmzettenMuntenNaarGeld(munten);
-            this.Money.MuntenSaldo -= munten;
-            return geld;
-        }
-
         
     }
 }

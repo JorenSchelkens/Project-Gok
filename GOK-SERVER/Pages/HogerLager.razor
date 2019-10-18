@@ -1,4 +1,4 @@
-﻿@page "/test"
+﻿@page "/hoger_lager"
 
 <h1 style="text-align: center;">Hoger Lager</h1>
 
@@ -16,7 +16,7 @@
         <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
                                @bind-Value=@testingNullableDecimal2
                                DecimalPlaces=0
-                               Minimum=1 Maximum=100>
+                               Minimum=1 Maximum=@HuidigeGebruiker.Saldo>
         </MatNumericUpDownField>
     </div>
 
@@ -29,32 +29,44 @@
 @if (toonKaarten)
 {
     
-    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@urlKaartSpeler" />
-    <img style="position: relative; top: 50px; left: -75px;  height: 400px;" src="@urlKaartComputer" />
+    <div style="position: relative; top: 30px;">
+        <p style="position: relative; left: 1134.5675px; display: inline-block;">Jouw kaart:</p>
+        <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
+    </div>
+    
+    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@urlKaartSpeler" />          
+    <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@urlKaartComputer" />
+
+    <p style="text-align: center;">@resultaat</p>
+
 }
 
 
 @code{
 
+    [CascadingParameter]
+    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
+
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+
     public Random random = new Random();
     public int spelerKaart, computerKaart;
     public int winst;
-    public String resultaat;
     public bool disabled = true;
     public bool laatAllesZien = false;
     public bool spelGestart = false;
-    public List<string> genereerUrl1 { get; set; }
-    public List<string> genereerUrl2 { get; set; }
+    public List<string> genereerUrl { get; set; }
     public string urlKaartSpeler;
     public string urlKaartComputer;
     public bool toonKaarten = false;
+    public String resultaat;
 
     decimal? testingNullableDecimal2 = 0;
 
     protected override void OnInitialized()
     {
-        genereerUrl1 = DefaultClasses.UrlGenerator.GenerateUrls();
-        genereerUrl2 = DefaultClasses.UrlGenerator.GenerateUrls();
+        genereerUrl = DefaultClasses.UrlGenerator.GenerateUrls();
+        DBConnection = new DefaultClasses.DBConnection();
     }
 
     public void startSpel()
@@ -81,8 +93,9 @@
         genereerSpelerKaart();
         genereerComputerKaart();
         bepaalWinnaar();
-        urlKaartSpeler = genereerUrl1[spelerKaart];
-        urlKaartComputer = genereerUrl2[computerKaart];
+        urlKaartSpeler = genereerUrl[spelerKaart];
+        urlKaartComputer = genereerUrl[computerKaart];
+
         toonKaarten = true;
 
     }
@@ -90,32 +103,39 @@
     public void genereerSpelerKaart()
     {
         spelerKaart = random.Next(1, 13);
+
     }
 
     public void genereerComputerKaart()
     {
-        computerKaart = random.Next(1, 13);
+        do
+        {
+            computerKaart = random.Next(4, 13);
+
+        } while (computerKaart == spelerKaart);
+
     }
 
     public void bepaalWinnaar()
     {
-        int waardeIngezet = (int)testingNullableDecimal2.Value;
 
         if (spelerKaart > computerKaart)
         {
-            winst += (waardeIngezet * 2);
+            HuidigeGebruiker.Saldo += ((int)testingNullableDecimal2.Value * 2);
+            updateGebruiker();
             resultaat = "Je hebt gewonnen";
-        }
-        else if (spelerKaart < computerKaart)
-        {
-            winst -= waardeIngezet;
-            resultaat = "je hebt verloren";
         }
         else
         {
-            //winst blijft hetzelfde
-            resultaat = "gelijk";
+            HuidigeGebruiker.Saldo -= ((int)testingNullableDecimal2.Value);
+            resultaat = "je hebt verloren";
         }
+
+    }
+
+    private void updateGebruiker()
+    {
+        DBConnection.UpdateGebruiker(HuidigeGebruiker);
     }
 
 }
