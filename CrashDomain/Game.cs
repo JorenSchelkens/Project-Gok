@@ -9,25 +9,24 @@ namespace CrashDomain
         public double multiplier { get; set; }
         public int muntenIngezet { get; set; }
         public double autoCashOut { get; set; }
+        public double totalMultiplier { get; set; }
         public bool spelGedaan { get; set; } = false;
-        public Timer timer;
 
-        public Game(double multiplier, int muntenIngezet, double autoCashOut)
+        public Game(int muntenIngezet, double autoCashOut)
         {
-            this.multiplier = multiplier;
             this.muntenIngezet = muntenIngezet;
             this.autoCashOut = autoCashOut;
         }
 
+        public Game(int muntenIngezet)
+        {
+            this.muntenIngezet = muntenIngezet;
+        }
+
         public void VerhoogMultiplier()
         {
-            var random = new Random();
-            var totalMultiplier = random.NextDouble();
-
-            timer = new Timer(new TimerCallback(_ =>
-            {
-
-            }), null, 1000, 1000);
+            multiplier += 0.01;
+            multiplier = Math.Round(multiplier, 3);
         }
 
         public bool IsGecrasht(double random)

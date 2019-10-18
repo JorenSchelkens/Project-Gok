@@ -1,7 +1,8 @@
 ﻿@page "/crash"
 @using CrashDomain
 
-    <h1 style="text-align: center;"> Crash Gambling </h1>    
+<h1 style="text-align: center;"> Crash Gambling </h1>
+<p>@Game.multiplier</p>
 
 
 @if (temp)
@@ -22,13 +23,31 @@
         </MatNumericUpDownField>
     </div>
 
-} else
+}
+else
 {
+
+    <EjsChart Title="Status" Width="100%">
+   
+        <ChartPrimaryYAxis RangePadding="ChartRangePadding.None" Minimum="0" Maximum="15"
+                           Interval="1.0">
+            <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+            <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+        </ChartPrimaryYAxis> 
+        <EjsDataManager Json=@Country></EjsDataManager>
+
+        <ChartSeriesCollection>
+            <ChartSeries Query="@QueryData" DataSource="@Country" XName="X" YName="Y" Type="ChartSeriesType.Line">
+            </ChartSeries>
+        </ChartSeriesCollection>
+    </EjsChart>
+
 
 }
 
 <div style="text-align: center; position: relative; top: 300px;">
     <MatButton OnClick="@Click" Raised="true">Start game</MatButton>
+    <MatButton OnClick="@Temp2" Raised="true">Start game</MatButton>
 </div>
 
 @code {
@@ -36,12 +55,62 @@
     decimal? testingNullableDecimal1 = 0;
     decimal? testingNullableDecimal2 = 0;
 
+    private string QueryData = "new ej.data.Query().take(10).where('Estimate', 'lessThan', 3, false)";
+    private string UpdatedQueryData = "new ej.data.Query().take(5).where('Estimate', 'lessThan', 3, false)";
+
+    public CrashDomain.Game Game { get; set; }
+
     public bool temp = true;
 
-    void Click()
+    protected override void OnInitialized()
+    {
+        Game = new Game((int) testingNullableDecimal1.Value);
+    }
+
+    public async void Click()
     {
         temp = false;
+
+        Game.totalMultiplier = (double) new Random().Next(10, 15);
+
+        for (double i = 0; i < Game.totalMultiplier; i+= 0.01)
+        {
+            await Task.Delay(25);
+            Game.VerhoogMultiplier();
+            StateHasChanged();
+        }
     }
+
+    void Temp2()
+    {
+        //var random = new Random();
+        //var randomGetal = random.NextDouble();
+        //string randomGetalString = randomGetal.ToString();
+
+        //MedalDetails.Add(new ChartData { X = randomGetalString, Y = randometal });
+        //StateHasChanged();
+
+
+
+        QueryData = UpdatedQueryData;
+    }
+
+    public class ChartData
+    {
+        public string XValue;
+        public double YValue;
+    }
+
+      public List<ChartData> ConsumerDetails = new List<ChartData>
+    {
+        new ChartData { XValue = "1", YValue = 21, YValue1 = 28 },
+        new ChartData { XValue = "2", YValue = 24, YValue1 = 44 },
+        new ChartData { XValue = "3", YValue = 36, YValue1 = 48 },
+        new ChartData { XValue = "4", YValue = 38, YValue1 = 50 },
+        new ChartData { XValue = "5", YValue = 54, YValue1 = 66 },
+        new ChartData { XValue = "6", YValue = 57, YValue1 = 78 },
+        new ChartData { XValue = "7", YValue = 70, YValue1 = 84 },
+    };
 
 
 

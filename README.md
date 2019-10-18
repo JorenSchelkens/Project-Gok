@@ -5,4 +5,5 @@ http://blazorhelpwebsite.com/Blog/tabid/61/EntryId/4318/Creating-A-Step-By-Step-
 
 https://docs.microsoft.com/en-us/azure/sql-database/sql-database-design-first-database-csharp#cs_1_connect
 
-https://ej2.syncfusion.com/blazor/documentation/getting-started/dotnet-cli-blazor-server/?no-cache=1
+https://ej2.syncfusion.com/blazor/documentation/data/getting-started/
+https://ej2.syncfusion.com/blazor/documentation/chart/working-with-data/
