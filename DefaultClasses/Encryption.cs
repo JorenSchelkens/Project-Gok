@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DefaultClasses
@@ -7,17 +8,9 @@ namespace DefaultClasses
     {
         public static string EncryptString(string text)
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
-
-            byte[] result = md5.Hash;
-
-            StringBuilder strBuilder = new StringBuilder();
-            for (int i = 0; i < result.Length; i++)
-            { 
-                strBuilder.Append(result[i].ToString("x2"));
-            }
-            return strBuilder.ToString();
+            byte[] b = Encoding.ASCII.GetBytes(text);
+            string encrypted = Convert.ToBase64String(b);
+            return encrypted;
         }
 
     }
