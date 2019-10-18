@@ -15,7 +15,7 @@
 }
 else
 {
-    
+    GaNaarVolgende();
 }
 
 @code {
@@ -38,7 +38,11 @@ else
     {
         Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
         HuidigeGebruiker.Update(Gebruiker.Spelersnummer, Gebruiker.Gebruikersnaam, Gebruiker.Naam, Gebruiker.Email, Gebruiker.Wachtwoord, Gebruiker.Saldo, Gebruiker.DailyGiftDatum, Gebruiker.Admin, Gebruiker.Nieuwsbrief, Gebruiker.Notificaties);
-        StateHasChanged();
+        GaNaarVolgende();
+    }
 
+    public void GaNaarVolgende()
+    {
+        NavigationManager.NavigateTo("/gebruiker/profiel");
     }
 }
