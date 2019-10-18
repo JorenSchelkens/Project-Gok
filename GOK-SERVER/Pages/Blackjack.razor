@@ -4,13 +4,13 @@
 
 @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
 {
-    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel">genereer kaart</MatButton>
+    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel2">genereer kaart</MatButton>
 }
 
 @if (!spelGestart)
 {
     <div style="text-align: center; position: relative; top: 300px;">
-        <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
+        <MatButton Unelevated="true" OnClick="@startSpel" Disabled="start">Start spel</MatButton>
     </div>
 
 }
@@ -21,12 +21,9 @@
         <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
                                @bind-Value=@testingNullableDecimal2
                                DecimalPlaces=0
+                               Disabled="start"
                                Minimum=0 Maximum=100>
         </MatNumericUpDownField>
-    </div>
-
-    <div style="position: relative; top: 544px; left: 1300px;">
-        <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
     </div>
 
 }
@@ -43,21 +40,43 @@
     public bool spelGestart = false;
     public bool laatZien = false;
     public bool disabled = true;
+    public bool start = false;
+    public bool toonkaart = false;
+    public List<string> genereerUrl { get; set; }
+    public List<int> kaartenSpeler;
+    public List<int> kaartenDealer;
+    public string urlKaartSpeler;
+    public string urlKaartDealer;
+    public int inzet;
+    
 
     public BlackJackDomain.Game Game { get; set; }
 
+    protected override void OnInitialized()
+    {
+        genereerUrl = DefaultClasses.UrlGenerator.GenerateUrls();
+        DBConnection = new DefaultClasses.DBConnection();
+    }
+
     public void startSpel()
     {
-        Game = new BlackJackDomain.Game(0.25);
         spelGestart = true;
         laatZien = true;
-
     }
 
     public void startSpel2()
     {
-        HuidigeGebruiker.Saldo += 500;
-        DBConnection.UpdateGebruiker(HuidigeGebruiker);
+        Game = new BlackJackDomain.Game(inzet);
+        Game.extraKaart();
+        urlKaartSpeler = genereerUrl[];
+        Game.extraKaart();
+        urlKaartSpeler = genereerUrl[];
+        Game.dealer();
+        urlKaartDealer = genereerUrl[];
+        Game.dealer();
+        urlKaartDealer = genereerUrl[];
+        start = true;
+        
     }
 
     public void checkIngevuldeWaarde()
@@ -69,7 +88,9 @@
         else
         {
             disabled = true;
+            inzet = (int)testingNullableDecimal2.Value;
         }
     }
+
 
 }
