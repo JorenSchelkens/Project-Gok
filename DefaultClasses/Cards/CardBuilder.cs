@@ -4,13 +4,14 @@ using System.Text;
 
 namespace DefaultClasses.Cards
 {
-    public static class CardBuilder
+    public class CardBuilder
     {
         private static List<string> urls = UrlGenerator.GenerateUrls();
-        private static List<Card> Cards { set; get; }
 
         public static List<Card> BuildCards()
         {
+            List<Card> Cards = new List<Card>();
+
             for (int i = 0; i < 52; i++)
             {
 
@@ -21,43 +22,43 @@ namespace DefaultClasses.Cards
 
                 //13
 
-                string waarde = card.url.Substring(13);
+                string waarde = card.url.Substring(13, 2);
 
                 switch (waarde)
                 {
-                    case "A":
+                    case "A.":
                         card.waardeBlackjack = 1;
                         card.waardeHogerLager = 1;
                         break;
-                    case "2":
+                    case "2.":
                         card.waardeBlackjack = 2;
                         card.waardeHogerLager = 2;
                         break;
-                    case "3":
+                    case "3.":
                         card.waardeBlackjack = 3;
                         card.waardeHogerLager = 3;
                         break;
-                    case "4":
+                    case "4.":
                         card.waardeBlackjack = 4;
                         card.waardeHogerLager = 4;
                         break;
-                    case "5":
+                    case "5.":
                         card.waardeBlackjack = 5;
                         card.waardeHogerLager = 5;
                         break;
-                    case "6":
+                    case "6.":
                         card.waardeBlackjack = 6;
                         card.waardeHogerLager = 6;
                         break;
-                    case "7":
+                    case "7.":
                         card.waardeBlackjack = 7;
                         card.waardeHogerLager = 7;
                         break;
-                    case "8":
+                    case "8.":
                         card.waardeBlackjack = 8;
                         card.waardeHogerLager = 8;
                         break;
-                    case "9":
+                    case "9.":
                         card.waardeBlackjack = 9;
                         card.waardeHogerLager = 9;
                         break;
@@ -65,15 +66,15 @@ namespace DefaultClasses.Cards
                         card.waardeBlackjack = 10;
                         card.waardeHogerLager = 10;
                         break;
-                    case "J":
+                    case "J.":
                         card.waardeBlackjack = 10;
                         card.waardeHogerLager = 11;
                         break;
-                    case "Q":
+                    case "Q.":
                         card.waardeBlackjack = 10;
                         card.waardeHogerLager = 12;
                         break;
-                    case "K":
+                    case "K.":
                         card.waardeBlackjack = 10;
                         card.waardeHogerLager = 13;
                         break;
