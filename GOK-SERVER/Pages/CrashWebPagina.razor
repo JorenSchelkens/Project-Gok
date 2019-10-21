@@ -23,95 +23,91 @@
         </MatNumericUpDownField>
     </div>
 
+    <div style="text-align: center; position: relative; top: 300px;">
+        <MatButton OnClick="@Click" Raised="true">Start game</MatButton>
+    </div>
+
 }
 else
 {
 
-    @*<EjsChart Title="Status" Width="100%">
-   
-        <ChartPrimaryYAxis RangePadding="ChartRangePadding.None" Minimum="0" Maximum="15"
-                           Interval="1.0">
-            <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
-            <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
-        </ChartPrimaryYAxis> 
-        <EjsDataManager ></EjsDataManager>
+    <<<<<<< HEAD
+    <EjsChart Title="Status" Width="100%">
 
-        <ChartSeriesCollection>
-            <ChartSeries Query="@QueryData" DataSource="@ConsumerDetails" XName="X" YName="Y" Type="ChartSeriesType.Line">
-            </ChartSeries>
-        </ChartSeriesCollection>
-    </EjsChart>*@
+        <ChartPrimaryXAxis ValueType="Syncfusion.EJ2.Blazor.Charts.ValueType.Category" Minimum="0" Maximum="20" Interval="1"></ChartPrimaryXAxis>
+        =======
+        @*<EjsChart Title="Status" Width="100%">
+
+                    <ChartPrimaryYAxis RangePadding="ChartRangePadding.None" Minimum="0" Maximum="15"
+                                       Interval="1.0">
+                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                    </ChartPrimaryYAxis>
+                    <EjsDataManager ></EjsDataManager>
+            >>>>>>> 75bbb66cac766071f8bb85b337c44bcc31403e1b
+
+                    <ChartSeriesCollection>
+                        <ChartSeries DataSource="@CrashGegevens" XName="X" YName="Y" Type="ChartSeriesType.Line">
+                        </ChartSeries>
+                    </ChartSeriesCollection>
+            <<<<<<< HEAD
+
+                </EjsChart>
+            =======
+                </EjsChart>*@
+        >>>>>>> 75bbb66cac766071f8bb85b337c44bcc31403e1b
 
 
-}
+        }
 
-<div style="text-align: center; position: relative; top: 300px;">
-    <MatButton OnClick="@Click" Raised="true">Start game</MatButton>
-    <MatButton OnClick="@Temp2" Raised="true">Start game</MatButton>
-</div>
+        @code {
 
-@code {
-
-    decimal? testingNullableDecimal1 = 0;
-    decimal? testingNullableDecimal2 = 0;
-
-    private string QueryData = "new ej.data.Query().take(10).where('Estimate', 'lessThan', 3, false)";
-    private string UpdatedQueryData = "new ej.data.Query().take(5).where('Estimate', 'lessThan', 3, false)";
+            decimal? testingNullableDecimal1 = 0;
+            decimal? testingNullableDecimal2 = 0;
 
     public CrashDomain.Game Game { get; set; }
 
-    public bool temp = true;
+        public bool temp = true;
+        public int tempInt = 2;
 
-    protected override void OnInitialized()
-    {
-        Game = new Game((int) testingNullableDecimal1.Value);
-    }
-
-    public async void Click()
-    {
-        temp = false;
-
-        Game.totalMultiplier = (double) new Random().Next(10, 15);
-
-        for (double i = 0; i < Game.totalMultiplier; i+= 0.01)
+        protected override void OnInitialized()
         {
-            await Task.Delay(25);
-            Game.VerhoogMultiplier();
-            StateHasChanged();
+            Game = new Game((int)testingNullableDecimal1.Value);
         }
-    }
 
-    void Temp2()
-    {
-        //var random = new Random();
-        //var randomGetal = random.NextDouble();
-        //string randomGetalString = randomGetal.ToString();
+        public async void Click()
+        {
+            temp = false;
 
-        //MedalDetails.Add(new ChartData { X = randomGetalString, Y = randometal });
-        //StateHasChanged();
+            Game.totalMultiplier = (double)new Random().Next(10, 15);
 
+            for (double i = 0; i < Game.totalMultiplier; i += 0.01)
+            {
+                await Task.Delay(50);
+                dataChange(tempInt, Game.VerhoogMultiplier());
+                tempInt++;
+                StateHasChanged();
+            }
+        }
 
+        public class ChartData
+        {
+            public int X { get; set; }
+            public double Y { get; set; }
 
-        QueryData = UpdatedQueryData;
-    }
+        }
 
-    public class ChartData
-    {
-        public string XValue { get; set; }
-        public double YValue { get; set; }
-    }
+        public List<ChartData> CrashGegevens = new List<ChartData>
+{
+        new ChartData { X = 1, Y = 0 },
 
-    public List<ChartData> ConsumerDetails = new List<ChartData>
-    {
-        new ChartData { XValue = "1", YValue = 21 },
-        new ChartData { XValue = "2", YValue = 24 },
-        new ChartData { XValue = "3", YValue = 36 },
-        new ChartData { XValue = "4", YValue = 38 },
-        new ChartData { XValue = "5", YValue = 54 },
-        new ChartData { XValue = "6", YValue = 57 },
-        new ChartData { XValue = "7", YValue = 70}
     };
 
+        public void dataChange(int temp, double temp2)
+        {
 
+            CrashGegevens.Add(new ChartData { X = temp, Y = temp2 });
 
-}
+        }
+
+        }
