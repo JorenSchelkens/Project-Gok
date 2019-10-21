@@ -79,6 +79,8 @@ namespace DefaultClasses.Cards
                         break;
                 }
 
+                Cards.Add(card);
+
             }
 
             return Cards;

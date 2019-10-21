@@ -34,8 +34,8 @@
         <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
     </div>
     
-    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@urlKaartSpeler" />          
-    <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@urlKaartComputer" />
+    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@spelerKaart.url" />          
+    <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@computerKaart.url" />
 
     <p style="text-align: center;">@resultaat</p>
 
@@ -46,18 +46,17 @@
 
     [CascadingParameter]
     public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
-
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
+    List<DefaultClasses.Cards.Card> cards = DefaultClasses.Cards.CardBuilder.BuildCards();
+
     public Random random = new Random();
-    public int spelerKaart, computerKaart;
+    public DefaultClasses.Cards.Card spelerKaart, computerKaart;
     public int winst;
     public bool disabled = true;
     public bool laatAllesZien = false;
     public bool spelGestart = false;
-    public List<string> genereerUrl { get; set; }
-    public string urlKaartSpeler;
-    public string urlKaartComputer;
+
     public bool toonKaarten = false;
     public String resultaat;
 
@@ -65,7 +64,6 @@
 
     protected override void OnInitialized()
     {
-        genereerUrl = DefaultClasses.UrlGenerator.GenerateUrls();
         DBConnection = new DefaultClasses.DBConnection();
     }
 
@@ -73,7 +71,6 @@
     {
         laatAllesZien = true;
         spelGestart = true;
-
     }
 
     public void checkIngevuldeWaarde()
@@ -93,8 +90,6 @@
         genereerSpelerKaart();
         genereerComputerKaart();
         bepaalWinnaar();
-        urlKaartSpeler = genereerUrl[spelerKaart];
-        urlKaartComputer = genereerUrl[computerKaart];
 
         toonKaarten = true;
 
@@ -102,24 +97,21 @@
 
     public void genereerSpelerKaart()
     {
-        spelerKaart = random.Next(1, 13);
-
+        int temp = random.Next(0, cards.Count);
+        spelerKaart = cards[temp];
+        cards.RemoveAt(temp);
     }
 
     public void genereerComputerKaart()
     {
-        do
-        {
-            computerKaart = random.Next(6, 13);
-
-        } while (computerKaart == spelerKaart);
-
+        int temp = random.Next(0, cards.Count);
+        computerKaart = cards[temp];
     }
 
     public void bepaalWinnaar()
     {
 
-        if (spelerKaart > computerKaart)
+        if (spelerKaart.waardeHogerLager > computerKaart.waardeHogerLager)
         {
             HuidigeGebruiker.Saldo += ((int)testingNullableDecimal2.Value * 2);
             updateGebruiker();
@@ -130,6 +122,8 @@
             HuidigeGebruiker.Saldo -= ((int)testingNullableDecimal2.Value);
             resultaat = "je hebt verloren";
         }
+
+        cards = DefaultClasses.Cards.CardBuilder.BuildCards();
 
     }
 
