@@ -48,7 +48,11 @@ else
     {
         List<int> getallen = new List<int>();
         getallen.Add(50);
-        game = new RouletteDomain.Game("even", getallen);
+
+        List<string> titels = new List<string>();
+        titels.Add("even");
+
+        game = new RouletteDomain.Game(titels, getallen);
 
         uitkomst = game.StartSpel();
     }
