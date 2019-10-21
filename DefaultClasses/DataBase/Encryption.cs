@@ -8,9 +8,7 @@ namespace DefaultClasses
     {
         public static string EncryptString(string text)
         {
-            byte[] b = Encoding.ASCII.GetBytes(text);
-            string encrypted = Convert.ToBase64String(b);
-            return encrypted;
+            return text;
         }
 
     }
