@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultClasses.Cards;
 
 namespace BlackJackDomain
 {
@@ -8,8 +9,9 @@ namespace BlackJackDomain
     public class Game
     {
         Random rand = new Random();
-        ArrayList lijstKaartenSpeler = new ArrayList();
-        ArrayList lijstKaartenDealer = new ArrayList();
+        public List<Card> lijstKaartenSpeler = new List<Card>();
+        public List<Card> lijstKaartenDealer = new List<Card>();
+        public List<Card> cards = CardBuilder.BuildCards();
         private Boolean gewonnen{ get; set; }
         private double inzet{ get; set; }
         private int som { get; set; }
@@ -27,38 +29,39 @@ namespace BlackJackDomain
         
         public void beginSpel()
         {
-            int huidigeKaart = rand.Next(1, 10);
-            if (huidigeKaart == 1)
+            int temp = rand.Next(0, cards.Count);
+            Card huidigeKaart = cards[temp];
+            if (huidigeKaart.waardeBlackjack == 1)
             {
-                huidigeKaart = 11;
+                huidigeKaart.waardeBlackjack = 11;
             }
-            som += huidigeKaart;
+            som += huidigeKaart.waardeBlackjack;
             lijstKaartenSpeler.Add(huidigeKaart);
-            huidigeKaart = rand.Next(1, 10);
-            if (huidigeKaart == 1)
+            huidigeKaart.waardeBlackjack = rand.Next(1, 10);
+            if (huidigeKaart.waardeBlackjack == 1)
             {
-                huidigeKaart = 11;
+                huidigeKaart.waardeBlackjack = 11;
             }
-            som += huidigeKaart;
+            som += huidigeKaart.waardeBlackjack;
             lijstKaartenSpeler.Add(huidigeKaart);
             if (som == 21)
             {
                 gewonnen = true;
             }
-            
-            huidigeKaart = rand.Next(1, 10);
-            if (huidigeKaart == 1)
+
+            huidigeKaart.waardeBlackjack = rand.Next(1, 10);
+            if (huidigeKaart.waardeBlackjack == 1)
             {
-                huidigeKaart = 11;
+                huidigeKaart.waardeBlackjack = 11;
             }
-            somDealer += huidigeKaart;
+            somDealer += huidigeKaart.waardeBlackjack;
             lijstKaartenDealer.Add(huidigeKaart);
-            huidigeKaart = rand.Next(1, 10);
-            if (huidigeKaart == 1)
+            huidigeKaart.waardeBlackjack = rand.Next(1, 10);
+            if (huidigeKaart.waardeBlackjack == 1)
             {
-                huidigeKaart = 11;
+                huidigeKaart.waardeBlackjack = 11;
             }
-            somDealer += huidigeKaart;
+            somDealer += huidigeKaart.waardeBlackjack;
             lijstKaartenDealer.Add(huidigeKaart);
             if (somDealer == 21)
             {
@@ -69,54 +72,68 @@ namespace BlackJackDomain
 
         public int extraKaart()
         {
-            int huidigeKaart = rand.Next(1, 10);
-            if (huidigeKaart == 1)
+            int temp = rand.Next(0, cards.Count);
+            Card huidigeKaart = cards[temp];
+            if (huidigeKaart.waardeBlackjack == 1)
             {
-                huidigeKaart = 11;
+                huidigeKaart.waardeBlackjack = 11;
             }
-            som += huidigeKaart;
+            som += huidigeKaart.waardeBlackjack;
             lijstKaartenSpeler.Add(huidigeKaart);
 
             if (som > 21)
             {
-                if (lijstKaartenSpeler.Contains(11))
+
+                for(int i = 0; i < lijstKaartenSpeler.Count; i++)
                 {
-                    lijstKaartenSpeler[lijstKaartenSpeler.IndexOf(11)] = 1;
-                    som -= 10;
+                    if (lijstKaartenSpeler[i].waardeBlackjack == 11)
+                    {
+                        lijstKaartenSpeler[i].waardeBlackjack = 1;
+                        som -= 10;
+                    }
+                    else
+                    {
+                        gewonnen = false;
+                    }
                 }
-                else
-                {
-                    gewonnen = false;
-                }
+                
                     
             }
-            return huidigeKaart;
+            return huidigeKaart.waardeBlackjack;
         }
 
         public int dealer()
         {
-            int huidigeKaart = rand.Next(1, 10);
-            if (huidigeKaart == 1)
+            int temp = rand.Next(0, cards.Count);
+            Card huidigeKaart = cards[temp];
+            if (huidigeKaart.waardeBlackjack == 1)
             {
-                huidigeKaart = 11;
+                huidigeKaart.waardeBlackjack = 11;
             }
-            somDealer += huidigeKaart;
+            somDealer += huidigeKaart.waardeBlackjack;
 
             lijstKaartenDealer.Add(huidigeKaart);
             if (somDealer > 21)
             {
-                if (lijstKaartenDealer.Contains(11))
+                for (int i = 0; i < lijstKaartenDealer.Count; i++)
                 {
-                    lijstKaartenDealer[lijstKaartenDealer.IndexOf(11)] = 1;
-                    somDealer -= 10;
-                }
-                else
-                {
-                    gewonnen = true;
+
+                    if (lijstKaartenDealer[i].waardeBlackjack == 11)
+                    {
+                        lijstKaartenDealer[i].waardeBlackjack = 1;
+                        somDealer -= 10;
+                    }
+                    else
+                    {
+                        gewonnen = true;
+                    }
+
                 }
 
+                
+
             }
-            return huidigeKaart;
+            return huidigeKaart.waardeBlackjack;
         }
 
         public double winnaar()

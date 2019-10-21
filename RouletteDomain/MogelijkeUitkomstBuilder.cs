@@ -5,13 +5,14 @@ namespace RouletteDomain
 {
     public class MogelijkeUitkomstBuilder
     {
-        private static List<MogelijkeUitkomst> list { get; set; }
-        private static List<int> tteEerste { get; set; }
-        private static List<int> tteTweede { get; set; }
-        private static List<int> tteDerde { get; set; }
-
         public static List<MogelijkeUitkomst> Build()
         {
+
+            List<MogelijkeUitkomst> list = new List<MogelijkeUitkomst>();
+            List<int> tteEerste = new List<int>();
+            List<int> tteTweede = new List<int>();
+            List<int> tteDerde = new List<int>();
+
             MogelijkeUitkomst zwart = new MogelijkeUitkomst("zwart");
             zwart.isRood = false;
             zwart.isNul = false;

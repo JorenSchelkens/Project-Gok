@@ -7,16 +7,21 @@ namespace RouletteDomain
     public class Game
     {
         public List<int> muntenIngezet { get; set; }
-        public List<MogelijkeUitkomst> opgegeveUitkomsten { get; set; }
+        public List<MogelijkeUitkomst> opgegeveUitkomsten { get; set; } = new List<MogelijkeUitkomst>();
         public List<MogelijkeUitkomst> mogelijkeUitkomsten { get; set; }
         public MogelijkeUitkomst uitkomst { get; set; }
         // juiste gok maken 
-        public Game(string opgegeveTitel, List<int> muntenIngezet)
+        public Game(List<string> opgegeveTitles, List<int> muntenIngezet)
         {
             this.muntenIngezet = muntenIngezet;
 
             mogelijkeUitkomsten = MogelijkeUitkomstBuilder.Build();
-            opgegeveUitkomsten = mogelijkeUitkomsten.Where(v => v.titel == opgegeveTitel).ToList();
+
+            foreach(var titel in opgegeveTitles)
+            {
+                MogelijkeUitkomst temp = mogelijkeUitkomsten.Where(v => v.titel == titel).First();
+                opgegeveUitkomsten.Add(temp);
+            }
         }
 
         public int StartSpel()
@@ -36,11 +41,11 @@ namespace RouletteDomain
 
         public bool Controleer(int i)
         {
-            if (opgegeveUitkomsten[i] == uitkomst) {
+            if (opgegeveUitkomsten[i].nummerWaarde == uitkomst.nummerWaarde) {
                 muntenIngezet[i] = muntenIngezet[i] * 36;
                 return true;
             }
-            if (opgegeveUitkomsten[i].isNul == uitkomst.isNul) {
+            if (opgegeveUitkomsten[i].isNul == true && uitkomst.isNul == true) {
                 muntenIngezet[i] = muntenIngezet[i] * 36;
                 return true;
             }

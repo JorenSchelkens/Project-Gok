@@ -1,10 +1,22 @@
 ﻿@page "/koen"
-
 <h1 style="text-align: center;">Roullette</h1>
-
 @if (knop)
 {
-    <p> Koenus handicapus </p>
+    // afbeeldingen in plaatsen
+    // rood
+    // zwart
+    <img src="/img/rouletteTafel.jpg" width="500" height="300" @onclick="gok" />
+    <p>Standaard uitkomst = 50 --> nieuwe uitkomst = @uitkomst</p>
+    if (gok1)
+    {
+        <MatNumericUpDownField Label="inzet"
+                               @bind-Value=@UpDownField1
+                               DecimalPlaces=0
+                               Icon="attach_money"
+                               Minimum="1" Maximum="100">
+        </MatNumericUpDownField>
+        <MatButton OnClick="@gok2" Raised="true">Go!</MatButton>
+    }
 }
 else
 {
@@ -13,14 +25,35 @@ else
     </div>
 }
 
-<button>test</button>
-
 @code{
+
     public bool knop = false;
+    public bool knop1 = false;
+    public bool gok1 = false;
+    decimal? UpDownField1 = null;
+    public int uitkomst = 0;
+    //(int)UpDownField1.Value;
+
+    public RouletteDomain.Game game;
 
     public void startSpel()
     {
         knop = true;
     }
+    public void gok()
+    {
+        gok1 = true;
+    }
+    public void gok2()
+    {
+        List<int> getallen = new List<int>();
+        getallen.Add(50);
 
+        List<string> titels = new List<string>();
+        titels.Add("even");
+
+        game = new RouletteDomain.Game(titels, getallen);
+
+        uitkomst = game.StartSpel();
+    }
 }

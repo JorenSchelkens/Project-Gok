@@ -22,9 +22,15 @@
                                @bind-Value=@testingNullableDecimal2
                                DecimalPlaces=0
                                Disabled="start"
-                               Minimum=0 Maximum=100>
+                               Minimum=0 Maximum=500>
         </MatNumericUpDownField>
     </div>
+
+}
+
+@if (toonkaart)
+{
+    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@spelen">genereer kaart</MatButton>
 
 }
 
@@ -42,19 +48,19 @@
     public bool disabled = true;
     public bool start = false;
     public bool toonkaart = false;
-    public List<string> genereerUrl { get; set; }
+    public bool volgendeKaart = false;
     public List<int> kaartenSpeler;
     public List<int> kaartenDealer;
     public string urlKaartSpeler;
     public string urlKaartDealer;
-    public int inzet;
-    
+    public double inzet;
+
+
 
     public BlackJackDomain.Game Game { get; set; }
 
     protected override void OnInitialized()
     {
-        genereerUrl = DefaultClasses.UrlGenerator.GenerateUrls();
         DBConnection = new DefaultClasses.DBConnection();
     }
 
@@ -68,20 +74,32 @@
     {
         Game = new BlackJackDomain.Game(inzet);
         Game.extraKaart();
-        urlKaartSpeler = genereerUrl[5];
+        urlKaartSpeler = Game.lijstKaartenSpeler[0].url;
         Game.extraKaart();
-        urlKaartSpeler = genereerUrl[5];
+        urlKaartSpeler = Game.lijstKaartenSpeler[1].url;
         Game.dealer();
-        urlKaartDealer = genereerUrl[5];
+        urlKaartDealer = Game.lijstKaartenDealer[0].url;
         Game.dealer();
-        urlKaartDealer = genereerUrl[5];
+        urlKaartDealer = Game.lijstKaartenDealer[1].url;
         start = true;
-        
+
+    }
+
+    public void spelen()
+    {
+        int plaatsKaart = 2;
+
+        while (volgendeKaart)
+        {
+            Game.extraKaart();
+            urlKaartSpeler = Game.lijstKaartenSpeler[plaatsKaart].url;
+            plaatsKaart++;
+        }
     }
 
     public void checkIngevuldeWaarde()
     {
-        if(testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+        if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
         {
             disabled = false;
         }
@@ -92,5 +110,8 @@
         }
     }
 
-
+    public void winnaar()
+    {
+        inzet += Game.winnaar();
+    }
 }
