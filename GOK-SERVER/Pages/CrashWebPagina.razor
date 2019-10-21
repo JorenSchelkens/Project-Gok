@@ -34,10 +34,10 @@ else
             <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
             <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
         </ChartPrimaryYAxis> 
-        <EjsDataManager Json=@Country></EjsDataManager>
+        <EjsDataManager ></EjsDataManager>
 
         <ChartSeriesCollection>
-            <ChartSeries Query="@QueryData" DataSource="@Country" XName="X" YName="Y" Type="ChartSeriesType.Line">
+            <ChartSeries Query="@QueryData" DataSource="@ConsumerDetails" XName="X" YName="Y" Type="ChartSeriesType.Line">
             </ChartSeries>
         </ChartSeriesCollection>
     </EjsChart>
@@ -52,8 +52,8 @@ else
 
 @code {
 
-        decimal? testingNullableDecimal1 = 0;
-        decimal? testingNullableDecimal2 = 0;
+    decimal? testingNullableDecimal1 = 0;
+    decimal? testingNullableDecimal2 = 0;
 
     private string QueryData = "new ej.data.Query().take(10).where('Estimate', 'lessThan', 3, false)";
     private string UpdatedQueryData = "new ej.data.Query().take(5).where('Estimate', 'lessThan', 3, false)";
@@ -97,8 +97,8 @@ else
 
     public class ChartData
     {
-        public string XValue;
-        public double YValue;
+        public string XValue { get; set; }
+        public double YValue { get; set; }
     }
 
     public List<ChartData> ConsumerDetails = new List<ChartData>
