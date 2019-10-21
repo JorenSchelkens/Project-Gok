@@ -38,9 +38,7 @@
     <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@computerKaart.url" />
 
     <p style="text-align: center;">@resultaat</p>
-
 }
-
 
 @code{
 
@@ -98,14 +96,19 @@
     public void genereerSpelerKaart()
     {
         int temp = random.Next(0, cards.Count);
+
         spelerKaart = cards[temp];
         cards.RemoveAt(temp);
     }
 
     public void genereerComputerKaart()
     {
-        int temp = random.Next(0, cards.Count);
-        computerKaart = cards[temp];
+        do
+        {
+            int temp2 = random.Next(0, cards.Count);
+            computerKaart = cards[temp2];
+        } while (computerKaart.waardeHogerLager < 9);
+        
     }
 
     public void bepaalWinnaar()
