@@ -23,10 +23,11 @@ namespace CrashDomain
             this.muntenIngezet = muntenIngezet;
         }
 
-        public void VerhoogMultiplier()
+        public double VerhoogMultiplier()
         {
             multiplier += 0.01;
             multiplier = Math.Round(multiplier, 3);
+            return multiplier;
         }
 
         public bool IsGecrasht(double random)
