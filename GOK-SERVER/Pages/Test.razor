@@ -1,12 +1,22 @@
 ﻿@page "/koen"
 
 <h1 style="text-align: center;">Roullette</h1>
-<div style="text-align: center; position: relative; top: 300px;">
-    <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
-</div>
+
+@if (knop)
+{
+    <p> Koenus handicapus </p>
+}
+else
+{
+    <div style="text-align: center; position: relative; top: 300px;">
+        <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
+    </div>
+}
+
+<button>test</button>
 
 @code{
-    public bool knop=false;
+    public bool knop = false;
 
     public void startSpel()
     {
