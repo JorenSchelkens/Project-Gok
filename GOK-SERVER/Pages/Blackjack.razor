@@ -42,7 +42,6 @@
     public bool disabled = true;
     public bool start = false;
     public bool toonkaart = false;
-    public List<string> genereerUrl { get; set; }
     public List<int> kaartenSpeler;
     public List<int> kaartenDealer;
     public string urlKaartSpeler;
@@ -54,7 +53,6 @@
 
     protected override void OnInitialized()
     {
-        genereerUrl = DefaultClasses.UrlGenerator.GenerateUrls();
         DBConnection = new DefaultClasses.DBConnection();
     }
 
@@ -68,13 +66,13 @@
     {
         Game = new BlackJackDomain.Game(inzet);
         Game.extraKaart();
-        urlKaartSpeler = genereerUrl[5];
+        urlKaartSpeler = Game.lijstKaartenSpeler[0].url;
         Game.extraKaart();
-        urlKaartSpeler = genereerUrl[5];
+        urlKaartSpeler = Game.lijstKaartenSpeler[1].url;
         Game.dealer();
-        urlKaartDealer = genereerUrl[5];
+        urlKaartDealer = Game.lijstKaartenDealer[0].url;
         Game.dealer();
-        urlKaartDealer = genereerUrl[5];
+        urlKaartDealer = Game.lijstKaartenDealer[0].url;
         start = true;
         
     }
