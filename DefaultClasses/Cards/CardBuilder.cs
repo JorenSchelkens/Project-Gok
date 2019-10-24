@@ -28,7 +28,7 @@ namespace DefaultClasses.Cards
                 {
                     case "A.":
                         card.waardeBlackjack = 1;
-                        card.waardeHogerLager = 1;
+                        card.waardeHogerLager = 14;
                         break;
                     case "2.":
                         card.waardeBlackjack = 2;

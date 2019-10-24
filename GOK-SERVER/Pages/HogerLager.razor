@@ -37,7 +37,7 @@
         <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
     </div>
 
-    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@hogerLager.spelerKaart.url" />          
+    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@hogerLager.spelerKaart.url" />
     <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@hogerLager.computerKaart.url" />
 
     <p style="text-align: center;">@hogerLager.resultaat</p>
@@ -51,7 +51,7 @@
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
-    HogerEnLagerDomain.HogerLager hogerLager;
+    HogerLagerDomain.HogerLager hogerLager;
     
     public bool disabled = true;
     public bool laatAllesZien = false;
@@ -86,7 +86,7 @@
 
     public void startSpel()
     {
-        hogerLager = new HogerEnLagerDomain.HogerLager((int)testingNullableDecimal2.Value);
+        hogerLager = new HogerLagerDomain.HogerLager((int)testingNullableDecimal2.Value);
         HuidigeGebruiker.Saldo += hogerLager.StartSpel();
         updateGebruiker();
         toonKaarten = true;

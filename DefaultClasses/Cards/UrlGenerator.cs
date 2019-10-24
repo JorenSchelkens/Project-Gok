@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DefaultClasses
+namespace DefaultClasses.Cards
 {
     public static class UrlGenerator
     {

@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HogerEnLagerDomain
+namespace HogerLagerDomain
 {
 
     public class HogerLager
     {
 
+        public Random random = new Random();
+
+        public List<DefaultClasses.Cards.Card> cards = DefaultClasses.Cards.CardBuilder.BuildCards();
         public DefaultClasses.Cards.Card spelerKaart { get; set; }
         public DefaultClasses.Cards.Card computerKaart { get; set; }
 
         private int ingezetteWaarde { get; set; }
-
-        public Random random = new Random();
-        public string resultaat { get; set }
-        public List<DefaultClasses.Cards.Card> cards = DefaultClasses.Cards.CardBuilder.BuildCards();
+        public string resultaat { get; set; }
 
         public HogerLager(int ingezetteWaarde)
         {
@@ -26,7 +26,6 @@ namespace HogerEnLagerDomain
             genereerSpelerKaart();
             genereerComputerKaart();
             return bepaalWinnaar();
-
         }
         public void genereerSpelerKaart()
         {

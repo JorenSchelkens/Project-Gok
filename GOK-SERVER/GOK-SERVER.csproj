@@ -29,7 +29,7 @@
     <ProjectReference Include="..\CascadingClasses\CascadingClasses.csproj" />
     <ProjectReference Include="..\CrashDomain\CrashDomain.csproj" />
     <ProjectReference Include="..\DefaultClasses\DefaultClasses.csproj" />
-    <ProjectReference Include="..\HogerEnLagerDomain\HogerEnLagerDomain.csproj" />
+    <ProjectReference Include="..\HogerEnLagerDomain\HogerLagerDomain.csproj" />
     <ProjectReference Include="..\RouletteDomain\RouletteDomain.csproj" />
   </ItemGroup>
 

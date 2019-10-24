@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJackDomain", "BlackJac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrashDomain", "CrashDomain\CrashDomain.csproj", "{C81B9776-E7CD-4CD3-B54A-90F7856CEF98}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HogerEnLagerDomain", "HogerEnLagerDomain\HogerEnLagerDomain.csproj", "{223F2E2D-CAE8-4DB1-AE5B-5B5CB1DBAB77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HogerLagerDomain", "HogerEnLagerDomain\HogerLagerDomain.csproj", "{223F2E2D-CAE8-4DB1-AE5B-5B5CB1DBAB77}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RouletteDomain", "RouletteDomain\RouletteDomain.csproj", "{DF59E88A-0D31-4BF2-9FC6-15501740CD39}"
 EndProject
