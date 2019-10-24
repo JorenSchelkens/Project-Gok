@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HogerEnLagerDomain
 {
@@ -6,35 +7,58 @@ namespace HogerEnLagerDomain
     public class HogerLager
     {
 
-        private int eigenKaart { get; set; }
-        private int computerKaart { get; set; }
-        private int hoogsteKaart { get; set; }
+        public DefaultClasses.Cards.Card spelerKaart { get; set; }
+        public DefaultClasses.Cards.Card computerKaart { get; set; }
 
+        private int ingezetteWaarde { get; set; }
 
-        public int BerekenHoogsteKaart()
+        public Random random = new Random();
+        public string resultaat { get; set }
+        public List<DefaultClasses.Cards.Card> cards = DefaultClasses.Cards.CardBuilder.BuildCards();
+
+        public HogerLager(int ingezetteWaarde)
         {
-            if(eigenKaart > computerKaart)
+            this.ingezetteWaarde = ingezetteWaarde;
+        }
+
+        public int StartSpel() {
+
+            genereerSpelerKaart();
+            genereerComputerKaart();
+            return bepaalWinnaar();
+
+        }
+        public void genereerSpelerKaart()
+        {
+            int randomSpelerKaart = random.Next(0, cards.Count);
+            spelerKaart = cards[randomSpelerKaart];
+            cards.RemoveAt(randomSpelerKaart);
+        }
+
+        public void genereerComputerKaart()
+        {
+            do
             {
-                hoogsteKaart = eigenKaart;
-            }
-            else if(eigenKaart == computerKaart)
+                int randomComputerKaart = random.Next(0, cards.Count);
+                computerKaart = cards[randomComputerKaart];
+            } while (computerKaart.waardeHogerLager < 9);
+        }
+
+        public int bepaalWinnaar()
+        {
+
+            if (spelerKaart.waardeHogerLager > computerKaart.waardeHogerLager)
             {
-                hoogsteKaart = eigenKaart;
+                resultaat = "Je hebt gewonnen";
+                return (ingezetteWaarde * 2);
+               
             }
             else
             {
-                hoogsteKaart = computerKaart;
+                resultaat = "Je hebt verloren";
+                return (-ingezetteWaarde);
             }
 
-            return hoogsteKaart;
-
         }
-
-
-
-
-
     }
-
-
 }
