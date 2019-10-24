@@ -23,17 +23,16 @@
     <div style="text-align: center; position: relative; top: 625px;">
         <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
     </div>
-
 }
 
 @if (toonKaarten)
 {
-    
+
     <div style="position: relative; top: 30px;">
         <p style="position: relative; left: 1134.5675px; display: inline-block;">Jouw kaart:</p>
         <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
     </div>
-    
+
     <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@spelerKaart.url" />          
     <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@computerKaart.url" />
 
@@ -90,25 +89,23 @@
         bepaalWinnaar();
 
         toonKaarten = true;
-
     }
 
     public void genereerSpelerKaart()
     {
-        int temp = random.Next(0, cards.Count);
+        int randomSpelerKaart = random.Next(0, cards.Count);
 
-        spelerKaart = cards[temp];
-        cards.RemoveAt(temp);
+        spelerKaart = cards[randomSpelerKaart];
+        cards.RemoveAt(randomSpelerKaart);
     }
 
     public void genereerComputerKaart()
     {
         do
         {
-            int temp2 = random.Next(0, cards.Count);
-            computerKaart = cards[temp2];
+            int randomComputerKaart = random.Next(0, cards.Count);
+            computerKaart = cards[randomComputerKaart];
         } while (computerKaart.waardeHogerLager < 9);
-        
     }
 
     public void bepaalWinnaar()
@@ -127,7 +124,6 @@
         }
 
         cards = DefaultClasses.Cards.CardBuilder.BuildCards();
-
     }
 
     private void updateGebruiker()
