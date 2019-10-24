@@ -30,84 +30,74 @@
 }
 else
 {
-
-    <<<<<<< HEAD
+    <ChartPrimaryXAxis ValueType="Syncfusion.EJ2.Blazor.Charts.ValueType.Category" Minimum="0" Maximum="20" Interval="1"></ChartPrimaryXAxis>
     <EjsChart Title="Status" Width="100%">
 
-        <ChartPrimaryXAxis ValueType="Syncfusion.EJ2.Blazor.Charts.ValueType.Category" Minimum="0" Maximum="20" Interval="1"></ChartPrimaryXAxis>
-        =======
-        @*<EjsChart Title="Status" Width="100%">
+        <ChartPrimaryYAxis RangePadding="ChartRangePadding.None" Minimum="0" Maximum="15"
+                           Interval="1.0">
+            <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+            <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+        </ChartPrimaryYAxis>
+        <EjsDataManager></EjsDataManager>
 
-                    <ChartPrimaryYAxis RangePadding="ChartRangePadding.None" Minimum="0" Maximum="15"
-                                       Interval="1.0">
-                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
-                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
-                    </ChartPrimaryYAxis>
-                    <EjsDataManager ></EjsDataManager>
-            >>>>>>> 75bbb66cac766071f8bb85b337c44bcc31403e1b
+        <ChartSeriesCollection>
+            <ChartSeries DataSource="@CrashGegevens" XName="X" YName="Y" Type="ChartSeriesType.Line">
+            </ChartSeries>
+        </ChartSeriesCollection>
 
-                    <ChartSeriesCollection>
-                        <ChartSeries DataSource="@CrashGegevens" XName="X" YName="Y" Type="ChartSeriesType.Line">
-                        </ChartSeries>
-                    </ChartSeriesCollection>
-            <<<<<<< HEAD
-
-                </EjsChart>
-            =======
-                </EjsChart>*@
-        >>>>>>> 75bbb66cac766071f8bb85b337c44bcc31403e1b
+    </EjsChart>
+}
 
 
-        }
 
-        @code {
+@code {
 
-            decimal? testingNullableDecimal1 = 0;
-            decimal? testingNullableDecimal2 = 0;
+    decimal? testingNullableDecimal1 = 0;
+    decimal? testingNullableDecimal2 = 0;
 
     public CrashDomain.Game Game { get; set; }
 
-        public bool temp = true;
-        public int tempInt = 2;
+    public bool temp = true;
+    public int tempInt = 2;
 
-        protected override void OnInitialized()
+    protected override void OnInitialized()
+    {
+        Game = new Game((int)testingNullableDecimal1.Value);
+    }
+
+    public async void Click()
+    {
+        temp = false;
+
+        Game.totalMultiplier = (double)new Random().Next(10, 15);
+
+        for (double i = 0; i < Game.totalMultiplier; i += 0.01)
         {
-            Game = new Game((int)testingNullableDecimal1.Value);
+            await Task.Delay(50);
+            dataChange(tempInt, Game.VerhoogMultiplier());
+            tempInt++;
+            StateHasChanged();
         }
+    }
 
-        public async void Click()
-        {
-            temp = false;
+    public class ChartData
+    {
+        public int X { get; set; }
+        public double Y { get; set; }
 
-            Game.totalMultiplier = (double)new Random().Next(10, 15);
+    }
 
-            for (double i = 0; i < Game.totalMultiplier; i += 0.01)
-            {
-                await Task.Delay(50);
-                dataChange(tempInt, Game.VerhoogMultiplier());
-                tempInt++;
-                StateHasChanged();
-            }
-        }
-
-        public class ChartData
-        {
-            public int X { get; set; }
-            public double Y { get; set; }
-
-        }
-
-        public List<ChartData> CrashGegevens = new List<ChartData>
+    public List<ChartData> CrashGegevens = new List<ChartData>
 {
         new ChartData { X = 1, Y = 0 },
 
     };
 
-        public void dataChange(int temp, double temp2)
-        {
+    public void dataChange(int temp, double temp2)
+    {
 
-            CrashGegevens.Add(new ChartData { X = temp, Y = temp2 });
+        CrashGegevens.Add(new ChartData { X = temp, Y = temp2 });
 
-        }
+    }
 
-        }
+}
