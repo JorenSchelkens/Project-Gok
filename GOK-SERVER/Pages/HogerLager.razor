@@ -5,23 +5,27 @@
 @if (!spelGestart)
 {
     <div style="text-align: center; position: relative; top: 300px;">
-        <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
+        <MatButton Unelevated="true" OnClick="@toonKnoppen">Start spel</MatButton>
     </div>
 
 }
 
 @if (laatAllesZien)
 {
-    <div style="text-align: center; position: relative; top: 600px;">
-        <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                               @bind-Value=@testingNullableDecimal2
-                               DecimalPlaces=0
-                               Minimum=1 Maximum=@HuidigeGebruiker.Saldo>
-        </MatNumericUpDownField>
-    </div>
+
+    @if(HuidigeGebruiker.Saldo > 0) { 
+
+        <div style="text-align: center; position: relative; top: 600px;">
+            <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                                   @bind-Value=@testingNullableDecimal2
+                                   DecimalPlaces=0
+                                   Minimum=1 Maximum=@HuidigeGebruiker.Saldo>
+            </MatNumericUpDownField>
+        </div>
+    }
 
     <div style="text-align: center; position: relative; top: 625px;">
-        <MatButton Unelevated="true" OnClick="@startSpel2" Disabled="@disabled">Trek kaart</MatButton>
+        <MatButton Unelevated="true" OnClick="@startSpel" Disabled="@disabled">Trek kaart</MatButton>
     </div>
 }
 
@@ -33,29 +37,27 @@
         <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
     </div>
 
-    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@spelerKaart.url" />          
-    <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@computerKaart.url" />
+    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@hogerLager.spelerKaart.url" />          
+    <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@hogerLager.computerKaart.url" />
 
-    <p style="text-align: center;">@resultaat</p>
+    <p style="text-align: center;">@hogerLager.resultaat</p>
 }
 
 @code{
 
+    
     [CascadingParameter]
     public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
+
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
-    List<DefaultClasses.Cards.Card> cards = DefaultClasses.Cards.CardBuilder.BuildCards();
-
-    public Random random = new Random();
-    public DefaultClasses.Cards.Card spelerKaart, computerKaart;
-    public int winst;
+    HogerEnLagerDomain.HogerLager hogerLager;
+    
     public bool disabled = true;
     public bool laatAllesZien = false;
     public bool spelGestart = false;
 
     public bool toonKaarten = false;
-    public String resultaat;
 
     decimal? testingNullableDecimal2 = 0;
 
@@ -63,8 +65,8 @@
     {
         DBConnection = new DefaultClasses.DBConnection();
     }
-
-    public void startSpel()
+   
+    public void toonKnoppen()
     {
         laatAllesZien = true;
         spelGestart = true;
@@ -82,48 +84,12 @@
         }
     }
 
-    public void startSpel2()
+    public void startSpel()
     {
-        genereerSpelerKaart();
-        genereerComputerKaart();
-        bepaalWinnaar();
-
+        hogerLager = new HogerEnLagerDomain.HogerLager((int)testingNullableDecimal2.Value);
+        HuidigeGebruiker.Saldo += hogerLager.StartSpel();
+        updateGebruiker();
         toonKaarten = true;
-    }
-
-    public void genereerSpelerKaart()
-    {
-        int randomSpelerKaart = random.Next(0, cards.Count);
-
-        spelerKaart = cards[randomSpelerKaart];
-        cards.RemoveAt(randomSpelerKaart);
-    }
-
-    public void genereerComputerKaart()
-    {
-        do
-        {
-            int randomComputerKaart = random.Next(0, cards.Count);
-            computerKaart = cards[randomComputerKaart];
-        } while (computerKaart.waardeHogerLager < 9);
-    }
-
-    public void bepaalWinnaar()
-    {
-
-        if (spelerKaart.waardeHogerLager > computerKaart.waardeHogerLager)
-        {
-            HuidigeGebruiker.Saldo += ((int)testingNullableDecimal2.Value * 2);
-            updateGebruiker();
-            resultaat = "Je hebt gewonnen";
-        }
-        else
-        {
-            HuidigeGebruiker.Saldo -= ((int)testingNullableDecimal2.Value);
-            resultaat = "je hebt verloren";
-        }
-
-        cards = DefaultClasses.Cards.CardBuilder.BuildCards();
     }
 
     private void updateGebruiker()
