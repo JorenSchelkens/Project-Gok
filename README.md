@@ -7,3 +7,5 @@ https://docs.microsoft.com/en-us/azure/sql-database/sql-database-design-first-da
 
 https://ej2.syncfusion.com/blazor/documentation/data/getting-started/
 https://ej2.syncfusion.com/blazor/documentation/chart/working-with-data/
+
+https://github.com/mariusmuntean/ChartJs.Blazor
