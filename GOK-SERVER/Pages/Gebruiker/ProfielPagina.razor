@@ -1,10 +1,12 @@
 ﻿@page "/gebruiker/profiel"
 
+    @*Matlayout gebruiken geen tabel*@
+
     <table>
         <tr>
             <td><MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Gebruikersnaam"></MatTextField></td>
-            <td></td>
-            <td><MatButton OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton></td>
+            <td><MatButton style="margin-left: 10px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton></td>
+
             <MatDialog @bind-IsOpen="@dialog1IsOpen">
                 <MatDialogTitle>Geef de nieuwe gebruikersnaam in</MatDialogTitle>
                 <MatDialogContent>
