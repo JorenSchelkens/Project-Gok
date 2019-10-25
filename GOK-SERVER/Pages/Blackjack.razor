@@ -4,7 +4,11 @@
 
 @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
 {
-    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel2">genereer kaart</MatButton>
+    if (!toonkaart)
+    {
+        <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@startSpel2">start ronde</MatButton>
+    }
+
 }
 
 @if (!spelGestart)
@@ -30,9 +34,33 @@
 
 @if (toonkaart)
 {
-    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@spelen">genereer kaart</MatButton>
 
+    foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenDealer)
+    {
+        <img src="@kaart.url" />
+    }
+
+    foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenSpeler)
+    {
+        <img src="@kaart.url" />
+    }
+
+    <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@spelen" Disabled="hit">hit</MatButton>
+    <MatButton Unelevated="true" Style=" position: absolute; left: 1480px; top: 700px;" OnClick="@dealer">stand</MatButton>
 }
+
+@if (checkWinnaar)
+{
+    @if (Game.gewonnen)
+    {
+        <p>Gefeliciteerd, u heeft gewonnen!</p>
+    }
+    else
+    {
+        <p>U heeft verloren, volgende keer beter.</p>
+    }
+}
+
 
 @code{
 
@@ -49,10 +77,15 @@
     public bool start = false;
     public bool toonkaart = false;
     public bool volgendeKaart = false;
+    public bool hit = false;
+    public bool checkWinnaar = false;
+
     public List<int> kaartenSpeler;
     public List<int> kaartenDealer;
+
     public string urlKaartSpeler;
     public string urlKaartDealer;
+
     public double inzet;
 
 
@@ -62,6 +95,7 @@
     protected override void OnInitialized()
     {
         DBConnection = new DefaultClasses.DBConnection();
+        Game = new BlackJackDomain.Game();
     }
 
     public void startSpel()
@@ -82,7 +116,7 @@
         Game.dealer();
         urlKaartDealer = Game.lijstKaartenDealer[1].url;
         start = true;
-
+        toonkaart = true;
     }
 
     public void spelen()
@@ -95,6 +129,12 @@
             urlKaartSpeler = Game.lijstKaartenSpeler[plaatsKaart].url;
             plaatsKaart++;
         }
+    }
+
+    public void dealer()
+    {
+        hit = true;
+
     }
 
     public void checkIngevuldeWaarde()
@@ -113,5 +153,8 @@
     public void winnaar()
     {
         inzet += Game.winnaar();
+        Task.Delay(3000);
+        toonkaart = false;
+        hit = false;
     }
 }
