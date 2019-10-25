@@ -50,7 +50,6 @@ namespace HogerLagerDomain
             {
                 resultaat = "Je hebt gewonnen";
                 return (ingezetteWaarde * 2);
-               
             }
             else
             {
