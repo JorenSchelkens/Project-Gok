@@ -1,47 +1,49 @@
 ﻿@page "/hoger_lager"
-
-<h1 style="text-align: center;">Hoger Lager</h1>
-
-@if (!spelGestart)
-{
-    <div style="text-align: center; position: relative; top: 300px;">
-        <MatButton Unelevated="true" OnClick="@toonKnoppen">Start spel</MatButton>
+    
+    <div style="text-align: center;">
+        <h1 style="display: inline-block;">Hoger Lager</h1>
+        <MatIcon Style="display: inline-block;" Icon="info"></MatIcon>
     </div>
-
-}
-
-@if (laatAllesZien)
-{
-
-    @if(HuidigeGebruiker.Saldo > 0) { 
-
-        <div style="text-align: center; position: relative; top: 600px;">
-            <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                                   @bind-Value=@testingNullableDecimal2
-                                   DecimalPlaces=0
-                                   Minimum=1 Maximum=@HuidigeGebruiker.Saldo>
-            </MatNumericUpDownField>
+    
+    @if (!spelGestart)
+    {
+        <div style="text-align: center; position: relative; top: 300px;">
+            <MatButton Unelevated="true" OnClick="@toonKnoppen">Start spel</MatButton>
         </div>
     }
 
-    <div style="text-align: center; position: relative; top: 625px;">
-        <MatButton Unelevated="true" OnClick="@startSpel" Disabled="@disabled">Trek kaart</MatButton>
-    </div>
-}
+    @if (laatAllesZien)
+    {
 
-@if (toonKaarten)
-{
+        @if(HuidigeGebruiker.Saldo > 0) { 
 
-    <div style="position: relative; top: 30px;">
-        <p style="position: relative; left: 1134.5675px; display: inline-block;">Jouw kaart:</p>
-        <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
-    </div>
+            <div style="text-align: center; position: relative; top: 600px;">
+                <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                                       @bind-Value=@testingNullableDecimal2
+                                       DecimalPlaces=0
+                                       Minimum=1 Maximum=@HuidigeGebruiker.Saldo>
+                </MatNumericUpDownField>
+            </div>
+        }
 
-    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@hogerLager.spelerKaart.url" />
-    <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@hogerLager.computerKaart.url" />
+        <div style="text-align: center; position: relative; top: 625px;">
+            <MatButton Unelevated="true" OnClick="@startSpel" Disabled="@disabled">Trek kaart</MatButton>
+        </div>
+    }
 
-    <p style="text-align: center;">@hogerLager.resultaat</p>
-}
+    @if (toonKaarten)
+    {
+
+        <div style="position: relative; top: 30px;">
+            <p style="position: relative; left: 1134.5675px; display: inline-block;">Jouw kaart:</p>
+            <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
+        </div>
+
+        <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@hogerLager.spelerKaart.url" />
+        <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@hogerLager.computerKaart.url" />
+
+        <p style="text-align: center;">@hogerLager.resultaat</p>
+    }
 
 @code{
 
