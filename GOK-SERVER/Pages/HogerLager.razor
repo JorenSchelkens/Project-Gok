@@ -2,7 +2,11 @@
     
     <div style="text-align: center;">
         <h1 style="display: inline-block;">Hoger Lager</h1>
-        <MatIcon Style="display: inline-block;" Icon="info"></MatIcon>
+        <MatIconButton Style="display: inline-block;" OnClick="@toonInfo" Icon="info"></MatIconButton>
+        @if (toonInfo2)
+        {
+            <p>Welkom bij hoger lager</p>
+        }
     </div>
     
     @if (!spelGestart)
@@ -47,14 +51,16 @@
 
 @code{
 
-    
+
     [CascadingParameter]
     public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     HogerLagerDomain.HogerLager hogerLager;
-    
+
+    public bool toonInfo2 = false;
+
     public bool disabled = true;
     public bool laatAllesZien = false;
     public bool spelGestart = false;
@@ -67,7 +73,19 @@
     {
         DBConnection = new DefaultClasses.DBConnection();
     }
-   
+
+    public void toonInfo()
+    {
+        if (!toonInfo2)
+        {
+            toonInfo2 = true;
+        }
+        else
+        {
+            toonInfo2 = false;
+        }
+    }
+
     public void toonKnoppen()
     {
         laatAllesZien = true;
