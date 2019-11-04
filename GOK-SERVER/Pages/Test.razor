@@ -1,12 +1,125 @@
 ﻿@page "/koen"
 <h1 style="text-align: center;">Roullette</h1>
+<div>
+    <style>
+        img, td {
+            margin: 0px;
+            float: left;
+            border: 0px;
+            padding: 0px;
+        }
+
+        table {
+            border-spacing: 0px;
+            border-collapse: collapse;
+        }
+    </style>
+</div>
+
+
+
+
 @if (knop)
 {
     // afbeeldingen in plaatsen
     // rood
     // zwart
-    <img src="/img/rouletteTafel.jpg" width="500" height="300" @onclick="gok" />
+    <table class="tabel">
+        <tr>
+            <td rowspan="3">
+                <img src="img/roulette/0.jpg" height="300px" width="60px">
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <img src="img/roulette/3.jpg" height="100px" width="60px" style="">
+                            <img src="img/roulette/6.jpg" height="100px" width="60px">
+                            <img src="img/roulette/9.jpg" height="100px" width="60px">
+                            <img src="img/roulette/12.jpg" height="100px" width="60px">
+                            <img src="img/roulette/15.jpg" height="100px" width="60px">
+                            <img src="img/roulette/18.jpg" height="100px" width="60px">
+                            <img src="img/roulette/21.jpg" height="100px" width="60px">
+                            <img src="img/roulette/24.jpg" height="100px" width="60px">
+                            <img src="img/roulette/27.jpg" height="100px" width="60px">
+                            <img src="img/roulette/30.jpg" height="100px" width="60px">
+                            <img src="img/roulette/33.jpg" height="100px" width="60px">
+                            <img src="img/roulette/36.jpg" height="100px" width="60px">
+                            <img src="img/roulette/2to1-1.jpg" height="100px" width="60px">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="img/roulette/2.jpg" height="100px" width="60px">
+                            <img src="img/roulette/5.jpg" height="100px" width="60px">
+                            <img src="img/roulette/8.jpg" height="100px" width="60px">
+                            <img src="img/roulette/11.jpg" height="100px" width="60px">
+                            <img src="img/roulette/14.jpg" height="100px" width="60px">
+                            <img src="img/roulette/17.jpg" height="100px" width="60px">
+                            <img src="img/roulette/20.jpg" height="100px" width="60px">
+                            <img src="img/roulette/23.jpg" height="100px" width="60px">
+                            <img src="img/roulette/26.jpg" height="100px" width="60px">
+                            <img src="img/roulette/29.jpg" height="100px" width="60px">
+                            <img src="img/roulette/32.jpg" height="100px" width="60px">
+                            <img src="img/roulette/35.jpg" height="100px" width="60px">
+                            <img src="img/roulette/2to1-2.jpg" height="100px" width="60px">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="img/roulette/1.jpg" height="100px" width="60px">
+                            <img src="img/roulette/4.jpg" height="100px" width="60px">
+                            <img src="img/roulette/7.jpg" height="100px" width="60px">
+                            <img src="img/roulette/10.jpg" height="100px" width="60px">
+                            <img src="img/roulette/13.jpg" height="100px" width="60px">
+                            <img src="img/roulette/16.jpg" height="100px" width="60px">
+                            <img src="img/roulette/19.jpg" height="100px" width="60px">
+                            <img src="img/roulette/22.jpg" height="100px" width="60px">
+                            <img src="img/roulette/25.jpg" height="100px" width="60px">
+                            <img src="img/roulette/28.jpg" height="100px" width="60px">
+                            <img src="img/roulette/31.jpg" height="100px" width="60px">
+                            <img src="img/roulette/34.jpg" height="100px" width="60px">
+                            <img src="img/roulette/2to1-1.jpg" height="100px" width="60px">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="img/roulette/groeneRuimte.jpg" height="80px" width="60px">
+
+                <img src="img/roulette/1st12.jpg" height="80px" width="240">
+            </td>
+            <td>
+                <img src="img/roulette/2nd12.jpg" height="80px" width="240px">
+            </td>
+            <td>
+                <img src="img/roulette/3rd 12.jpg" height="80px" width="240px">
+            </td>
+            <td>
+                <img src="img/roulette/groeneRuimte.jpg" height="80px" width="60">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="img/roulette/groeneRuimte.jpg" height="80px" width="60px">
+                <img src="img/roulette/1to18.jpg" height="80px" width="120px"><img src="img/roulette/even.jpg" height="80px" width="120px">
+            </td>
+            <td>
+                <img src="img/roulette/zwart.jpg" height="80px" width="120px">
+                <img src="img/roulette/rood.jpg" height="80px" width="120px">
+            </td>
+            <td>
+                <img src="img/roulette/oneven.jpg" height="80px" width="120px">
+                <img src="img/roulette/19 to 36.jpg" height="80px" width="120px">
+                <img src="img/roulette/groeneRuimte.jpg" height="80px" width="60">
+            </td>
+        </tr>
+    </table>
     <p>Standaard uitkomst = 50 --> nieuwe uitkomst = @uitkomst</p>
+            <MatButton Unelevated="true" OnClick="@inzet">Ingezet</MatButton>
+
     if (gok1)
     {
         <MatNumericUpDownField Label="inzet"
@@ -15,7 +128,7 @@
                                Icon="attach_money"
                                Minimum="1" Maximum="100">
         </MatNumericUpDownField>
-        <MatButton OnClick="@gok2" Raised="true">Go!</MatButton>
+        <MatButton Raised="true">Go!</MatButton>
     }
 }
 else
@@ -24,36 +137,23 @@ else
         <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
     </div>
 }
-
 @code{
 
     public bool knop = false;
-    public bool knop1 = false;
     public bool gok1 = false;
     decimal? UpDownField1 = null;
     public int uitkomst = 0;
     //(int)UpDownField1.Value;
 
+    public string stijl3 = "";
+    // string[] arrayStijlen = new string[];
     public RouletteDomain.Game game;
 
     public void startSpel()
     {
         knop = true;
     }
-    public void gok()
-    {
-        gok1 = true;
-    }
-    public void gok2()
-    {
-        List<int> getallen = new List<int>();
-        getallen.Add(50);
+    public void inzet() {
 
-        List<string> titels = new List<string>();
-        titels.Add("even");
-
-        game = new RouletteDomain.Game(titels, getallen);
-
-        uitkomst = game.StartSpel();
     }
 }
