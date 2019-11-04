@@ -1,8 +1,9 @@
 ﻿@page "/crash"
 @using CrashDomain
+@using System.Threading;
 
 <h1 style="text-align: center;"> Crash Gambling </h1>
-<p>@Game.multiplier</p>
+
 
 
 @if (temp)
@@ -30,6 +31,10 @@
 }
 else
 {
+<<<<<<< HEAD
+    <p style="text-align: center; font-size:100px; margin-top:100px;">@Game.multiplier</p>
+    <MatProgressBar Indeterminate="true"></MatProgressBar>
+=======
     <ChartPrimaryXAxis ValueType="Syncfusion.EJ2.Blazor.Charts.ValueType.Category" Minimum="0" Maximum="20" Interval="1"></ChartPrimaryXAxis>
     <EjsChart Title="Status" Width="100px">
 
@@ -46,6 +51,7 @@ else
         </ChartSeriesCollection>
 
     </EjsChart>
+>>>>>>> d94f615efa938cc93f20c85f9e916fb3e0e88ac4
 }
 
 
@@ -62,7 +68,7 @@ else
 
     protected override void OnInitialized()
     {
-        Game = new Game((int)testingNullableDecimal1.Value);
+       /* Game = new Game((int)testingNullableDecimal1.Value);*/
     }
 
     public async void Click()
@@ -71,32 +77,25 @@ else
 
         Game.totalMultiplier = (double)new Random().Next(10, 15);
 
-        for (double i = 0; i < Game.totalMultiplier; i += 0.01)
+
+       /*Timer timer = new TimerCallback(_ =>
         {
-            await Task.Delay(50);
-            dataChange(tempInt, Game.VerhoogMultiplier());
-            tempInt++;
-            StateHasChanged();
-        }
-    }
+            if (game.Time > 0)
+            {
+                game.Time--;
+                Progress -= (1 / (double)DontTapWhiteSetting.Time);
 
-    public class ChartData
-    {
-        public int X { get; set; }
-        public double Y { get; set; }
+                if (game.Time <= 0)
+                {
+                    game.Dies();
+                    StartDisable = false;
+                }
 
-    }
+                this.InvokeAsync(() => this.StateHasChanged());
 
-    public List<ChartData> CrashGegevens = new List<ChartData>
-{
-        new ChartData { X = 1, Y = 0 },
+            }
 
-    };
-
-    public void dataChange(int temp, double temp2)
-    {
-
-        CrashGegevens.Add(new ChartData { X = temp, Y = temp2 });
+        }), null, 1000, 1000);*/
 
     }
 
