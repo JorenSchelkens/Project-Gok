@@ -15,7 +15,7 @@ namespace BlackJackDomain
         public Boolean gewonnen{ get; set; }
         private double inzet{ get; set; }
         private int som { get; set; }
-        private int somDealer { get; set; }
+        public int somDealer { get; set; }
         
         
 
