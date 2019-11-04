@@ -139,10 +139,7 @@
 
         for (int i = 0; i < Game.somDealer; i++)
         {   
-            Game.extraKaart();
-            urlKaartDealer = Game.lijstKaartenDealer[plaatsKaartDealer].url;
-
-            plaatsKaartDealer++;
+            
         }
         checkWinnaar = true;
         winnaar();
@@ -170,5 +167,6 @@
         toonkaart = false;
         this.StateHasChanged();
         checkWinnaar = false;
+        Game.gewonnen = false;
     }
 }
