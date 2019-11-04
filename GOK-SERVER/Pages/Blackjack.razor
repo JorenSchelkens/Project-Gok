@@ -34,15 +34,15 @@
 
 @if (toonkaart)
 {
-
+    
     foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenDealer)
     {
-        <img src="@kaart.url" />
+        <img style= width="9%" height="15%" src="@kaart.url" />
     }
 
     foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenSpeler)
     {
-        <img src="@kaart.url" />
+        <img style= width="9%" height="15%" src="@kaart.url" />
     }
 
     <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@spelen" Disabled="hit">hit</MatButton>
@@ -88,6 +88,9 @@
 
     public double inzet;
 
+    public int plaatsKaart = 2;
+    public int plaatsKaartDealer = 2;
+
 
 
     public BlackJackDomain.Game Game { get; set; }
@@ -121,12 +124,11 @@
 
     public void spelen()
     {
-        int plaatsKaart = 2;
-
         while (volgendeKaart)
         {
             Game.extraKaart();
             urlKaartSpeler = Game.lijstKaartenSpeler[plaatsKaart].url;
+
             plaatsKaart++;
         }
     }
@@ -135,6 +137,15 @@
     {
         hit = true;
 
+        for (int i = 0; i < Game.somDealer; i++)
+        {   
+            Game.extraKaart();
+            urlKaartDealer = Game.lijstKaartenDealer[plaatsKaartDealer].url;
+
+            plaatsKaartDealer++;
+        }
+        checkWinnaar = true;
+        winnaar();
     }
 
     public void checkIngevuldeWaarde()
@@ -150,11 +161,14 @@
         }
     }
 
-    public void winnaar()
+    public async void winnaar()
     {
         inzet += Game.winnaar();
-        Task.Delay(3000);
-        toonkaart = false;
+        await Task.Delay(3000);
         hit = false;
+        start = false;
+        toonkaart = false;
+        this.StateHasChanged();
+        checkWinnaar = false;
     }
 }
