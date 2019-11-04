@@ -6,6 +6,7 @@
         <tr>
             <td><MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Gebruikersnaam"></MatTextField></td>
             <td><MatButton style="margin-left: 10px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton></td>
+            <td><MatButton style="margin-left: 10px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton></td>
 
             <MatDialog @bind-IsOpen="@dialog1IsOpen">
                 <MatDialogTitle>Geef de nieuwe gebruikersnaam in</MatDialogTitle>
@@ -15,6 +16,28 @@
                 <MatDialogActions>
                     <MatButton OnClick="@(e => { dialog1IsOpen = false; })">Cancel</MatButton>
                     <MatButton OnClick="@OkClick1">Submit</MatButton>
+                </MatDialogActions>
+            </MatDialog>
+        </tr>
+        <tr>
+            <MatDialog @bind-IsOpen="@dialog2IsOpen">
+                <MatDialogTitle>Geef je oude wachtwoord in</MatDialogTitle>
+                <MatDialogContent>
+                    <MatTextField @bind-Value="@oudeWachtwoord"></MatTextField>
+                </MatDialogContent>
+                @if (!oudWachtwoordJuisIngegeven)
+                {
+                    <MatDialogContent>
+                        <p style="color: red;">Foute inloggegevens</p>
+                    </MatDialogContent>
+                }
+                <MatDialogTitle>Geef je nieuwe wachtwoord in</MatDialogTitle>
+                <MatDialogContent>
+                    <MatTextField @bind-Value="@nieuwWachtwoord"></MatTextField>
+                </MatDialogContent>
+                <MatDialogActions>
+                    <MatButton OnClick="@(e => { dialog2IsOpen = false; })">Cancel</MatButton>
+                    <MatButton OnClick="@checkWachtwoord">Submit</MatButton>
                 </MatDialogActions>
             </MatDialog>
         </tr>
@@ -32,8 +55,12 @@
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     public bool dialog1IsOpen = false;
+    public bool dialog2IsOpen = false;
 
     public string nieuweGebruikersNaam = null;
+    public bool oudWachtwoordJuisIngegeven = true;
+    public string oudeWachtwoord = null;
+    public string nieuwWachtwoord = null;
 
     protected override void OnInitialized()
     {
@@ -46,10 +73,34 @@
         nieuweGebruikersNaam = null;
     }
 
+    public void veranderWachtwoord()
+    {
+        dialog2IsOpen = true;
+        nieuwWachtwoord = null;
+
+    }
+
+
     public void OkClick1()
     {
         HuidigeGebruiker.Gebruikersnaam = nieuweGebruikersNaam;
         dialog1IsOpen = false;
+    }
+
+    public void checkWachtwoord()
+    {
+
+        if(oudeWachtwoord == HuidigeGebruiker.Wachtwoord)
+        {
+            oudWachtwoordJuisIngegeven = true;
+            HuidigeGebruiker.Wachtwoord = nieuwWachtwoord;
+            dialog2IsOpen = false;
+        }
+        else
+        {
+            oudWachtwoordJuisIngegeven = false;
+        }
+
     }
 
     public void UpdateProfiel()

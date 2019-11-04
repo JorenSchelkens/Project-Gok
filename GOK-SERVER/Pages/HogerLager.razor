@@ -3,12 +3,16 @@
     <div style="text-align: center;">
         <h1 style="display: inline-block;">Hoger Lager</h1>
         <MatIconButton Style="display: inline-block;" OnClick="@toonInfo" Icon="info"></MatIconButton>
-        @if (toonInfo2)
-        {
-            <p>Welkom bij hoger lager</p>
-        }
     </div>
     
+    <MatDialog @bind-IsOpen="@toonInfo2">
+        <MatDialogContent>
+            <p>Druk op 'start spel' om het spel te starten. Kies daarna het bedrag dat je wilt inzetten.
+            Druk daarna op 'trek kaart'. Jouw kaart staat rechts, de kaart van de computer staat links.
+            Diegene die de hoogste kaart heeft wint.</p>
+        </MatDialogContent>
+    </MatDialog>
+   
     @if (!spelGestart)
     {
         <div style="text-align: center; position: relative; top: 300px;">
