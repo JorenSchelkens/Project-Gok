@@ -32,6 +32,17 @@ namespace CrashDomain
             multiplier = seconden;
             multiplier = Math.Round(multiplier, 2);
         }
- 
+           
+        private void genereerRandomGetal()
+        {
+            Random random = new Random();
+            var random1 = new Random().Next(0, 1);
+            var random2 = 0.0;
+
+            if(random1 < 0.6)
+            {
+                random2 = random.NextDouble();
+            }
+        }
     }
 }
