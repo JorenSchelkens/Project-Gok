@@ -30,7 +30,9 @@
 else
 {
     <p style="text-align: center; font-size:100px; margin-top:100px;">@Game.multiplier</p>
-    <MatProgressBar Indeterminate="true"></MatProgressBar>
+    <MatProgressBar Indeterminate="@progressBar"></MatProgressBar>
+    <p style="text-align: center; font-size: 80px; margin-top:200px;">@crash</p>
+
 }
 
 
@@ -43,6 +45,8 @@ else
 
     public bool temp = true;
     public int tempInt = 2;
+    public bool progressBar = true;
+    public String crash = null;
 
     protected override void OnInitialized()
     {
@@ -54,9 +58,7 @@ else
         Game.muntenIngezet = (int)testingNullableDecimal1.Value;
         temp = false;
 
-        Game.totalMultiplier = (double)new Random().Next(10, 15);
         var tempTimerSec = 0.00;
-
 
         Timer timer = null;
         timer = new Timer(new TimerCallback(_ =>
@@ -71,6 +73,13 @@ else
             });
 
             timer.Change(50, 50);
+
+            if (Game.multiplier >= Game.totalMultiplier)
+            {
+                progressBar = false;
+                crash = "Crash";
+                timer.Change(Timeout.Infinite, Timeout.Infinite);
+            }
 
         }), null, 200, 100);
 
