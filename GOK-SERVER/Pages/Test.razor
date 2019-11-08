@@ -16,29 +16,30 @@
     </style>
 </div>
 
-@if (knop) { 
+@if (knop)
+{
     <table class="tabel">
         <tr>
             <td rowspan="3">
-                <img src="img/roulette/0.jpg" style=" height: 100px; width: 60px;" >
+                <img src="img/roulette/0.jpg" style=" height: 300px; width: 60px;">
             </td>
             <td>
                 <table>
                     <tr>
-                        <td >
+                        <td @onclick="() => nummer(3)">
                             <img src="img/roulette/3.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(3)">
                             <img src="img/roulette/6.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(6)">
                             <img src="img/roulette/9.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(9)">
                             <img src="img/roulette/12.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(12)">
                             <img src="img/roulette/15.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(15)">
-                            <img src="img/roulette/18.jpg" style=" height: 100px; width: 60px;"onclick="@nummer(18)">
-                            <img src="img/roulette/21.jpg" style=" height: 100px; width: 60px;"onclick="@nummer(21)">
-                            <img src="img/roulette/24.jpg" style=" height: 100px; width: 60px;"onclick="@nummer(24)">
-                            <img src="img/roulette/27.jpg" style=" height: 100px; width: 60px;"onclick="@nummer(27)">
-                            <img src="img/roulette/30.jpg" style=" height: 100px; width: 60px;"onclick="@nummer(30)">
-                            <img src="img/roulette/33.jpg" style=" height: 100px; width: 60px;"onclick="@nummer(33)">
-                            <img src="img/roulette/36.jpg" style=" height: 100px; width: 60px;"onclick="@nummer(36)">
-                            <img src="img/roulette/2to1-1.jpg" style=" height: 100px; width: 60px;"onclick="">
+                            <img src="img/roulette/18.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(18)">
+                            <img src="img/roulette/21.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(21)">
+                            <img src="img/roulette/24.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(24)">
+                            <img src="img/roulette/27.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(27)">
+                            <img src="img/roulette/30.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(30)">
+                            <img src="img/roulette/33.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(33)">
+                            <img src="img/roulette/36.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(36)">
+                            <img src="img/roulette/2to1-1.jpg" style=" height: 100px; width: 60px;" onclick="">
                         </td>
                     </tr>
                     <tr>
@@ -59,7 +60,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td onclick="@nummer(1)">
                             <img src="img/roulette/1.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(1)">
                             <img src="img/roulette/4.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(4)">
                             <img src="img/roulette/7.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(7)">
@@ -105,14 +106,16 @@
                 <img src="img/roulette/rood.jpg" style=" height: 80px; width: 120px;">
             </td>
             <td>
-                <img src="img/roulette/oneven.jpg" style=" height: 80px; width: 60px;">
-                <img src="img/roulette/19 to 36.jpg" style=" height: 80px; width: 60px;">
+                <img src="img/roulette/oneven.jpg" style=" height: 80px; width: 120px;">
+                <img src="img/roulette/19 to 36.jpg" style=" height: 80px; width: 120px;">
                 <img src="img/roulette/groeneRuimte.jpg" style=" height: 80px; width: 60px;">
             </td>
         </tr>
     </table>
+
     <p>Standaard uitkomst = 50 --> nieuwe uitkomst = @uitkomst</p>
-            <MatButton Unelevated="true" OnClick="@inzet">Ingezet</MatButton>
+    <MatButton Unelevated="true" OnClick="@inzet">Ingezet</MatButton>
+    <p>@getal</p>
 
     if (gok1)
     {
@@ -137,7 +140,10 @@ else
     public bool gok1 = false;
     decimal? UpDownField1 = null;
     public int uitkomst = 0;
+    public int getal = 0;
     //(int)UpDownField1.Value;
+
+    private object e = null;
 
     public string stijl3 = "";
     // string[] arrayStijlen = new string[];
@@ -147,15 +153,17 @@ else
     {
         knop = true;
     }
-    public void inzet() {
+
+    public void inzet()
+    {
 
     }
 
-    public EventCallback nummer(int nummer)
+    public Object nummer(int nummer)
     {
 
+        this.getal = nummer;
+        return null;
 
-
-        return new EventCallback();
     }
 }
