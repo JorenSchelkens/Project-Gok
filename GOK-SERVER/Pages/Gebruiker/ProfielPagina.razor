@@ -23,7 +23,7 @@
             <MatDialog @bind-IsOpen="@dialog2IsOpen">
                 <MatDialogTitle>Geef je oude wachtwoord in</MatDialogTitle>
                 <MatDialogContent>
-                    <MatTextField @bind-Value="@oudeWachtwoord"></MatTextField>
+                    <MatTextField @bind-Value="@oudeWachtwoord" Type="password"></MatTextField>
                 </MatDialogContent>
                 @if (!oudWachtwoordJuisIngegeven)
                 {
@@ -33,7 +33,7 @@
                 }
                 <MatDialogTitle>Geef je nieuwe wachtwoord in</MatDialogTitle>
                 <MatDialogContent>
-                    <MatTextField @bind-Value="@nieuwWachtwoord"></MatTextField>
+                    <MatTextField @bind-Value="@nieuwWachtwoord" Type="password"></MatTextField>
                 </MatDialogContent>
                 <MatDialogActions>
                     <MatButton OnClick="@(e => { dialog2IsOpen = false; })">Cancel</MatButton>
