@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 
 namespace CrashDomain
 {
@@ -9,7 +8,7 @@ namespace CrashDomain
         public double multiplier { get; set; }
         public int muntenIngezet { get; set; }
         public double autoCashOut { get; set; }
-        public double totalMultiplier { get; set; } = 0.0;
+        public double totalMultiplier { get; set; } = 0.00;
         public bool spelGedaan { get; set; } = false;
 
         public Game(int muntenIngezet, double autoCashOut)
@@ -23,10 +22,15 @@ namespace CrashDomain
             this.muntenIngezet = muntenIngezet;
         }
 
+        public Game()
+        {
+            
+        }
+
         public void VerhoogMultiplier(double seconden)
         {
-            multiplier = Math.Pow(1.4, seconden) - 1;
-            multiplier = Math.Round(multiplier, 3);
+            multiplier = seconden;
+            multiplier = Math.Round(multiplier, 2);
         }
  
     }
