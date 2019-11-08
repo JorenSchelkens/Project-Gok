@@ -4,8 +4,6 @@
 
 <h1 style="text-align: center;"> Crash Gambling </h1>
 
-
-
 @if (temp)
 {
     <div style="text-align: center; top: 600px;">
@@ -31,27 +29,8 @@
 }
 else
 {
-<<<<<<< HEAD
     <p style="text-align: center; font-size:100px; margin-top:100px;">@Game.multiplier</p>
     <MatProgressBar Indeterminate="true"></MatProgressBar>
-=======
-    <ChartPrimaryXAxis ValueType="Syncfusion.EJ2.Blazor.Charts.ValueType.Category" Minimum="0" Maximum="20" Interval="1"></ChartPrimaryXAxis>
-    <EjsChart Title="Status" Width="100px">
-
-        <ChartPrimaryYAxis RangePadding="ChartRangePadding.None" Minimum="0" Maximum="15"
-                           Interval="1.0">
-            <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
-            <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
-        </ChartPrimaryYAxis>
-        <EjsDataManager></EjsDataManager>
-
-        <ChartSeriesCollection>
-            <ChartSeries DataSource="@CrashGegevens" XName="X" YName="Y" Type="ChartSeriesType.Line">
-            </ChartSeries>
-        </ChartSeriesCollection>
-
-    </EjsChart>
->>>>>>> d94f615efa938cc93f20c85f9e916fb3e0e88ac4
 }
 
 
@@ -68,34 +47,24 @@ else
 
     protected override void OnInitialized()
     {
-       /* Game = new Game((int)testingNullableDecimal1.Value);*/
+        Game = new Game((int)testingNullableDecimal1.Value);
     }
 
-    public async void Click()
+    public void Click()
     {
         temp = false;
 
         Game.totalMultiplier = (double)new Random().Next(10, 15);
 
-
-       /*Timer timer = new TimerCallback(_ =>
+        Timer timer = new Timer(new TimerCallback(_ =>
         {
-            if (game.Time > 0)
+            
+            InvokeAsync(() =>
             {
-                game.Time--;
-                Progress -= (1 / (double)DontTapWhiteSetting.Time);
+                StateHasChanged();
+            });
 
-                if (game.Time <= 0)
-                {
-                    game.Dies();
-                    StartDisable = false;
-                }
-
-                this.InvokeAsync(() => this.StateHasChanged());
-
-            }
-
-        }), null, 1000, 1000);*/
+        }), null, 450, 200);
 
     }
 

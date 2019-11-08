@@ -9,7 +9,7 @@ namespace CrashDomain
         public double multiplier { get; set; }
         public int muntenIngezet { get; set; }
         public double autoCashOut { get; set; }
-        public double totalMultiplier { get; set; }
+        public double totalMultiplier { get; set; } = 0.0;
         public bool spelGedaan { get; set; } = false;
 
         public Game(int muntenIngezet, double autoCashOut)
