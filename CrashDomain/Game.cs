@@ -24,7 +24,7 @@ namespace CrashDomain
 
         public Game()
         {
-            
+
         }
 
         public void VerhoogMultiplier(double seconden)
@@ -32,16 +32,32 @@ namespace CrashDomain
             multiplier = seconden;
             multiplier = Math.Round(multiplier, 2);
         }
-           
+
         private void genereerRandomGetal()
         {
             Random random = new Random();
-            var random1 = new Random().Next(0, 1);
-            var random2 = 0.0;
+            var random1 = random.NextDouble();
+            var winst = 0.0;
 
-            if(random1 < 0.6)
+            if (random1 < 0.7)
             {
-                random2 = random.NextDouble();
+                winst = random.Next(400000, 600000); // * inzet
+
+            }
+            else if (random1 < 0.90)
+            {
+                winst = random.NextDouble(); // * inzet
+
+            }
+            else if (random1 < 0.95)
+            {
+                winst = random.NextDouble(); // * inzet
+
+            }
+            else
+            {
+                winst = random.NextDouble(); // * inzet
+
             }
         }
     }
