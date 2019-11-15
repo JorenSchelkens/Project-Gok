@@ -53,35 +53,29 @@ else
         Game = new Game();
     }
 
-    public void Click()
+    public async void Click()
     {
         Game.muntenIngezet = (int)testingNullableDecimal1.Value;
         temp = false;
 
-        var tempTimerSec = 0.00;
+        double i = 0.00;
 
-        Timer timer = null;
-        timer = new Timer(new TimerCallback(_ =>
+        while(i + 0.01 <= Game.totalMultiplier)
         {
 
-            tempTimerSec += 0.01;
-            Game.VerhoogMultiplier(tempTimerSec);
+            Game.VerhoogMultiplier(i);
+            this.StateHasChanged();
 
-            InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
+            await Task.Delay(Game.delay);
 
-            timer.Change(50, 50);
+            i += 0.01;
 
-            if (Game.multiplier >= Game.totalMultiplier)
-            {
-                progressBar = false;
-                crash = "Crash";
-                timer.Change(Timeout.Infinite, Timeout.Infinite);
-            }
+        }
 
-        }), null, 200, 100);
+        progressBar = false;
+        crash = "Crash";
+
+        this.StateHasChanged();
 
     }
 
