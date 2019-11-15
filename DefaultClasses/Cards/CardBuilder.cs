@@ -19,6 +19,7 @@ namespace DefaultClasses.Cards
                 var randomGetal = new Random().Next(0, urls.Count);
 
                 card.url = urls[randomGetal];
+                card.urlAchterKant = "img/Kaarten/Back/back.png";
 
                 //13
 
