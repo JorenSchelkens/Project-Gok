@@ -21,7 +21,7 @@
 
 @if (laatZien)
 {
-    <div style="text-align: center; position: relative; top: 600px;">
+    <div style="text-align: center; position: relative;">
         <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
                                @bind-Value=@testingNullableDecimal2
                                DecimalPlaces=0
@@ -34,7 +34,7 @@
 
 @if (toonkaart)
 {
-    
+
     foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenDealer)
     {
         <img style= width="9%" height="15%" src="@kaart.url" />
@@ -42,11 +42,13 @@
 
     foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenSpeler)
     {
-        <img style= width="9%" height="15%" src="@kaart.url" />
+        <img style="position:center" width="9%" height="15%" src="@kaart.url" />
     }
 
+
+
     <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 700px;" OnClick="@spelen" Disabled="hit">hit</MatButton>
-    <MatButton Unelevated="true" Style=" position: absolute; left: 1480px; top: 700px;" OnClick="@dealer">stand</MatButton>
+    <MatButton Unelevated="true" Style=" position: absolute; left: 1480px; top: 700px;" OnClick="@dealer" Disabled="stand">stand</MatButton>
 }
 
 @if (checkWinnaar)
@@ -59,6 +61,8 @@
     {
         <p>U heeft verloren, volgende keer beter.</p>
     }
+
+    
 }
 
 
@@ -79,6 +83,7 @@
     public bool volgendeKaart = false;
     public bool hit = false;
     public bool checkWinnaar = false;
+    public bool stand = false;
 
     public List<int> kaartenSpeler;
     public List<int> kaartenDealer;
@@ -130,19 +135,20 @@
             urlKaartSpeler = Game.lijstKaartenSpeler[plaatsKaart].url;
 
             plaatsKaart++;
+
         }
     }
 
     public void dealer()
     {
         hit = true;
-
+        stand = true;
         for (int i = 0; i < Game.somDealer; i++)
-        {   
-            
+        {
+
         }
+        Game.winnaar();
         checkWinnaar = true;
-        winnaar();
     }
 
     public void checkIngevuldeWaarde()
@@ -165,8 +171,9 @@
         hit = false;
         start = false;
         toonkaart = false;
-        this.StateHasChanged();
         checkWinnaar = false;
         Game.gewonnen = false;
+        stand = false;
+        this.StateHasChanged();
     }
 }
