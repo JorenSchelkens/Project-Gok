@@ -37,7 +37,7 @@
         <MatDialog @bind-IsOpen="@dialog2IsOpen">
             <MatDialogTitle>Geef je oude wachtwoord in</MatDialogTitle>
             <MatDialogContent>
-                <MatTextField @bind-Value="@oudeWachtwoord" Type="password"></MatTextField>
+                <MatTextField Required="true" @bind-Value="@oudeWachtwoord" Type="password"></MatTextField>
             </MatDialogContent>
             @if (!oudWachtwoordJuisIngegeven)
             {
@@ -47,7 +47,7 @@
             }
             <MatDialogTitle>Geef je nieuwe wachtwoord in</MatDialogTitle>
             <MatDialogContent>
-                <MatTextField @bind-Value="@nieuwWachtwoord" Type="password"></MatTextField>
+                <MatTextField Required="true" @bind-Value="@nieuwWachtwoord" Type="password"></MatTextField>
             </MatDialogContent>
             <MatDialogActions>
                 <MatButton OnClick="@(e => { dialog2IsOpen = false; })">Cancel</MatButton>
@@ -69,7 +69,7 @@
         <MatDialog @bind-IsOpen="@dialog3IsOpen">
             <MatDialogTitle>Geef het nieuwe email adres in</MatDialogTitle>
             <MatDialogContent>
-                <MatTextField @bind-Value="@nieuwEmail"></MatTextField>
+                <MatTextField Required="true" Type="email" @bind-Value="@nieuwEmail"></MatTextField>
             </MatDialogContent>
             <MatDialogActions>
                 <MatButton OnClick="@(e => { dialog3IsOpen = false; })">Cancel</MatButton>
@@ -127,7 +127,8 @@
 
     public void veranderEmail()
     {
-
+        dialog3IsOpen = true;
+        nieuwEmail = null;
     }
 
     public void OkClick1()
@@ -154,7 +155,8 @@
 
     public void OkClick3()
     {
-
+        HuidigeGebruiker.Email = nieuwEmail;
+        dialog3IsOpen = false;
     }
 
     public void UpdateProfiel()
