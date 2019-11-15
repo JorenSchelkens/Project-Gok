@@ -1,52 +1,92 @@
 ﻿@page "/gebruiker/profiel"
 
-    @*Matlayout gebruiken geen tabel*@
+<div class="mat-layout-grid mat-layout-grid-align-left">
+    <div class="mat-layout-grid-inner">
 
-    <table>
-        <tr>
-            <td><MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Gebruikersnaam"></MatTextField></td>
-            <td><MatButton style="margin-left: 10px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton></td>
-            <td><MatButton style="margin-left: 10px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton></td>
+        @* Deel 1 *@
 
-            <MatDialog @bind-IsOpen="@dialog1IsOpen">
-                <MatDialogTitle>Geef de nieuwe gebruikersnaam in</MatDialogTitle>
-                <MatDialogContent>
-                    <MatTextField @bind-Value="@nieuweGebruikersNaam"></MatTextField>
-                </MatDialogContent>
-                <MatDialogActions>
-                    <MatButton OnClick="@(e => { dialog1IsOpen = false; })">Cancel</MatButton>
-                    <MatButton OnClick="@OkClick1">Submit</MatButton>
-                </MatDialogActions>
-            </MatDialog>
-        </tr>
-        <tr>
-            <MatDialog @bind-IsOpen="@dialog2IsOpen">
-                <MatDialogTitle>Geef je oude wachtwoord in</MatDialogTitle>
-                <MatDialogContent>
-                    <MatTextField @bind-Value="@oudeWachtwoord" Type="password"></MatTextField>
-                </MatDialogContent>
-                @if (!oudWachtwoordJuisIngegeven)
-                {
-                    <MatDialogContent>
-                        <p style="color: red;">Foute inloggegevens</p>
-                    </MatDialogContent>
-                }
-                <MatDialogTitle>Geef je nieuwe wachtwoord in</MatDialogTitle>
-                <MatDialogContent>
-                    <MatTextField @bind-Value="@nieuwWachtwoord" Type="password"></MatTextField>
-                </MatDialogContent>
-                <MatDialogActions>
-                    <MatButton OnClick="@(e => { dialog2IsOpen = false; })">Cancel</MatButton>
-                    <MatButton OnClick="@checkWachtwoord">Submit</MatButton>
-                </MatDialogActions>
-            </MatDialog>
-        </tr>
-    </table>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            <MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Gebruikersnaam" FullWidth="true"></MatTextField>
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+            <MatButton Style="height: 50px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton>
+        </div>
 
-    <p>
-        <br /> <br />
-        <MatButton OnClick="@UpdateProfiel" Raised="true">Update profiel</MatButton>
-    </p>
+        <MatDialog @bind-IsOpen="@dialog1IsOpen">
+            <MatDialogTitle>Geef de nieuwe gebruikersnaam in</MatDialogTitle>
+            <MatDialogContent>
+                <MatTextField @bind-Value="@nieuweGebruikersNaam"></MatTextField>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { dialog1IsOpen = false; })">Cancel</MatButton>
+                <MatButton OnClick="@OkClick1">Submit</MatButton>
+            </MatDialogActions>
+        </MatDialog>
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
+        @* Deel 2 *@
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            <MatTextField Type="password" ReadOnly="true" Value="@HuidigeGebruiker.Wachtwoord" FullWidth="true"></MatTextField>
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+            <MatButton Style="height: 50px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton>
+        </div>
+
+        <MatDialog @bind-IsOpen="@dialog2IsOpen">
+            <MatDialogTitle>Geef je oude wachtwoord in</MatDialogTitle>
+            <MatDialogContent>
+                <MatTextField Required="true" @bind-Value="@oudeWachtwoord" Type="password"></MatTextField>
+            </MatDialogContent>
+            @if (!oudWachtwoordJuisIngegeven)
+            {
+                <MatDialogContent>
+                    <p style="color: red;">Foute inloggegevens</p>
+                </MatDialogContent>
+            }
+            <MatDialogTitle>Geef je nieuwe wachtwoord in</MatDialogTitle>
+            <MatDialogContent>
+                <MatTextField Required="true" @bind-Value="@nieuwWachtwoord" Type="password"></MatTextField>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { dialog2IsOpen = false; })">Cancel</MatButton>
+                <MatButton OnClick="@OkClick2">Submit</MatButton>
+            </MatDialogActions>
+        </MatDialog>
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
+        @* Deel 3 *@
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            <MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Email" FullWidth="true"></MatTextField>
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+            <MatButton Style="height: 50px;" OnClick="@veranderEmail" Raised="true">Verander Email</MatButton>
+        </div>
+
+        <MatDialog @bind-IsOpen="@dialog3IsOpen">
+            <MatDialogTitle>Geef het nieuwe email adres in</MatDialogTitle>
+            <MatDialogContent>
+                <MatTextField Required="true" Type="email" @bind-Value="@nieuwEmail"></MatTextField>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { dialog3IsOpen = false; })">Cancel</MatButton>
+                <MatButton OnClick="@OkClick3">Submit</MatButton>
+            </MatDialogActions>
+        </MatDialog>
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
+
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+            <MatButton Style="height: 50px;" OnClick="@UpdateProfiel" Raised="true">Update profiel</MatButton>
+        </div>
+
+    </div>
+</div>
 
 @code{
 
@@ -56,11 +96,16 @@
 
     public bool dialog1IsOpen = false;
     public bool dialog2IsOpen = false;
+    public bool dialog3IsOpen = false;
+
+    public bool oudWachtwoordJuisIngegeven = true;
 
     public string nieuweGebruikersNaam = null;
-    public bool oudWachtwoordJuisIngegeven = true;
+    public string nieuwEmail = null;
+
     public string oudeWachtwoord = null;
     public string nieuwWachtwoord = null;
+
 
     protected override void OnInitialized()
     {
@@ -80,6 +125,11 @@
 
     }
 
+    public void veranderEmail()
+    {
+        dialog3IsOpen = true;
+        nieuwEmail = null;
+    }
 
     public void OkClick1()
     {
@@ -87,10 +137,10 @@
         dialog1IsOpen = false;
     }
 
-    public void checkWachtwoord()
+    public void OkClick2()
     {
 
-        if(oudeWachtwoord == HuidigeGebruiker.Wachtwoord)
+        if (oudeWachtwoord == HuidigeGebruiker.Wachtwoord)
         {
             oudWachtwoordJuisIngegeven = true;
             HuidigeGebruiker.Wachtwoord = nieuwWachtwoord;
@@ -101,6 +151,12 @@
             oudWachtwoordJuisIngegeven = false;
         }
 
+    }
+
+    public void OkClick3()
+    {
+        HuidigeGebruiker.Email = nieuwEmail;
+        dialog3IsOpen = false;
     }
 
     public void UpdateProfiel()

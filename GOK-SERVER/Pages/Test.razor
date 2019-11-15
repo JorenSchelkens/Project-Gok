@@ -7,6 +7,7 @@
             float: left;
             border: 0px;
             padding: 0px;
+            object-fit: cover;
         }
 
         table {
@@ -15,155 +16,237 @@
         }
     </style>
 </div>
-
 @if (knop)
-{
-    <table class="tabel">
-        <tr>
-            <td rowspan="3">
-                <img src="img/roulette/0.jpg" style=" height: 300px; width: 60px;">
-            </td>
-            <td>
-                <table>
-                    <tr>
-                        <td @onclick="() => nummer(3)">
-                            <img src="img/roulette/3.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(3)">
-                            <img src="img/roulette/6.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(6)">
-                            <img src="img/roulette/9.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(9)">
-                            <img src="img/roulette/12.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(12)">
-                            <img src="img/roulette/15.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(15)">
-                            <img src="img/roulette/18.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(18)">
-                            <img src="img/roulette/21.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(21)">
-                            <img src="img/roulette/24.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(24)">
-                            <img src="img/roulette/27.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(27)">
-                            <img src="img/roulette/30.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(30)">
-                            <img src="img/roulette/33.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(33)">
-                            <img src="img/roulette/36.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(36)">
-                            <img src="img/roulette/2to1-1.jpg" style=" height: 100px; width: 60px;" onclick="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="img/roulette/2.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(2)">
-                            <img src="img/roulette/5.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(5)">
-                            <img src="img/roulette/8.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(8)">
-                            <img src="img/roulette/11.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(11)">
-                            <img src="img/roulette/14.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(14)">
-                            <img src="img/roulette/17.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(17)">
-                            <img src="img/roulette/20.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(20)">
-                            <img src="img/roulette/23.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(23)">
-                            <img src="img/roulette/26.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(26)">
-                            <img src="img/roulette/29.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(29)">
-                            <img src="img/roulette/32.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(32)">
-                            <img src="img/roulette/35.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(35)">
-                            <img src="img/roulette/2to1-2.jpg" style=" height: 100px; width: 60px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td onclick="@nummer(1)">
-                            <img src="img/roulette/1.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(1)">
-                            <img src="img/roulette/4.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(4)">
-                            <img src="img/roulette/7.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(7)">
-                            <img src="img/roulette/10.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(10)">
-                            <img src="img/roulette/13.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(13)">
-                            <img src="img/roulette/16.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(16)">
-                            <img src="img/roulette/19.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(19)">
-                            <img src="img/roulette/22.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(22)">
-                            <img src="img/roulette/25.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(25)">
-                            <img src="img/roulette/28.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(28)">
-                            <img src="img/roulette/31.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(31)">
-                            <img src="img/roulette/34.jpg" style=" height: 100px; width: 60px;" onclick="@nummer(34)">
-                            <img src="img/roulette/2to1-1.jpg" style=" height: 100px; width: 60px;">
-                        </td>
+{   
+            <table class="tabel">
+                <tr>
+                    <td rowspan="3">
+                        <img src="img/roulette/0.jpg" style=" height: 300px; width: 60px;">
+                    </td>
+                    <td>
+                        <!--<table>-->
+                        <tr>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/3.jpg" onclick="@nummer(3)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/6.jpg" onclick="@nummer(6)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/9.jpg" onclick="@nummer(9)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/12.jpg" onclick="@nummer(12)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/15.jpg" onclick="@nummer(15)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/18.jpg" onclick="@nummer(18)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/21.jpg" onclick="@nummer(21)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/24.jpg" onclick="@nummer(24)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/27.jpg" onclick="@nummer(27)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/30.jpg" onclick="@nummer(30)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/33.jpg" onclick="@nummer(33)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/36.jpg" onclick="@nummer(36)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img style=" height: 100px; width: 60px;" src="img/roulette/2to1-1.jpg" onclick="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/2.jpg" onclick="@nummer(2)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/5.jpg" onclick="@nummer(5)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/8.jpg" onclick="@nummer(8)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/11.jpg" onclick="@nummer(11)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/14.jpg" onclick="@nummer(14)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/17.jpg" onclick="@nummer(17)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/20.jpg" onclick="@nummer(20)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/23.jpg" onclick="@nummer(23)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/26.jpg" onclick="@nummer(26)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/29.jpg" onclick="@nummer(29)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/32.jpg" onclick="@nummer(32)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/35.jpg" onclick="@nummer(35)">
+                                </td>
+                                <td>
+                                    <img style=" height: 100px; width: 60px;" src="img/roulette/2to1-2.jpg">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/1.jpg" onclick="@nummer(1)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/4.jpg" onclick="@nummer(4)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/7.jpg" onclick="@nummer(7)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/10.jpg" onclick="@nummer(10)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/13.jpg" onclick="@nummer(13)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/16.jpg" onclick="@nummer(16)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/19.jpg" onclick="@nummer(19)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/22.jpg" onclick="@nummer(22)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/25.jpg" onclick="@nummer(25)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/28.jpg" onclick="@nummer(28)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/31.jpg" onclick="@nummer(31)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img src="img/roulette/34.jpg" onclick="@nummer(34)">
+                                </td>
+                                <td style=" height: 100px; width: 60px;">
+                                    <img style=" height: 100px; width: 60px;" src="img/roulette/2to1-1.jpg">
+                                </td>
+                            </tr>
+                            <!--</table>-->
+                    </td>
+                </tr>
+                <tr>
+                    <td style=" height: 80px; width: 60px;">
+                        <img src="img/roulette/groeneRuimte.jpg" style="height: 80px; width: 240px">
+                    </td>
+                    <td style=" height: 80px; width: 240px;">
+                        <img src="img/roulette/1st12.jpg" style="height: 80px; width: 240px">
+                    </td>
+                    <td style=" height: 80px; width: 240px;">
+                        <img src="img/roulette/2nd12.jpg" style="height: 80px; width: 240px">
+                    </td>
+                    <td style=" height: 80px; width: 240px;">
+                        <img src="img/roulette/3rd 12.jpg" style="height: 80px; width: 240px">
+                    </td>
+                    <td style=" height: 80px; width: 60px;">
+                        <img src="img/roulette/groeneRuimte.jpg" style="height: 80px; width: 60px">
+                    </td>
+                </tr>
+                <tr>
+                    <td style=" height: 80px; width: 60px;">
+                        <img src="img/roulette/groeneRuimte.jpg" >
+                    </td>
+                    <td style=" height: 80px; width: 120px;">
+                        <img src="img/roulette/1to18.jpg">
+                    </td>
+                    <td style=" height: 80px; width: 120px;">
+                        <img src="img/roulette/even.jpg">
+                    </td>
+                    <td style=" height: 80px; width: 120px;">
+                        <img src="img/roulette/zwart.jpg">
+                    </td>
+                    <td >
+                        <img style=" height: 78px; width: 120px;" src="img/roulette/rood.jpg" /> 
+                    </td>
+                    <td style=" height: 80px; width: 120px;">
+                        <img src="img/roulette/oneven.jpg" >
+                    </td>
+                    <td style=" height: 80px; width: 120px">
+                        <img src="img/roulette/19 to 36.jpg" >
+                    </td>
+                    <td style=" height: 80px; width: 60px;" >
+                        <img src="img/roulette/groeneRuimte.jpg" style="height: 78px; width: 60px" >
+                    </td>
+                </tr>
+            </table>
+            
+            <p>Standaard uitkomst = 50 --> nieuwe uitkomst = @uitkomst</p>
+            <MatButton Unelevated="true" OnClick="@inzet">Ingezet</MatButton>
+            <p>@getal</p>
 
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="img/roulette/groeneRuimte.jpg" style=" height: 80px; width: 60px;">
+            if (gok1)
+            {
+            <MatNumericUpDownField Label="inzet"
+                                   @bind-Value=@UpDownField1
+                                   DecimalPlaces=0
+                                   Icon="attach_money"
+                                   Minimum="1" Maximum="100">
+            </MatNumericUpDownField>
+            <MatButton Raised="true">Go!</MatButton>
+            }
+            }
+            else
+            {
+            <div style="text-align: center; position: relative; top: 300px;">
+                <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
+            </div>
+            }
+            @code{
 
-                <img src="img/roulette/1st12.jpg" style=" height: 80px; width: 240px;">
-            </td>
-            <td>
-                <img src="img/roulette/2nd12.jpg" style=" height: 80px; width: 240px;">
-            </td>
-            <td>
-                <img src="img/roulette/3rd 12.jpg" style=" height: 80px; width: 240px;">
-            </td>
-            <td>
-                <img src="img/roulette/groeneRuimte.jpg" style=" height: 80px; width: 60px;">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="img/roulette/groeneRuimte.jpg" style=" height: 80px; width: 60px;">
-                <img src="img/roulette/1to18.jpg" style=" height: 80px; width: 120px;"><img src="img/roulette/even.jpg" style=" height: 80px; width: 120px;">
-            </td>
-            <td>
-                <img src="img/roulette/zwart.jpg" style=" height: 80px; width: 120px;">
-                <img src="img/roulette/rood.jpg" style=" height: 80px; width: 120px;">
-            </td>
-            <td>
-                <img src="img/roulette/oneven.jpg" style=" height: 80px; width: 120px;">
-                <img src="img/roulette/19 to 36.jpg" style=" height: 80px; width: 120px;">
-                <img src="img/roulette/groeneRuimte.jpg" style=" height: 80px; width: 60px;">
-            </td>
-        </tr>
-    </table>
+        public bool knop = false;
+            public bool gok1 = false;
+            decimal? UpDownField1 = null;
+            public int uitkomst = 0;
+            public int getal = 0;
+            //(int)UpDownField1.Value;
 
-    <p>Standaard uitkomst = 50 --> nieuwe uitkomst = @uitkomst</p>
-    <MatButton Unelevated="true" OnClick="@inzet">Ingezet</MatButton>
-    <p>@getal</p>
+            private object e = null;
 
-    if (gok1)
-    {
-        <MatNumericUpDownField Label="inzet"
-                               @bind-Value=@UpDownField1
-                               DecimalPlaces=0
-                               Icon="attach_money"
-                               Minimum="1" Maximum="100">
-        </MatNumericUpDownField>
-        <MatButton Raised="true">Go!</MatButton>
-    }
-}
-else
-{
-    <div style="text-align: center; position: relative; top: 300px;">
-        <MatButton Unelevated="true" OnClick="@startSpel">Start spel</MatButton>
-    </div>
-}
-@code{
+            public string stijl3 = "";
+            // string[] arrayStijlen = new string[];
+            public RouletteDomain.Game game;
 
-    public bool knop = false;
-    public bool gok1 = false;
-    decimal? UpDownField1 = null;
-    public int uitkomst = 0;
-    public int getal = 0;
-    //(int)UpDownField1.Value;
+            public void startSpel()
+            {
+                knop = true;
+            }
 
-    private object e = null;
+            public void inzet()
+            {
 
-    public string stijl3 = "";
-    // string[] arrayStijlen = new string[];
-    public RouletteDomain.Game game;
+            }
 
-    public void startSpel()
-    {
-        knop = true;
-    }
+            public Object nummer(int nummer)
+            {
 
-    public void inzet()
-    {
+                this.getal = nummer;
+                return null;
 
-    }
-
-    public Object nummer(int nummer)
-    {
-
-        this.getal = nummer;
-        return null;
-
-    }
-}
+            }
+            }

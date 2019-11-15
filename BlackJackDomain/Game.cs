@@ -31,49 +31,6 @@ namespace BlackJackDomain
         {
 
         }
-        
-        public void beginSpel()
-        {
-            int temp = rand.Next(0, cards.Count);
-            Card huidigeKaart = cards[temp];
-            if (huidigeKaart.waardeBlackjack == 1)
-            {
-                huidigeKaart.waardeBlackjack = 11;
-            }
-            som += huidigeKaart.waardeBlackjack;
-            lijstKaartenSpeler.Add(huidigeKaart);
-            huidigeKaart.waardeBlackjack = rand.Next(1, 10);
-            if (huidigeKaart.waardeBlackjack == 1)
-            {
-                huidigeKaart.waardeBlackjack = 11;
-            }
-            som += huidigeKaart.waardeBlackjack;
-            lijstKaartenSpeler.Add(huidigeKaart);
-            if (som == 21)
-            {
-                gewonnen = true;
-            }
-
-            huidigeKaart.waardeBlackjack = rand.Next(1, 10);
-            if (huidigeKaart.waardeBlackjack == 1)
-            {
-                huidigeKaart.waardeBlackjack = 11;
-            }
-            somDealer += huidigeKaart.waardeBlackjack;
-            lijstKaartenDealer.Add(huidigeKaart);
-            huidigeKaart.waardeBlackjack = rand.Next(1, 10);
-            if (huidigeKaart.waardeBlackjack == 1)
-            {
-                huidigeKaart.waardeBlackjack = 11;
-            }
-            somDealer += huidigeKaart.waardeBlackjack;
-            lijstKaartenDealer.Add(huidigeKaart);
-            if (somDealer == 21)
-            {
-                gewonnen = false;
-            }
-
-        }
 
         public int extraKaart()
         {
