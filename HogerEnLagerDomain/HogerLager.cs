@@ -36,11 +36,8 @@ namespace HogerLagerDomain
 
         public void genereerComputerKaart()
         {
-            do
-            {
-                int randomComputerKaart = random.Next(0, cards.Count);
-                computerKaart = cards[randomComputerKaart];
-            } while (computerKaart.waardeHogerLager < 9);
+            int randomComputerKaart = random.Next(0, cards.Count);
+            computerKaart = cards[randomComputerKaart];
         }
 
         public int bepaalWinnaar()
