@@ -1,11 +1,11 @@
 ﻿@page "/hoger_lager"
 
 <div style="text-align: center;">
-    <h1 style="display: inline-block;">Hoger Lager</h1>
-    <MatIconButton Style="display: inline-block;" OnClick="@toonInfo" Icon="info"></MatIconButton>
+    <h1 style="display: inline-block;"><label for="info">Hoger Lager</label></h1>
+    <MatIconButton OnClick="@veranderStatusInfo" Id="info" Icon="info"></MatIconButton>
 </div>
 
-<MatDialog @bind-IsOpen="@toonInfo2">
+<MatDialog @bind-IsOpen="@toonInfo">
     <MatDialogContent>
         <p>
             Druk op 'start spel' om het spel te starten. Kies daarna het bedrag dat je wilt inzetten.
@@ -15,60 +15,29 @@
     </MatDialogContent>
 </MatDialog>
 
-@if (!spelGestart)
-{
-    <div style="text-align: center; position: relative; top: 300px;">
-        <MatButton Unelevated="true" OnClick="@toonKnoppen">Start spel</MatButton>
-    </div>
-}
-
-@if (laatAllesZien)
-{
-
-    @if (HuidigeGebruiker.Saldo > 0)
-    {
-
-        <div style="text-align: center; position: relative; top: 600px;">
-            <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                                   @bind-Value=@testingNullableDecimal2
-                                   DecimalPlaces=0
-                                   Minimum=1 Maximum=@HuidigeGebruiker.Saldo>
-            </MatNumericUpDownField>
-        </div>
-    }
-
-    <div style="text-align: center; position: relative; top: 625px;">
-        <MatButton Unelevated="true" OnClick="@startSpel" Disabled="@disabled">Trek kaart</MatButton>
-    </div>
-}
-
 @if (toonKaarten)
 {
-
     <div style="text-align: center;" class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">Kaart computer:</div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">Jouw kaart:</div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">Kaart computer</div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">Jouw kaart</div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6"><img style="height: 400px;" src="@hogerLager.computerKaart.url" /></div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6"><img style="height: 400px;" src="@hogerLager.spelerKaart.url" /></div>
         </div>
+        
     </div>
-
-    @*
-    <div style="position: relative; top: 30px;">
-        <p style="position: relative; left: 1134.5675px; display: inline-block;">Jouw kaart:</p>
-        <p style="position: relative; left: 110px; display: inline-block;">Kaart computer:</p>
-    </div>
-
-    <img style="position: relative; top: 50px; left: 1134.5675px; height: 400px;" src="@hogerLager.spelerKaart.url" />
-    <img style="position: relative; top: 50px; left: -75px; height: 400px;" src="@hogerLager.computerKaart.url" />
-    *@
-
-    <p style="text-align: center; position: absolute;">@hogerLager.resultaat</p>
 }
 
-@code{
+<MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                        @bind-Value="@testingNullableDecimal2"
+                        DecimalPlaces=0
+                        Minimum=0 Maximum=100>
+</MatNumericUpDownField>
+<br />
+<MatButton Unelevated="true" Style="width: 278px; height: 56px; font-size: large" OnClick="@trekKaart" Disabled="@disabled">Trek kaart</MatButton>
 
+
+@code{
 
     [CascadingParameter]
     public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
@@ -77,12 +46,9 @@
 
     HogerLagerDomain.HogerLager hogerLager;
 
-    public bool toonInfo2 = false;
+    public bool toonInfo = false;
 
     public bool disabled = true;
-    public bool laatAllesZien = false;
-    public bool spelGestart = false;
-
     public bool toonKaarten = false;
 
     decimal? testingNullableDecimal2 = 0;
@@ -92,22 +58,9 @@
         DBConnection = new DefaultClasses.DBConnection();
     }
 
-    public void toonInfo()
+    public void veranderStatusInfo()
     {
-        if (!toonInfo2)
-        {
-            toonInfo2 = true;
-        }
-        else
-        {
-            toonInfo2 = false;
-        }
-    }
-
-    public void toonKnoppen()
-    {
-        laatAllesZien = true;
-        spelGestart = true;
+        toonInfo = true;
     }
 
     public void checkIngevuldeWaarde()
@@ -116,8 +69,6 @@
         if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
         {
             disabled = false;
-            HuidigeGebruiker.Saldo -= (int)testingNullableDecimal2.Value;
-            updateGebruiker();
         }
         else
         {
@@ -125,7 +76,7 @@
         }
     }
 
-    public void startSpel()
+    public void trekKaart()
     {
         hogerLager = new HogerLagerDomain.HogerLager((int)testingNullableDecimal2.Value);
         HuidigeGebruiker.Saldo += hogerLager.StartSpel();

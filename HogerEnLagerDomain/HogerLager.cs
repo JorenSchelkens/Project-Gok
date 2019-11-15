@@ -46,7 +46,7 @@ namespace HogerLagerDomain
             if (spelerKaart.waardeHogerLager > computerKaart.waardeHogerLager)
             {
                 resultaat = "Je hebt gewonnen";
-                return (ingezetteWaarde * 2);
+                return ingezetteWaarde;
             }
             else
             {
