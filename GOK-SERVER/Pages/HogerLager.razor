@@ -24,18 +24,20 @@
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6"><img style="height: 400px;" src="@hogerLager.computerKaart.url" /></div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6"><img style="height: 400px;" src="@hogerLager.spelerKaart.url" /></div>
         </div>
-        
+
     </div>
 }
 
-<MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                        @bind-Value="@testingNullableDecimal2"
-                        DecimalPlaces=0
-                        Minimum=0 Maximum=100>
-</MatNumericUpDownField>
-<br />
-<MatButton Unelevated="true" Style="width: 278px; height: 56px; font-size: large" OnClick="@trekKaart" Disabled="@disabled">Trek kaart</MatButton>
-
+@if (HuidigeGebruiker.Saldo > 0)
+{
+    <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                           @bind-Value="@testingNullableDecimal2"
+                           DecimalPlaces=0
+                           Minimum=0 Maximum=@HuidigeGebruiker.Saldo>
+    </MatNumericUpDownField>
+    <br />
+    <MatButton Unelevated="true" Style="width: 278px; height: 56px; font-size: large" OnClick="@trekKaart" Disabled="@disabled">Trek kaart</MatButton>
+}
 
 @code{
 
