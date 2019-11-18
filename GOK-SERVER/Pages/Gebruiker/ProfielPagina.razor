@@ -1,4 +1,5 @@
 ﻿@page "/gebruiker/profiel"
+@inject NavigationManager NavigationManager
 
 <div class="mat-layout-grid mat-layout-grid-align-left">
     <div class="mat-layout-grid-inner">
@@ -109,6 +110,7 @@
 
     protected override void OnInitialized()
     {
+        CheckGebruiker();
         DBConnection = new DefaultClasses.DBConnection();
     }
 
@@ -157,6 +159,14 @@
     {
         HuidigeGebruiker.Email = nieuwEmail;
         dialog3IsOpen = false;
+    }
+
+    private void CheckGebruiker()
+    {
+        if ((string.IsNullOrEmpty(HuidigeGebruiker.Naam)))
+        {
+            NavigationManager.NavigateTo("/gebruiker/logout");
+        }
     }
 
     public void UpdateProfiel()
