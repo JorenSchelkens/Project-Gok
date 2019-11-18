@@ -3,6 +3,8 @@
 <div style="text-align: center;">
     <h1 style="display: inline-block;"><label for="info">Hoger Lager</label></h1>
     <MatIconButton OnClick="@veranderStatusInfo" Id="info" Icon="info"></MatIconButton>
+    <br />
+    <br />
 </div>
 
 <MatDialog @bind-IsOpen="@toonInfo">
@@ -15,28 +17,41 @@
     </MatDialogContent>
 </MatDialog>
 
-@if (toonKaarten)
-{
-    <div style="text-align: center;" class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">Kaart computer</div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">Jouw kaart</div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6"><img style="height: 400px;" src="@hogerLager.computerKaart.url" /></div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6"><img style="height: 400px;" src="@hogerLager.spelerKaart.url" /></div>
-        </div>
-
-    </div>
-}
-
 @if (HuidigeGebruiker.Saldo > 0)
 {
-    <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                           @bind-Value="@testingNullableDecimal2"
-                           DecimalPlaces=0
-                           Minimum=0 Maximum=@HuidigeGebruiker.Saldo>
-    </MatNumericUpDownField>
-    <br />
-    <MatButton Unelevated="true" Style="width: 278px; height: 56px; font-size: large" OnClick="@trekKaart" Disabled="@disabled">Trek kaart</MatButton>
+    <div style="text-align: center;">
+        <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                               @bind-Value="@testingNullableDecimal2"
+                               DecimalPlaces=0
+                               Minimum=0 Maximum=@HuidigeGebruiker.Saldo>
+        </MatNumericUpDownField>
+        <br />
+        <MatButton Unelevated="true" Style="width: 278px; height: 56px; font-size: large" OnClick="@trekKaart" Disabled="@disabled">Trek kaart</MatButton>
+    </div>
+
+}
+
+@if (toonKaarten)
+{
+    <div class="mat-layout-grid">
+        <div style="text-align: center;" class="mat-layout-grid-inner">
+            <div style="font-size: x-large;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4">Kaart computer</div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4"></div>
+            <div style="font-size: x-large;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4">Jouw kaart</div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4"><img style="height: 400px;" src="@hogerLager.computerKaart.url" /></div>
+            <div style="font-size: x-large;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4 mat-layout-grid-cell-align-middle">
+                <span style="text-align: left;">
+                    beste streak: @bestStreak
+                    <br />
+                    streak: @currentStreak
+                    <br />
+                    <br />
+                    @hogerLager.resultaat
+                </span>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4"><img style="height: 400px;" src="@hogerLager.spelerKaart.url" /></div>
+        </div>
+    </div>
 }
 
 @code{
@@ -53,6 +68,9 @@
     public bool disabled = true;
     public bool toonKaarten = false;
 
+    public int currentStreak = 0;
+    public int bestStreak = 0;
+
     decimal? testingNullableDecimal2 = 0;
 
     protected override void OnInitialized()
@@ -68,7 +86,7 @@
     public void checkIngevuldeWaarde()
     {
 
-        if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+        if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
         {
             disabled = false;
         }
@@ -82,6 +100,20 @@
     {
         hogerLager = new HogerLagerDomain.HogerLager((int)testingNullableDecimal2.Value);
         HuidigeGebruiker.Saldo += hogerLager.StartSpel();
+
+        if(hogerLager.resultaat == "Je hebt gewonnen")
+        {
+            currentStreak++;
+            if(currentStreak > bestStreak)
+            {
+                bestStreak = currentStreak;
+            }
+        }
+        else
+        {
+            currentStreak = 0;
+        }
+
         updateGebruiker();
         toonKaarten = true;
     }
