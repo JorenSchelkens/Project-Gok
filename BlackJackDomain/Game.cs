@@ -14,7 +14,7 @@ namespace BlackJackDomain
         public List<Card> cards = CardBuilder.BuildCards();
         public Boolean gewonnen{ get; set; }
         private double inzet{ get; set; }
-        private int som { get; set; }
+        public int som { get; set; }
         public int somDealer { get; set; }
         
         
@@ -36,6 +36,7 @@ namespace BlackJackDomain
         {
             int temp = rand.Next(0, cards.Count);
             Card huidigeKaart = cards[temp];
+            cards.RemoveAt(temp);
             if (huidigeKaart.waardeBlackjack == 1)
             {
                 huidigeKaart.waardeBlackjack = 11;
@@ -61,7 +62,7 @@ namespace BlackJackDomain
                 
                     
             }
-            if (lijstKaartenSpeler.Count >= 5)
+            if (lijstKaartenSpeler.Count >= 6)
             {
                 gewonnen = true;
             }
@@ -71,8 +72,15 @@ namespace BlackJackDomain
 
         public int dealer()
         {
+            
+            if (somDealer > 21 || somDealer < som)
+            {
+                gewonnen = true;
+
+            }
             int temp = rand.Next(0, cards.Count);
             Card huidigeKaart = cards[temp];
+            cards.RemoveAt(temp);
             if (huidigeKaart.waardeBlackjack == 1)
             {
                 huidigeKaart.waardeBlackjack = 11;
@@ -99,12 +107,13 @@ namespace BlackJackDomain
 
             }
 
-            if (lijstKaartenDealer.Count >= 5)
+            if (lijstKaartenDealer.Count >= 6 || somDealer >= som && somDealer < 21)
             {
-                gewonnen = true;
+                gewonnen = false;
             }
 
             return huidigeKaart.waardeBlackjack;
+            
         }
 
         public double winnaar()
