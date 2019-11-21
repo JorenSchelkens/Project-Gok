@@ -8,7 +8,7 @@ namespace CrashDomain
         public double multiplier { get; set; }
         public int muntenIngezet { get; set; }
         public double autoCashOut { get; set; }
-        public double totalMultiplier { get; set; } = 10.00;
+        public double totalMultiplier { get; set; }
         public bool spelGedaan { get; set; } = false;
         public int delay { get; set; } = 150;  //150 - 10
 
@@ -37,7 +37,7 @@ namespace CrashDomain
         public void RondAf(double xValue)
         {
             multiplier = xValue;
-            multiplier = Math.Round(multiplier, 2);
+            multiplier = Math.Round(multiplier, 4);
         }
 
         public void VeranderDelay()
@@ -47,36 +47,31 @@ namespace CrashDomain
                 delay = 10;
             } else
             {
-                delay = (int)Math.Pow((-1.2), multiplier) + 151;
+                delay = -(int)Math.Pow((1.2), multiplier + 25) + 245;
             }
             
         }
 
-        private void genereerRandomGetal()
+        public void genereerRandomGetal()
         {
             Random random = new Random();
             var random1 = random.NextDouble();
-            var winst = 0.0;
 
             if (random1 < 0.7)
             {
-                winst = random.Next(400000, 600000); // * inzet
-
+                totalMultiplier = random.NextDouble();
             }
             else if (random1 < 0.90)
             {
-                winst = random.NextDouble(); // * inzet
-
+                totalMultiplier = random.NextDouble() + 1;
             }
             else if (random1 < 0.95)
             {
-                winst = random.NextDouble(); // * inzet
-
+                totalMultiplier = random.NextDouble() * 2 + 2;
             }
             else
             {
-                winst = random.NextDouble(); // * inzet
-
+                totalMultiplier = random.NextDouble() * 2 + 4;
             }
         }
     }
