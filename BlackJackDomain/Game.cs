@@ -11,7 +11,8 @@ namespace BlackJackDomain
         Random rand = new Random();
         public List<Card> lijstKaartenSpeler = new List<Card>();
         public List<Card> lijstKaartenDealer = new List<Card>();
-        public List<Card> cards = CardBuilder.BuildCards();
+        public List<Card> cards;
+        private CardBuilder CardBuilder = new CardBuilder();
         public Boolean gewonnen{ get; set; }
         private double inzet{ get; set; }
         public int som { get; set; }
@@ -21,6 +22,7 @@ namespace BlackJackDomain
 
         public Game(double inzet)
         {
+            this.cards = this.CardBuilder.BuildCards();
             gewonnen = false;
             this.inzet = inzet;
             som = 0;
@@ -29,7 +31,7 @@ namespace BlackJackDomain
 
         public Game()
         {
-
+            this.cards = this.CardBuilder.BuildCards();
         }
 
         public int extraKaart()
@@ -62,7 +64,7 @@ namespace BlackJackDomain
                 
                     
             }
-            if (lijstKaartenSpeler.Count >= 6)
+            if (lijstKaartenSpeler.Count >= 6 && som <= 21)
             {
                 gewonnen = true;
             }
@@ -107,7 +109,7 @@ namespace BlackJackDomain
 
             }
 
-            if (lijstKaartenDealer.Count >= 6 || somDealer >= som && somDealer < 21)
+            if (lijstKaartenDealer.Count >= 6 && somDealer <= 21|| somDealer >= som && somDealer < 21)
             {
                 gewonnen = false;
             }
