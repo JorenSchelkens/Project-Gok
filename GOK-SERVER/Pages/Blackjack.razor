@@ -7,11 +7,26 @@
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
 
-            @foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenDealer)
+            @for (int i = 0; i < Game.lijstKaartenDealer.Count; i++)
             {
                 <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
 
-                    <img style="height: 300px;" src="@kaart.url" />
+                    @if (!dealerShow)
+                    {
+                        if (i == 1)
+                        {
+                            <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].urlAchterKant" />
+                        }
+                        else
+                        {
+                            <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].url" />
+                        }
+
+                    }
+                    else
+                    {
+                        <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].url" />
+                    }
 
                 </div>
             }
@@ -42,7 +57,7 @@
                     }
                 }
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                 <MatButton Unelevated="true" OnClick="@spelen" Disabled="hit">trek kaart</MatButton>
             </div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
@@ -54,192 +69,195 @@
 
 }
 
-    @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
+@if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
+{
+    if (ronde)
     {
-        if (ronde)
-        {
-            <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 820px;" OnClick="@startSpel2">start ronde</MatButton>
-        }
-
+        <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 820px;" OnClick="@startSpel2">start ronde</MatButton>
     }
 
-    @if (!spelGestart)
-    {
-        <div style="text-align: center; position: relative; top: 300px;">
-            <MatButton Unelevated="true" OnClick="@startSpel" Disabled="start">Start spel</MatButton>
-        </div>
+}
 
+@if (!spelGestart)
+{
+    <div style="text-align: center; position: relative; top: 300px;">
+        <MatButton Unelevated="true" OnClick="@startSpel" Disabled="start">Start spel</MatButton>
+    </div>
+
+}
+
+@if (laatZien)
+{
+    <div style="text-align: center; position: center;">
+        <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                               @bind-Value=@testingNullableDecimal2
+                               DecimalPlaces=0
+                               Disabled="start"
+                               Minimum=0 Maximum=500>
+        </MatNumericUpDownField>
+    </div>
+
+}
+
+
+
+@code{
+
+    [CascadingParameter]
+    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
+
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+
+    decimal? testingNullableDecimal2 = 0;
+
+    public bool spelGestart = false;
+    public bool laatZien = false;
+    public bool disabled = true;
+    public bool start = false;
+    public bool toonkaart = false;
+    public bool volgendeKaart = false;
+    public bool hit = false;
+    public bool checkWinnaar = false;
+    public bool stand = false;
+    public bool ronde = false;
+    public bool dealerShow = false;
+
+    public List<int> kaartenSpeler;
+    public List<int> kaartenDealer;
+
+    public string urlKaartSpeler;
+    public string urlKaartDealer;
+
+    public double inzet;
+
+    public int plaatsKaart = 2;
+    public int plaatsKaartDealer = 2;
+
+
+
+    public BlackJackDomain.Game Game { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DBConnection = new DefaultClasses.DBConnection();
+        Game = new BlackJackDomain.Game();
     }
 
-    @if (laatZien)
+    public void startSpel()
     {
-        <div style="text-align: center; position: center;">
-            <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                                   @bind-Value=@testingNullableDecimal2
-                                   DecimalPlaces=0
-                                   Disabled="start"
-                                   Minimum=0 Maximum=500>
-            </MatNumericUpDownField>
-        </div>
-
+        spelGestart = true;
+        laatZien = true;
+        ronde = true;
     }
 
-
-
-    @code{
-
-        [CascadingParameter]
-        public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
-
-        public DefaultClasses.DBConnection DBConnection { get; set; }
-
-        decimal? testingNullableDecimal2 = 0;
-
-        public bool spelGestart = false;
-        public bool laatZien = false;
-        public bool disabled = true;
-        public bool start = false;
-        public bool toonkaart = false;
-        public bool volgendeKaart = false;
-        public bool hit = false;
-        public bool checkWinnaar = false;
-        public bool stand = false;
-        public bool ronde = false;
-
-        public List<int> kaartenSpeler;
-        public List<int> kaartenDealer;
-
-        public string urlKaartSpeler;
-        public string urlKaartDealer;
-
-        public double inzet;
-
-        public int plaatsKaart = 2;
-        public int plaatsKaartDealer = 2;
-
-
-
-        public BlackJackDomain.Game Game { get; set; }
-
-        protected override void OnInitialized()
+    public void startSpel2()
+    {
+        laatZien = false;
+        Game = new BlackJackDomain.Game(inzet);
+        Game.extraKaart();
+        urlKaartSpeler = Game.lijstKaartenSpeler[0].url;
+        Game.extraKaart();
+        urlKaartSpeler = Game.lijstKaartenSpeler[1].url;
+        Game.dealer();
+        urlKaartDealer = Game.lijstKaartenDealer[0].url;
+        Game.dealer();
+        urlKaartDealer = Game.lijstKaartenDealer[1].url;
+        start = true;
+        toonkaart = true;
+        ronde = false;
+        if (Game.som == 21)
         {
-            DBConnection = new DefaultClasses.DBConnection();
-            Game = new BlackJackDomain.Game();
-        }
-
-        public void startSpel()
-        {
-            spelGestart = true;
-            laatZien = true;
-            ronde = true;
-        }
-
-        public void startSpel2()
-        {
-            laatZien = false;
-            Game = new BlackJackDomain.Game(inzet);
-            Game.extraKaart();
-            urlKaartSpeler = Game.lijstKaartenSpeler[0].url;
-            Game.extraKaart();
-            urlKaartSpeler = Game.lijstKaartenSpeler[1].url;
-            Game.dealer();
-            urlKaartDealer = Game.lijstKaartenDealer[0].url;
-            Game.dealer();
-            urlKaartDealer = Game.lijstKaartenDealer[1].url;
-            start = true;
-            toonkaart = true;
-            ronde = false;
-            if (Game.som == 21)
-            {
-                checkWinnaar = true;
-                hit = true;
-                stand = true;
-                Game.gewonnen = true;
-                winnaar();
-            }
-
-            if(Game.somDealer == 21)
-            {
-                checkWinnaar = true;
-                hit = true;
-                stand = true;
-                Game.gewonnen = false;
-                winnaar();
-            }
-        }
-
-        public void spelen()
-        {
-            Game.extraKaart();
-            urlKaartSpeler = Game.lijstKaartenSpeler[plaatsKaart].url;
-
-            plaatsKaart++;
-
-            verloren();
-        }
-
-        public void verloren()
-        {
-            if (Game.som > 21)
-            {
-                checkWinnaar = true;
-                hit = true;
-                stand = true;
-                winnaar();
-            }
-        }
-
-        public void dealer()
-        {
+            checkWinnaar = true;
             hit = true;
             stand = true;
-            checkWinnaar = true;
-            while (Game.somDealer < Game.som && Game.somDealer < 17)
-            {
-                Game.dealer();
-            }
-            
-            Game.winnaar();
+            Game.gewonnen = true;
             winnaar();
         }
 
-        public void checkIngevuldeWaarde()
+        if (Game.somDealer == 21)
         {
-            if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
-            {
-                disabled = false;
-            }
-            else
-            {
-                disabled = true;
-                inzet = (int)testingNullableDecimal2.Value;
-            }
-        }
-
-        public async void winnaar()
-        {
-            inzet += Game.winnaar();
-            await Task.Delay(6000);
-            spelGestart = true;
-            laatZien = true;
-            disabled = true;
-            start = false;
-            toonkaart = false;
-            volgendeKaart = false;
-            hit = false;
-            checkWinnaar = false;
-            stand = false;
-            ronde = true;
-
-            this.kaartenSpeler = null;
-            this.kaartenDealer = null;
-
-            this.urlKaartSpeler = "";
-            this.urlKaartDealer = "";
-
-            plaatsKaart = 2;
-            plaatsKaartDealer = 2;
-
-            this.StateHasChanged();
+            checkWinnaar = true;
+            hit = true;
+            stand = true;
+            Game.gewonnen = false;
+            winnaar();
         }
     }
+
+    public void spelen()
+    {
+        Game.extraKaart();
+        urlKaartSpeler = Game.lijstKaartenSpeler[plaatsKaart].url;
+
+        plaatsKaart++;
+
+        verloren();
+    }
+
+    public void verloren()
+    {
+        if (Game.som > 21)
+        {
+            checkWinnaar = true;
+            hit = true;
+            stand = true;
+            winnaar();
+        }
+    }
+
+    public void dealer()
+    {
+        hit = true;
+        stand = true;
+        checkWinnaar = true;
+        while (Game.somDealer < Game.som && Game.somDealer < 17)
+        {
+            Game.dealer();
+        }
+
+        Game.winnaar();
+        winnaar();
+    }
+
+    public void checkIngevuldeWaarde()
+    {
+        if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value > 0)
+        {
+            disabled = false;
+        }
+        else
+        {
+            disabled = true;
+            inzet = (int)testingNullableDecimal2.Value;
+        }
+    }
+
+    public async void winnaar()
+    {
+        dealerShow = true;
+        inzet += Game.winnaar();
+        await Task.Delay(6000);
+        spelGestart = true;
+        laatZien = true;
+        disabled = true;
+        start = false;
+        toonkaart = false;
+        volgendeKaart = false;
+        hit = false;
+        checkWinnaar = false;
+        stand = false;
+        ronde = true;
+        dealerShow = false;
+
+        this.kaartenSpeler = null;
+        this.kaartenDealer = null;
+
+        this.urlKaartSpeler = "";
+        this.urlKaartDealer = "";
+
+        plaatsKaart = 2;
+        plaatsKaartDealer = 2;
+
+        this.StateHasChanged();
+    }
+}
