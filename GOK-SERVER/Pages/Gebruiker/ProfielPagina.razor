@@ -1,5 +1,6 @@
 ﻿@page "/gebruiker/profiel"
 @inject NavigationManager NavigationManager
+@inject DefaultClasses.Gebruiker Gebruiker
 
 <div class="mat-layout-grid mat-layout-grid-align-left">
     <div class="mat-layout-grid-inner">
@@ -7,7 +8,7 @@
         @* Deel 1 *@
 
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Gebruikersnaam" FullWidth="true"></MatTextField>
+            <MatTextField ReadOnly="true" Value="@Gebruiker.Gebruikersnaam" FullWidth="true"></MatTextField>
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
             <MatButton Style="height: 50px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton>
@@ -29,7 +30,7 @@
         @* Deel 2 *@
 
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField Type="password" ReadOnly="true" Value="@HuidigeGebruiker.Wachtwoord" FullWidth="true"></MatTextField>
+            <MatTextField Type="password" ReadOnly="true" Value="@Gebruiker.Wachtwoord" FullWidth="true"></MatTextField>
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
             <MatButton Style="height: 50px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton>
@@ -61,7 +62,7 @@
         @* Deel 3 *@
 
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField ReadOnly="true" Value="@HuidigeGebruiker.Email" FullWidth="true"></MatTextField>
+            <MatTextField ReadOnly="true" Value="@Gebruiker.Email" FullWidth="true"></MatTextField>
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
             <MatButton Style="height: 50px;" OnClick="@veranderEmail" Raised="true">Verander Email</MatButton>
@@ -91,8 +92,6 @@
 
 @code{
 
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     public bool dialog1IsOpen = false;
@@ -135,17 +134,17 @@
 
     public void OkClick1()
     {
-        HuidigeGebruiker.Gebruikersnaam = nieuweGebruikersNaam;
+        Gebruiker.Gebruikersnaam = nieuweGebruikersNaam;
         dialog1IsOpen = false;
     }
 
     public void OkClick2()
     {
 
-        if (oudeWachtwoord == HuidigeGebruiker.Wachtwoord)
+        if (oudeWachtwoord == Gebruiker.Wachtwoord)
         {
             oudWachtwoordJuisIngegeven = true;
-            HuidigeGebruiker.Wachtwoord = nieuwWachtwoord;
+            Gebruiker.Wachtwoord = nieuwWachtwoord;
             dialog2IsOpen = false;
         }
         else
@@ -157,13 +156,13 @@
 
     public void OkClick3()
     {
-        HuidigeGebruiker.Email = nieuwEmail;
+        Gebruiker.Email = nieuwEmail;
         dialog3IsOpen = false;
     }
 
     private void CheckGebruiker()
     {
-        if ((string.IsNullOrEmpty(HuidigeGebruiker.Naam)))
+        if ((string.IsNullOrEmpty(Gebruiker.Naam)))
         {
             NavigationManager.NavigateTo("/gebruiker/logout");
         }
@@ -171,7 +170,7 @@
 
     public void UpdateProfiel()
     {
-        DBConnection.UpdateGebruiker(HuidigeGebruiker);
+        DBConnection.UpdateGebruiker(Gebruiker);
     }
 
 }

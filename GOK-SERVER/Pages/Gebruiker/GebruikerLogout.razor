@@ -1,14 +1,13 @@
 ﻿@page "/gebruiker/logout"
 @inject NavigationManager NavigationManager
+@inject DefaultClasses.Gebruiker Gebruiker
 
 @code {
 
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
-
     protected override void OnInitialized()
     {
-        HuidigeGebruiker.Gebruikersnaam = null;
+        Gebruiker.Gebruikersnaam = null;
+        Gebruiker.Refresh();
         NavigationManager.NavigateTo("/gebruiker/login");
     }
 
