@@ -16,7 +16,7 @@
     {
         <p style="margin: 0; color: red">Je moet 18+ zijn om een account te kunnen aanmaken.</p>
     }
-    
+
     <MatCheckbox @bind-Checked="@Nieuwsbrief" Label="Nieuwsbrief?"></MatCheckbox>
     <br />
     <MatCheckbox @bind-Checked="@Notificaties" Label="Notificaties?"></MatCheckbox>
@@ -60,29 +60,29 @@ else
     {
         DateTime achtienTerug = DateTime.Now.AddYears(-18);
 
-        if(((datumAangeduid.Value.Year - achtienTerug.Year) < 0))
+        if (((datumAangeduid.Value.Year - achtienTerug.Year) < 0))
         {
             leeftijdHogerDan18 = true;
         }
-        else if(((datumAangeduid.Value.Year - achtienTerug.Year) == 0))
+        else if (((datumAangeduid.Value.Year - achtienTerug.Year) == 0))
         {
-            if((datumAangeduid.Value.Month < achtienTerug.Month))
+            if ((datumAangeduid.Value.Month < achtienTerug.Month))
             {
-                if((datumAangeduid.Value.Day < achtienTerug.Day))
+                if ((datumAangeduid.Value.Day < achtienTerug.Day))
                 {
                     leeftijdHogerDan18 = true;
-                } 
+                }
                 else
                 {
                     leeftijdHogerDan18 = false;
                 }
-            } 
+            }
             else
             {
                 leeftijdHogerDan18 = false;
             }
-        } 
-        else 
+        }
+        else
         {
             leeftijdHogerDan18 = false;
         }

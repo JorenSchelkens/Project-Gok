@@ -1,5 +1,7 @@
 ﻿@page "/gebruiker/login"
 @inject NavigationManager NavigationManager
+@inject IMatToaster Toaster
+@inject DefaultClasses.Gebruiker HuidigeGebruiker
 
 <h1>Login</h1>
 
@@ -8,7 +10,6 @@
     <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
 
-
     <br />
     <br />
 
@@ -16,13 +17,10 @@
 }
 else
 {
-    GaNaarVolgende();
+    CheckGebruiker();
 }
 
 @code {
-
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
     public DefaultClasses.Gebruiker Gebruiker;
@@ -39,7 +37,20 @@ else
     {
         Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
         HuidigeGebruiker.Update(Gebruiker.Spelersnummer, Gebruiker.Gebruikersnaam, Gebruiker.Naam, Gebruiker.Email, Gebruiker.Wachtwoord, Gebruiker.Saldo, Gebruiker.DailyGiftDatum, Gebruiker.Admin, Gebruiker.Nieuwsbrief, Gebruiker.Notificaties);
-        GaNaarVolgende();
+
+        CheckGebruiker();
+    }
+
+    private void CheckGebruiker()
+    {
+        if (!(string.IsNullOrEmpty(HuidigeGebruiker.Naam)))
+        {
+            GaNaarVolgende();
+        }
+        else
+        {
+            Toaster.Add("Gebruikersnaam of wachtwoord is niet correct", MatToastType.Danger, "Error");
+        }
     }
 
     public void GaNaarVolgende()

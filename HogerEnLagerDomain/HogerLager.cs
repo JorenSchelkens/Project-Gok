@@ -9,7 +9,8 @@ namespace HogerLagerDomain
 
         public Random random = new Random();
 
-        public List<DefaultClasses.Cards.Card> cards = DefaultClasses.Cards.CardBuilder.BuildCards();
+        public List<DefaultClasses.Cards.Card> cards;
+        private DefaultClasses.Cards.CardBuilder CardBuilder = new DefaultClasses.Cards.CardBuilder();
         public DefaultClasses.Cards.Card spelerKaart { get; set; }
         public DefaultClasses.Cards.Card computerKaart { get; set; }
 
@@ -19,6 +20,7 @@ namespace HogerLagerDomain
         public HogerLager(int ingezetteWaarde)
         {
             this.ingezetteWaarde = ingezetteWaarde;
+            this.cards = this.CardBuilder.BuildCards();
         }
 
         public int StartSpel() {
@@ -45,6 +47,7 @@ namespace HogerLagerDomain
 
             if (spelerKaart.waardeHogerLager > computerKaart.waardeHogerLager)
             {
+                
                 resultaat = "Je hebt gewonnen";
                 return ingezetteWaarde;
             }

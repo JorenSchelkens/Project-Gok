@@ -8,9 +8,9 @@ namespace CrashDomain
         public double multiplier { get; set; }
         public int muntenIngezet { get; set; }
         public double autoCashOut { get; set; }
-        public double totalMultiplier { get; set; } = 1.00;
+        public double totalMultiplier { get; set; } = 10.00;
         public bool spelGedaan { get; set; } = false;
-        public int delay { get; set; }
+        public int delay { get; set; } = 150;  //150 - 10
 
         public Game(int muntenIngezet, double autoCashOut)
         {
@@ -28,15 +28,28 @@ namespace CrashDomain
 
         }
 
-        public void VerhoogMultiplier(double seconden)
+        public void GeefDoor(double xValue)
         {
-            multiplier = seconden;
+            RondAf(xValue);
+            VeranderDelay();
+        }
+
+        public void RondAf(double xValue)
+        {
+            multiplier = xValue;
             multiplier = Math.Round(multiplier, 2);
         }
 
         public void VeranderDelay()
         {
-            //Maak delay kleiner
+            if(delay <= 10)
+            {
+                delay = 10;
+            } else
+            {
+                delay = (int)Math.Pow((-1.2), multiplier) + 151;
+            }
+            
         }
 
         private void genereerRandomGetal()

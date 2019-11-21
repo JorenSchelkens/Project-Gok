@@ -6,20 +6,24 @@ namespace DefaultClasses.Cards
 {
     public class CardBuilder
     {
-        private static List<string> urls = UrlGenerator.GenerateUrls();
+        private List<string> urls;
+        private UrlGenerator UrlGenerator = new UrlGenerator();
 
-        public static List<Card> BuildCards()
+        public List<Card> BuildCards()
         {
             List<Card> Cards = new List<Card>();
+            this.urls = UrlGenerator.GenerateUrls();
 
             for (int i = 0; i < 52; i++)
             {
 
                 Card card = new Card();
                 var randomGetal = new Random().Next(0, urls.Count);
-
+                
                 card.url = urls[randomGetal];
                 card.urlAchterKant = "img/Kaarten/Back/back.png";
+
+                this.urls.RemoveAt(randomGetal);
 
                 //13
 

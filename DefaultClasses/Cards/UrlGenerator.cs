@@ -4,9 +4,9 @@ using System.Text;
 
 namespace DefaultClasses.Cards
 {
-    public static class UrlGenerator
+    public class UrlGenerator
     {
-        public static List<string> GenerateUrls()
+        public List<string> GenerateUrls()
         {
             List<string> cards = new List<string>();
 

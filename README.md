@@ -11,3 +11,5 @@ https://ej2.syncfusion.com/blazor/documentation/chart/working-with-data/
 https://github.com/mariusmuntean/ChartJs.Blazor
 
 https://github.com/Joelius300/ChartJSBlazor
+
+http://blazorhelpwebsite.com/Blog/tabid/61/EntryId/4338/Implementing-State-Management-In-Blazor.aspx

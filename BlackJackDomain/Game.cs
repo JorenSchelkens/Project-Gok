@@ -11,16 +11,18 @@ namespace BlackJackDomain
         Random rand = new Random();
         public List<Card> lijstKaartenSpeler = new List<Card>();
         public List<Card> lijstKaartenDealer = new List<Card>();
-        public List<Card> cards = CardBuilder.BuildCards();
+        public List<Card> cards;
+        private CardBuilder CardBuilder = new CardBuilder();
         public Boolean gewonnen{ get; set; }
         private double inzet{ get; set; }
-        private int som { get; set; }
+        public int som { get; set; }
         public int somDealer { get; set; }
         
         
 
         public Game(double inzet)
         {
+            this.cards = this.CardBuilder.BuildCards();
             gewonnen = false;
             this.inzet = inzet;
             som = 0;
@@ -29,13 +31,14 @@ namespace BlackJackDomain
 
         public Game()
         {
-
+            this.cards = this.CardBuilder.BuildCards();
         }
 
         public int extraKaart()
         {
             int temp = rand.Next(0, cards.Count);
             Card huidigeKaart = cards[temp];
+            cards.RemoveAt(temp);
             if (huidigeKaart.waardeBlackjack == 1)
             {
                 huidigeKaart.waardeBlackjack = 11;
@@ -61,7 +64,7 @@ namespace BlackJackDomain
                 
                     
             }
-            if (lijstKaartenSpeler.Count >= 5)
+            if (lijstKaartenSpeler.Count >= 6 && som <= 21)
             {
                 gewonnen = true;
             }
@@ -71,8 +74,15 @@ namespace BlackJackDomain
 
         public int dealer()
         {
+            
+            if (somDealer > 21 || somDealer < som)
+            {
+                gewonnen = true;
+
+            }
             int temp = rand.Next(0, cards.Count);
             Card huidigeKaart = cards[temp];
+            cards.RemoveAt(temp);
             if (huidigeKaart.waardeBlackjack == 1)
             {
                 huidigeKaart.waardeBlackjack = 11;
@@ -99,12 +109,13 @@ namespace BlackJackDomain
 
             }
 
-            if (lijstKaartenDealer.Count >= 5)
+            if (lijstKaartenDealer.Count >= 6 && somDealer <= 21|| somDealer >= som && somDealer < 21)
             {
-                gewonnen = true;
+                gewonnen = false;
             }
 
             return huidigeKaart.waardeBlackjack;
+            
         }
 
         public double winnaar()

@@ -1,4 +1,5 @@
 ﻿@page "/bank"
+@inject DefaultClasses.Gebruiker Gebruiker
 
 @if (Bank == null)
 {
@@ -6,13 +7,13 @@
 }
 else
 {
-    <p>Huidig Balans: @HuidigeGebruiker.Saldo munten</p>
+    <p>Huidig Balans: @Gebruiker.Saldo munten</p>
 
     <MatNumericUpDownField Label="Withdrawal"
                            @bind-Value=@UpDownFieldWithdrawal
                            DecimalPlaces=0
-                           Icon="attach_money"
-                           Minimum="1" Maximum="@HuidigeGebruiker.Saldo">
+                           Icon="account_balance_wallet"
+                           Minimum="1" Maximum="@Gebruiker.Saldo">
 
     </MatNumericUpDownField>
     <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
@@ -33,8 +34,6 @@ else
 
 @code {
 
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     public Bank Bank;
@@ -45,24 +44,25 @@ else
     protected override void OnInitialized()
     {
         DBConnection = new DefaultClasses.DBConnection();
-        Bank = new Bank(HuidigeGebruiker.Saldo);
+        Bank = new Bank(Gebruiker.Saldo);
     }
 
     public void Deposit()
     {
-        HuidigeGebruiker.Saldo = Bank.Storten((double)UpDownFieldDeposit.Value);
+        Gebruiker.Saldo = Bank.Storten((double)UpDownFieldDeposit.Value);
         updateGebruiker();
     }
 
     public void Withdrawal()
     {
-        HuidigeGebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
+        Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
         updateGebruiker();
     }
 
     private void updateGebruiker()
     {
-        DBConnection.UpdateGebruiker(HuidigeGebruiker);
+        Gebruiker.Refresh();
+        DBConnection.UpdateGebruiker(Gebruiker);
     }
 
 }
