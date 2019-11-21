@@ -104,10 +104,6 @@
 
 @code{
 
-<<<<<<< HEAD
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
-
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     decimal? testingNullableDecimal2 = 0;
@@ -131,7 +127,6 @@
     public string urlKaartDealer;
 
     public double inzet;
-=======
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     decimal? testingNullableDecimal2 = 0;
@@ -157,13 +152,24 @@
 
     public int plaatsKaart = 2;
     public int plaatsKaartDealer = 2;
->>>>>>> fdf0a3da852f88ba09310611ba4a6d765074dd11
 
     public int plaatsKaart = 2;
     public int plaatsKaartDealer = 2;
 
+    public BlackJackDomain.Game Game { get; set; }
 
-<<<<<<< HEAD
+    protected override void OnInitialized()
+    {
+        DBConnection = new DefaultClasses.DBConnection();
+        Game = new BlackJackDomain.Game();
+    }
+
+    public void startSpel()
+    {
+        spelGestart = true;
+        laatZien = true;
+        ronde = true;
+    }
 
     public BlackJackDomain.Game Game { get; set; }
 
@@ -180,23 +186,6 @@
         ronde = true;
     }
 
-=======
-    public BlackJackDomain.Game Game { get; set; }
-
-    protected override void OnInitialized()
-    {
-        DBConnection = new DefaultClasses.DBConnection();
-        Game = new BlackJackDomain.Game();
-    }
-
-    public void startSpel()
-    {
-        spelGestart = true;
-        laatZien = true;
-        ronde = true;
-    }
-
->>>>>>> fdf0a3da852f88ba09310611ba4a6d765074dd11
     public void startSpel2()
     {
         laatZien = false;
@@ -281,10 +270,7 @@
 
     public async void winnaar()
     {
-<<<<<<< HEAD
         dealerShow = true;
-=======
->>>>>>> fdf0a3da852f88ba09310611ba4a6d765074dd11
         inzet += Game.winnaar();
         await Task.Delay(6000);
         spelGestart = true;
@@ -297,10 +283,7 @@
         checkWinnaar = false;
         stand = false;
         ronde = true;
-<<<<<<< HEAD
         dealerShow = false;
-=======
->>>>>>> fdf0a3da852f88ba09310611ba4a6d765074dd11
 
         this.kaartenSpeler = null;
         this.kaartenDealer = null;
