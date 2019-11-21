@@ -149,7 +149,7 @@
             start = true;
             toonkaart = true;
             ronde = false;
-            @if (Game.som == 21)
+            if (Game.som == 21)
             {
                 checkWinnaar = true;
                 hit = true;
@@ -158,7 +158,7 @@
                 winnaar();
             }
 
-            @if(Game.somDealer == 21)
+            if(Game.somDealer == 21)
             {
                 checkWinnaar = true;
                 hit = true;
@@ -219,7 +219,7 @@
         public async void winnaar()
         {
             inzet += Game.winnaar();
-            await Task.Delay(5000);
+            await Task.Delay(6000);
             spelGestart = true;
             laatZien = true;
             disabled = true;
@@ -231,14 +231,14 @@
             stand = false;
             ronde = true;
 
-            List<int> kaartenSpeler;
-            List<int> kaartenDealer;
+            this.kaartenSpeler = null;
+            this.kaartenDealer = null;
 
-            string urlKaartSpeler;
-            string urlKaartDealer;
+            this.urlKaartSpeler = "";
+            this.urlKaartDealer = "";
 
-            int plaatsKaart = 2;
-            int plaatsKaartDealer = 2;
+            plaatsKaart = 2;
+            plaatsKaartDealer = 2;
 
             this.StateHasChanged();
         }
