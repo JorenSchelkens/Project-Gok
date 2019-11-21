@@ -30,9 +30,11 @@
 
             @for (int i = 0; i < lijstGok.Count; i++)
             {
-                <p>Wat zet je in op @lijstGok[i] ?</p>
+                <p>
+                    Wat zet je in op @lijstGok[i] ?
+                </p>
 
-                <MatTextField @bind-Value="@lijstGokStrings[i]"></MatTextField>
+                <MatTextField @bind-Value="@voegToe(i)"></MatTextField>
 
                 <br />
 
@@ -57,10 +59,9 @@
                 <img src="img/roulette/0.jpg" style=" height: 300px; width: 60px;">
             </td>
             <td>
-                <!--<table>-->
         <tr>
-            <td style=" height: 100px; width: 60px;">
-                <img src="img/roulette/3.jpg" onclick="@nummer(3)">
+            <td style=" height: 100px; width: 60px;" onclick="@nummer(3)">
+                <img src="img/roulette/3.jpg">
             </td>
             <td style=" height: 100px; width: 60px;">
                 <img src="img/roulette/6.jpg" onclick="@nummer(6)">
@@ -92,8 +93,8 @@
             <td style=" height: 100px; width: 60px;">
                 <img src="img/roulette/33.jpg" onclick="@nummer(33)">
             </td>
-            <td style=" height: 100px; width: 60px;">
-                <img src="img/roulette/36.jpg" onclick="@nummer(36)">
+            <td style=" height: 100px; width: 60px;" onclick="@nummer(36)">
+                <img src="img/roulette/36.jpg">
             </td>
             <td style=" height: 100px; width: 60px;">
                 <img style=" height: 100px; width: 60px;" src="img/roulette/2to1-1.jpg" onclick="">
@@ -127,7 +128,7 @@
             <td style=" height: 100px; width: 60px;">
                 <img src="img/roulette/26.jpg" onclick="@nummer(26)">
             </td>
-            <td style=" height: 100px; width: 60px;">
+            <td style=" height: 100px; width: 60px;" on>
                 <img src="img/roulette/29.jpg" onclick="@nummer(29)">
             </td>
             <td style=" height: 100px; width: 60px;">
@@ -181,7 +182,6 @@
                 <img style=" height: 100px; width: 60px;" src="img/roulette/2to1-1.jpg">
             </td>
         </tr>
-        <!--</table>-->
         </td>
         </tr>
         <tr>
@@ -230,7 +230,10 @@
     </table>
     <p>Standaard uitkomst = 50 --> nieuwe uitkomst = @uitkomst</p>
     <MatButton Unelevated="true" OnClick="@inzet">Ingezet</MatButton>
-    <p>@getal</p>
+    if (toonGetal)
+    {
+        <p>@getal</p>
+    }
 
     if (gok1)
     {
@@ -251,6 +254,7 @@ else
 }
 
 @code{
+    public bool toonGetal = false;
     public bool knop = false;
     public bool gok1 = false;
     public bool laatZien = false;
@@ -261,7 +265,6 @@ else
     public List<string> lijstGokStrings = new List<string>();
     public List<int> lijstInzet = new List<int>();
     //(int)UpDownField1.Value;
-    private object e = null;
     public string stijl3 = "";
     // string[] arrayStijlen = new string[];
     public RouletteDomain.Game game;
@@ -281,10 +284,12 @@ else
     {
 
     }
-    public Object nummer(int nummer)
+
+    public int nummer(int nummer)
     {
         this.getal = nummer;
-        return null;
+        return this.getal;
+
     }
     public void kijkNa()
     {
@@ -304,11 +309,9 @@ else
     }
     public bool dialogIsOpen = false;
     public string name = null;
-    public string animal = null;
     public string dialogAnimal = null;
     public void OpenDialog()
     {
-        dialogAnimal = null;
         dialogIsOpen = true;
     }
     public void OkClick()
@@ -323,7 +326,21 @@ else
     }
     public void keuzesGemaakt()
     {
+
+        for (int i = 0; i < lijstGok.Count; i++)
+        {
+            lijstGokStrings.Add("");
+        }
+
         laatZien = true;
         disabled1 = true;
+        dialogIsOpen = true;
+
+
+    }
+
+    public void voegToe(int index)
+    {
+        lijstGokStrings[index] = ;
     }
 }
