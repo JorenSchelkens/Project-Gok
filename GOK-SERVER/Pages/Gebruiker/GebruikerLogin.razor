@@ -1,6 +1,7 @@
 ﻿@page "/gebruiker/login"
 @inject NavigationManager NavigationManager
 @inject IMatToaster Toaster
+@inject DefaultClasses.Gebruiker HuidigeGebruiker
 
 <h1>Login</h1>
 
@@ -20,9 +21,6 @@ else
 }
 
 @code {
-
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
     public DefaultClasses.Gebruiker Gebruiker;

@@ -1,4 +1,7 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@inject DefaultClasses.Gebruiker Gebruiker
+@implements IDisposable
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Casino</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -13,7 +16,7 @@
             </NavLink>
         </li>
 
-        @if (HuidigeGebruiker.Gebruikersnaam != null)
+        @if (Gebruiker.Gebruikersnaam != null)
         {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="bank" Match="NavLinkMatch.All">
@@ -41,9 +44,6 @@
 
 @code {
 
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
-
     bool collapseNavMenu = true;
 
     string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -51,5 +51,21 @@
     void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        // Subscribe to the StateChanged EventHandler
+        Gebruiker.StateChanged += OnGebruikerStateAdvancedStateChanged;
+    }
+
+    void OnGebruikerStateAdvancedStateChanged(object sender, EventArgs e) => StateHasChanged();
+
+    void IDisposable.Dispose()
+    {
+        // When this control is disposed of
+        // unsubscribe from the StateChanged EventHandler
+        Gebruiker.StateChanged -=
+        OnGebruikerStateAdvancedStateChanged;
     }
 }

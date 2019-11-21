@@ -15,6 +15,8 @@ namespace DefaultClasses
         public int Nieuwsbrief { get; set; }
         public int Notificaties { get; set; }
 
+        public event EventHandler StateChanged;
+
         public void Update(int spelersnummer, string gebruikersnaam, string naam, string email, string wachtwoord, int saldo, DateTime dailyGiftDatum, int admin, int nieuwsbrief, int notificaties)
         {
             Spelersnummer = spelersnummer;
@@ -27,6 +29,18 @@ namespace DefaultClasses
             Admin = admin;
             Nieuwsbrief = nieuwsbrief;
             Notificaties = notificaties;
+
+            this.StateHasChanged();
+        }
+
+        public void Refresh()
+        {
+            this.StateHasChanged();
+        }
+
+        private void StateHasChanged()
+        {
+            this.StateChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

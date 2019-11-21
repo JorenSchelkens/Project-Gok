@@ -1,4 +1,5 @@
 ﻿@page "/hoger_lager"
+@inject DefaultClasses.Gebruiker HuidigeGebruiker
 
 <div style="text-align: center;">
     <h1 style="display: inline-block;"><label for="info">Hoger Lager</label></h1>
@@ -20,7 +21,7 @@
 
 @if (HuidigeGebruiker.Saldo > 0)
 {
-    
+
     <div style="text-align: center;">
         <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="Munten inzetten"
                                @bind-Value="@testingNullableDecimal2"
@@ -61,9 +62,6 @@
 </div>
 
 @code{
-
-    [CascadingParameter]
-    public DefaultClasses.Gebruiker HuidigeGebruiker { get; set; }
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
@@ -106,11 +104,12 @@
     {
         hogerLager = new HogerLagerDomain.HogerLager((int)testingNullableDecimal2.Value);
         HuidigeGebruiker.Saldo += hogerLager.StartSpel();
+        HuidigeGebruiker.Refresh();
 
-        if(hogerLager.resultaat == "Je hebt gewonnen")
+        if (hogerLager.resultaat == "Je hebt gewonnen")
         {
             currentStreak++;
-            if(currentStreak > bestStreak)
+            if (currentStreak > bestStreak)
             {
                 bestStreak = currentStreak;
             }
