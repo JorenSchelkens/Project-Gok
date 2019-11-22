@@ -75,11 +75,6 @@ namespace BlackJackDomain
         public int dealer()
         {
             
-            if (somDealer > 21 || somDealer < som)
-            {
-                gewonnen = true;
-
-            }
             int temp = rand.Next(0, cards.Count);
             Card huidigeKaart = cards[temp];
             cards.RemoveAt(temp);
@@ -109,7 +104,12 @@ namespace BlackJackDomain
 
             }
 
-            if (lijstKaartenDealer.Count >= 6 && somDealer <= 21|| somDealer >= som && somDealer < 21)
+            if (somDealer > 21 || somDealer < som)
+            {
+                gewonnen = true;
+            }
+
+            if (lijstKaartenDealer.Count >= 6 && somDealer <= 21|| somDealer >= som && somDealer <= 21)
             {
                 gewonnen = false;
             }

@@ -8,11 +8,26 @@
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
 
-            @foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenDealer)
+            @for (int i = 0; i < Game.lijstKaartenDealer.Count; i++)
             {
                 <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
 
-                    <img style="height: 300px;" src="@kaart.url" />
+                    @if (!dealerShow)
+                    {
+                        if (i == 1)
+                        {
+                            <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].urlAchterKant" />
+                        }
+                        else
+                        {
+                            <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].url" />
+                        }
+
+                    }
+                    else
+                    {
+                        <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].url" />
+                    }
 
                 </div>
             }
@@ -43,7 +58,7 @@
                     }
                 }
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                 <MatButton Unelevated="true" OnClick="@spelen" Disabled="hit">trek kaart</MatButton>
             </div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
@@ -103,6 +118,7 @@
     public bool checkWinnaar = false;
     public bool stand = false;
     public bool ronde = false;
+    public bool dealerShow = false;
 
     public List<int> kaartenSpeler;
     public List<int> kaartenDealer;
@@ -114,8 +130,6 @@
 
     public int plaatsKaart = 2;
     public int plaatsKaartDealer = 2;
-
-
 
     public BlackJackDomain.Game Game { get; set; }
 
@@ -216,6 +230,7 @@
 
     public async void winnaar()
     {
+        dealerShow = true;
         inzet += Game.winnaar();
         await Task.Delay(6000);
         spelGestart = true;
@@ -228,6 +243,7 @@
         checkWinnaar = false;
         stand = false;
         ronde = true;
+        dealerShow = false;
 
         this.kaartenSpeler = null;
         this.kaartenDealer = null;
