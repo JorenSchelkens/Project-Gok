@@ -53,8 +53,8 @@ namespace BlackJackDomain
                 {
                     if (lijstKaartenSpeler[i].waardeBlackjack == 11)
                     {
-                        lijstKaartenSpeler[i].waardeBlackjack = 1;
                         som -= 10;
+                        lijstKaartenSpeler[i].waardeBlackjack = 1;
                     }
                     else
                     {
@@ -109,7 +109,7 @@ namespace BlackJackDomain
                 gewonnen = true;
             }
 
-            if (lijstKaartenDealer.Count >= 6 && somDealer <= 21|| somDealer >= som && somDealer <= 21)
+            if (lijstKaartenDealer.Count >= 6 && somDealer <= 21 || somDealer >= som && somDealer <= 21)
             {
                 gewonnen = false;
             }
