@@ -32,63 +32,69 @@ else
 
     <p style="text-align: center; font-size:100px; margin-top:100px;">@Game.multiplier</p>
     <MatProgressBar Indeterminate="@progressBar"></MatProgressBar>
-    <div style="text-align: center; margin-top: 20px">
+    <div style="text-align: center; margin-top: 25px">
         <MatButton OnClick="@CashOut" Raised="true" Disabled="@cashOut">Cash Out</MatButton>
     </div>
-    <p style="text-align: center; font-size: 80px; margin-top:200px;">@crash</p>
+    <p> Huidige winst/verlies : </p>
+    <p style="text-align: center; font-size: 75px; margin-top:200px; color: #e31e00">@crash</p>
 
 }
 
 
-            @code {
+@code {
 
-                decimal? testingNullableDecimal1 = 0;
-                decimal? testingNullableDecimal2 = 0;
+    decimal? testingNullableDecimal1 = 0;
+    decimal? testingNullableDecimal2 = 0;
 
-        public CrashDomain.Game Game { get; set; }
+    public CrashDomain.Game Game { get; set; }
 
-            public bool temp = true;
-            public int tempInt = 2;
-            public bool progressBar = true;
-            public String crash = null;
-            public bool cashOut = false;
+    public bool temp = true;
+    public int tempInt = 2;
+    public bool progressBar = true;
+    public String crash;
+    public bool cashOut;
+    public double huidigeWinst;
 
-            protected override void OnInitialized()
-            {
-                Game = new Game();
-            }
 
-            public async void Click()
-            {
-                Game.muntenIngezet = (int)testingNullableDecimal1.Value;
-                temp = false;
+    protected override void OnInitialized()
+    {
+        Game = new Game();
+    }
 
-                double i = 0.00;
+    public async void Click()
+    {
+        Game.muntenIngezet = (int)testingNullableDecimal1.Value;
+        temp = false;
 
-                Game.genereerRandomGetal();
+        double i = 0.00;
 
-                while (i + 0.01 <= Game.totalMultiplier)
-                {
+        Game.genereerRandomGetal();
 
-                    Game.GeefDoor(i);
-                    this.StateHasChanged();
+        while (i + 0.01 <= Game.totalMultiplier)
+        {
 
-                    await Task.Delay(Game.delay);
+            Game.GeefDoor(i);
+            this.StateHasChanged();
 
-                    i += 0.01;
+            await Task.Delay(Game.delay);
 
-                }
+            i += 0.01;
 
-                progressBar = false;
-                crash = "Crash";
+        }
 
-                this.StateHasChanged();
+        progressBar = false;
+        crash = "Crashed @ " + Game.multiplier;
+        cashOut = true;
 
-            }
+        this.StateHasChanged();
 
-            public void CashOut()
-            {
-                    cashOut = true;
-            }
+    }
 
-            }
+    public void CashOut()
+    {
+        cashOut = true;
+
+
+    }
+
+}
