@@ -11,7 +11,7 @@
             <MatTextField ReadOnly="true" Value="@Gebruiker.Gebruikersnaam" FullWidth="true"></MatTextField>
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-            <MatButton Style="height: 50px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton>
+            <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton>
         </div>
 
         <MatDialog @bind-IsOpen="@dialog1IsOpen">
@@ -27,13 +27,35 @@
 
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
+        @* Deel 1.1 *@
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            <MatTextField ReadOnly="true" Value="@Gebruiker.Naam" FullWidth="true"></MatTextField>
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+            <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderNaam" Raised="true">Verander Naam</MatButton>
+        </div>
+
+        <MatDialog @bind-IsOpen="@dialog4IsOpen">
+            <MatDialogTitle>Geef de nieuwe naam in</MatDialogTitle>
+            <MatDialogContent>
+                <MatTextField @bind-Value="@nieuweNaam"></MatTextField>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { dialog4IsOpen = false; })">Cancel</MatButton>
+                <MatButton OnClick="@OkClick4">Submit</MatButton>
+            </MatDialogActions>
+        </MatDialog>
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
         @* Deel 2 *@
 
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
             <MatTextField Type="password" ReadOnly="true" Value="@Gebruiker.Wachtwoord" FullWidth="true"></MatTextField>
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-            <MatButton Style="height: 50px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton>
+            <MatButton Style="height: 50px; width: 230px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton>
         </div>
 
         <MatDialog @bind-IsOpen="@dialog2IsOpen">
@@ -65,7 +87,7 @@
             <MatTextField ReadOnly="true" Value="@Gebruiker.Email" FullWidth="true"></MatTextField>
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-            <MatButton Style="height: 50px;" OnClick="@veranderEmail" Raised="true">Verander Email</MatButton>
+            <MatButton Style="height: 50px; width: 230px;" OnClick="@veranderEmail" Raised="true">Verander Email</MatButton>
         </div>
 
         <MatDialog @bind-IsOpen="@dialog3IsOpen">
@@ -82,9 +104,9 @@
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
 
-
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
-            <MatButton Style="height: 50px;" OnClick="@UpdateProfiel" Raised="true">Update profiel</MatButton>
+            <MatButton Style="height: 50px; width: 230px;" OnClick="@UpdateProfiel" Raised="true">Update profiel</MatButton>
         </div>
 
     </div>
@@ -97,11 +119,13 @@
     public bool dialog1IsOpen = false;
     public bool dialog2IsOpen = false;
     public bool dialog3IsOpen = false;
+    public bool dialog4IsOpen = false;
 
     public bool oudWachtwoordJuisIngegeven = true;
 
     public string nieuweGebruikersNaam = null;
     public string nieuwEmail = null;
+    public string nieuweNaam = null;
 
     public string oudeWachtwoord = null;
     public string nieuwWachtwoord = null;
@@ -132,6 +156,12 @@
         nieuwEmail = null;
     }
 
+    public void VeranderNaam()
+    {
+        dialog4IsOpen = true;
+        nieuweNaam = null;
+    }
+
     public void OkClick1()
     {
         Gebruiker.Gebruikersnaam = nieuweGebruikersNaam;
@@ -158,6 +188,12 @@
     {
         Gebruiker.Email = nieuwEmail;
         dialog3IsOpen = false;
+    }
+
+    public void OkClick4()
+    {
+        Gebruiker.Naam = nieuweNaam;
+        dialog4IsOpen = false;
     }
 
     private void CheckGebruiker()

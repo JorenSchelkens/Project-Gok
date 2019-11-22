@@ -7,8 +7,8 @@
 
 @if (HuidigeGebruiker.Gebruikersnaam == null)
 {
-    <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true"></MatTextField>
-    <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
+    <MatTextField @bind-Value="@Naam" Label="Gebruikersnaam" FullWidth="true" Required="true" @onkeyup="CheckKey"></MatTextField>
+    <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true" @onkeyup="CheckKey"></MatTextField>
 
     <br />
     <br />
@@ -50,6 +50,14 @@ else
         else
         {
             Toaster.Add("Gebruikersnaam of wachtwoord is niet correct", MatToastType.Danger, "Error");
+        }
+    }
+
+    public void CheckKey(KeyboardEventArgs e)
+    {
+        if(e.Key == "Enter")
+        {
+            this.Login();
         }
     }
 
