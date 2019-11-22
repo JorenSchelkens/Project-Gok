@@ -127,49 +127,9 @@
     public string urlKaartDealer;
 
     public double inzet;
-    public DefaultClasses.DBConnection DBConnection { get; set; }
-
-    decimal? testingNullableDecimal2 = 0;
-
-    public bool spelGestart = false;
-    public bool laatZien = false;
-    public bool disabled = true;
-    public bool start = false;
-    public bool toonkaart = false;
-    public bool volgendeKaart = false;
-    public bool hit = false;
-    public bool checkWinnaar = false;
-    public bool stand = false;
-    public bool ronde = false;
-
-    public List<int> kaartenSpeler;
-    public List<int> kaartenDealer;
-
-    public string urlKaartSpeler;
-    public string urlKaartDealer;
-
-    public double inzet;
 
     public int plaatsKaart = 2;
     public int plaatsKaartDealer = 2;
-
-    public int plaatsKaart = 2;
-    public int plaatsKaartDealer = 2;
-
-    public BlackJackDomain.Game Game { get; set; }
-
-    protected override void OnInitialized()
-    {
-        DBConnection = new DefaultClasses.DBConnection();
-        Game = new BlackJackDomain.Game();
-    }
-
-    public void startSpel()
-    {
-        spelGestart = true;
-        laatZien = true;
-        ronde = true;
-    }
 
     public BlackJackDomain.Game Game { get; set; }
 
