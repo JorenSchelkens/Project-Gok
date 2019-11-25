@@ -5,100 +5,106 @@
 
 @if (toonkaart)
 {
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
+    @if (HuidigeGebruiker.Naam != null)
+    {
+        <div class="mat-layout-grid">
+            <div class="mat-layout-grid-inner">
 
-            @for (int i = 0; i < Game.lijstKaartenDealer.Count; i++)
-            {
-                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                @for (int i = 0; i < Game.lijstKaartenDealer.Count; i++)
+                {
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
 
-                    @if (!dealerShow)
-                    {
-                        if (i == 1)
+                        @if (!dealerShow)
                         {
-                            <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].urlAchterKant" />
+                            if (i == 1)
+                            {
+                                <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].urlAchterKant" />
+                            }
+                            else
+                            {
+                                <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].url" />
+                            }
+
                         }
                         else
                         {
                             <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].url" />
                         }
 
-                    }
-                    else
-                    {
-                        <img style="height: 300px;" src="@Game.lijstKaartenDealer[i].url" />
-                    }
-
-                </div>
-            }
-
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
-
-            @foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenSpeler)
-            {
-                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-
-                    <img style="height: 300px;" src="@kaart.url" />
-
-                </div>
-            }
-
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
-
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                @if (checkWinnaar)
-                {
-                    @if (Game.gewonnen)
-                    {
-                        <p>U heeft gewonnen, gefeliciteerd!</p>
-                    }
-                    else
-                    {
-                        <p>U heeft verloren, volgende keer beter.</p>
-                    }
+                    </div>
                 }
-            </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-                <MatButton Unelevated="true" OnClick="@spelen" Disabled="hit">trek kaart</MatButton>
-            </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
-                <MatButton Unelevated="true" OnClick="@dealer" Disabled="stand">stop</MatButton>
-            </div>
 
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
+                @foreach (DefaultClasses.Cards.Card kaart in Game.lijstKaartenSpeler)
+                {
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+
+                        <img style="height: 300px;" src="@kaart.url" />
+
+                    </div>
+                }
+
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                    @if (checkWinnaar)
+                    {
+                        @if (Game.gewonnen)
+                        {
+                            <p>U heeft gewonnen, gefeliciteerd!</p>
+                        }
+                        else
+                        {
+                            <p>U heeft verloren, volgende keer beter.</p>
+                        }
+                    }
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                    <MatButton Unelevated="true" OnClick="@spelen" Disabled="hit">trek kaart</MatButton>
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
+                    <MatButton Unelevated="true" OnClick="@dealer" Disabled="stand">stop</MatButton>
+                </div>
+
+            </div>
         </div>
-    </div>
 
-}
+        @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
+        {
+            if (ronde)
+            {
+                <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 820px;" OnClick="@startSpel2">start ronde</MatButton>
+            }
 
-@if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
-{
-    if (ronde)
-    {
-        <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 820px;" OnClick="@startSpel2">start ronde</MatButton>
+        }
+
+        @if (!spelGestart)
+        {
+            <div style="text-align: center; position: relative; top: 300px;">
+                <MatButton Unelevated="true" OnClick="@startSpel" Disabled="start">Start spel</MatButton>
+            </div>
+
+        }
+
+        @if (laatZien)
+        {
+            <div style="text-align: center; position: center;">
+                <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
+                                       @bind-Value=@testingNullableDecimal2
+                                       DecimalPlaces=0
+                                       Disabled="start"
+                                       Minimum=0 Maximum=500>
+                </MatNumericUpDownField>
+            </div>
+
+        }
     }
 
-}
-
-@if (!spelGestart)
-{
-    <div style="text-align: center; position: relative; top: 300px;">
-        <MatButton Unelevated="true" OnClick="@startSpel" Disabled="start">Start spel</MatButton>
-    </div>
 
 }
 
-@if (laatZien)
-{
-    <div style="text-align: center; position: center;">
-        <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                               @bind-Value=@testingNullableDecimal2
-                               DecimalPlaces=0
-                               Disabled="start"
-                               Minimum=0 Maximum=500>
-        </MatNumericUpDownField>
-    </div>
 
-}
 
 
 
@@ -149,7 +155,7 @@
     public void startSpel2()
     {
         laatZien = false;
-        Game = new BlackJackDomain.Game(inzet);
+        Game = new BlackJackDomain.Game(HuidigeGebruiker.Saldo);
         Game.extraKaart();
         urlKaartSpeler = Game.lijstKaartenSpeler[0].url;
         Game.extraKaart();
