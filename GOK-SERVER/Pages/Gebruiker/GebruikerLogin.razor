@@ -13,7 +13,7 @@
     <br />
     <br />
 
-    <MatButton OnClick="@Login" Raised="true">Login</MatButton>
+    <MatButton Type="submit" OnClick="@Login" Raised="true">Login</MatButton>
 }
 else
 {
@@ -35,10 +35,22 @@ else
 
     private void Login()
     {
-        Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
-        HuidigeGebruiker.Update(Gebruiker.Spelersnummer, Gebruiker.Gebruikersnaam, Gebruiker.Naam, Gebruiker.Email, Gebruiker.Wachtwoord, Gebruiker.Saldo, Gebruiker.DailyGiftDatum, Gebruiker.Admin, Gebruiker.Nieuwsbrief, Gebruiker.Notificaties);
+        if (Naam == null)
+        {
+            Toaster.Add("Gebruikersnaam is verplicht", MatToastType.Danger, "Error");
+        }
+        else if (Wachtwoord == null)
+        {
+            Toaster.Add("Wachtwoord is verplicht", MatToastType.Danger, "Error");
+        }
+        else
+        {
+            Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
+            HuidigeGebruiker.Update(Gebruiker.Spelersnummer, Gebruiker.Gebruikersnaam, Gebruiker.Naam, Gebruiker.Email, Gebruiker.Wachtwoord, Gebruiker.Saldo, Gebruiker.DailyGiftDatum, Gebruiker.Admin, Gebruiker.Nieuwsbrief, Gebruiker.Notificaties);
 
-        CheckGebruiker();
+            CheckGebruiker();
+        }
+
     }
 
     private void CheckGebruiker()
@@ -55,7 +67,7 @@ else
 
     public void CheckKey(KeyboardEventArgs e)
     {
-        if(e.Key == "Enter")
+        if (e.Key == "Enter")
         {
             this.Login();
         }

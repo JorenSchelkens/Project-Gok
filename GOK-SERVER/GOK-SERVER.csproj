@@ -26,7 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Bank\BankDomain.csproj" />
     <ProjectReference Include="..\BlackJackDomain\BlackJackDomain.csproj" />
-    <ProjectReference Include="..\CascadingClasses\CascadingClasses.csproj" />
     <ProjectReference Include="..\CrashDomain\CrashDomain.csproj" />
     <ProjectReference Include="..\DefaultClasses\DefaultClasses.csproj" />
     <ProjectReference Include="..\HogerEnLagerDomain\HogerLagerDomain.csproj" />
