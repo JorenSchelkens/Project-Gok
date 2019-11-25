@@ -114,17 +114,15 @@ namespace DefaultClasses
         }
         public void RemoveGebruiker(string email)
         {
-
             try
             {
                 using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
                 {
                     connection.Open();
-                    string sqlCode = "DELETE FROM Gebruiker WHERE Email= gebruiker.email";
+                    string sqlCode = "DELETE FROM Gebruikers WHERE Email = '" + email + "'";
                     using (var command = new SqlCommand(sqlCode, connection))
                     {
                         int rowsAffected = command.ExecuteNonQuery();
-                        
                     }
 
                     connection.Close();

@@ -1,12 +1,26 @@
 ﻿@page "/admin"
-
-@for (int i = 0; i < gebruikers.Count; i++)
-{
-    <p>@gebruikers[i].Naam</p>
-}
+    <table border="1">
+        @foreach (DefaultClasses.Gebruiker gebruiker in gebruikers)
+        {
+            <tr>
+                <td>
+                    <p>@gebruiker.Naam</p>
+                </td>
+                <td>
+                    <p>@gebruiker.Email</p>
+                </td>
+                <td>
+                    <p>@gebruiker.Gebruikersnaam</p>
+                </td>
+                <td>
+                    <MatButton Type="submit" OnClick="@(() => Verwijder(gebruiker))" Raised="true">Verwijderd</MatButton>
+                </td>
+            </tr>
+        }
+    </table>
 
 @code{
-    public string tekst = "";
+
     public List<DefaultClasses.Gebruiker> gebruikers { get; set; } = new List<DefaultClasses.Gebruiker>();
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
@@ -16,5 +30,14 @@
         gebruikers = DBConnection.GetAllGebruikers();
 
         await Task.Delay(1);
+    }
+
+    public void Verwijder(DefaultClasses.Gebruiker gebruiker)
+    {
+        //TODO Popup
+
+        DBConnection.RemoveGebruiker(gebruiker.Email);
+        gebruikers.Remove(gebruiker);
+        this.StateHasChanged();
     }
 }
