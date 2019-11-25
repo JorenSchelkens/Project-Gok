@@ -52,7 +52,9 @@
         @* Deel 2 *@
 
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField Type="password" ReadOnly="true" Value="@Gebruiker.Wachtwoord" FullWidth="true"></MatTextField>
+            <MatTooltip Tooltip="Dit is niet een weergaven van u huidige passwoord">
+                <MatTextField Type="password" ReadOnly="true" Value="@Gebruiker.Wachtwoord" FullWidth="true"></MatTextField>
+            </MatTooltip>
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
             <MatButton Style="height: 50px; width: 230px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton>
