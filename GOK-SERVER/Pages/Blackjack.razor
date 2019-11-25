@@ -3,9 +3,9 @@
 
 <h1 style="text-align:center">Blackjack</h1>
 
-@if (toonkaart)
+@if (HuidigeGebruiker.Naam != null)
 {
-    @if (HuidigeGebruiker.Naam != null)
+    @if (toonkaart)
     {
         <div class="mat-layout-grid">
             <div class="mat-layout-grid-inner">
@@ -69,7 +69,7 @@
 
             </div>
         </div>
-
+    }
         @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
         {
             if (ronde)
@@ -99,18 +99,19 @@
             </div>
 
         }
+
     }
 
 
-}
 
 
 
 
 
-@code{
 
-    public DefaultClasses.DBConnection DBConnection { get; set; }
+    @code{
+
+public DefaultClasses.DBConnection DBConnection { get; set; }
 
     decimal? testingNullableDecimal2 = 0;
 
@@ -262,4 +263,4 @@
 
         this.StateHasChanged();
     }
-}
+    }
