@@ -173,10 +173,10 @@
     public void OkClick2()
     {
 
-        if (oudeWachtwoord == Gebruiker.Wachtwoord)
+        if (DefaultClasses.Encryption.EncryptString(oudeWachtwoord) == Gebruiker.Wachtwoord)
         {
             oudWachtwoordJuisIngegeven = true;
-            Gebruiker.Wachtwoord = nieuwWachtwoord;
+            Gebruiker.Wachtwoord = DefaultClasses.Encryption.EncryptString(nieuwWachtwoord);
             dialog2IsOpen = false;
         }
         else
