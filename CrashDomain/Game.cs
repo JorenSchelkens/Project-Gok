@@ -11,6 +11,7 @@ namespace CrashDomain
         public double totalMultiplier { get; set; }
         public bool spelGedaan { get; set; } = false;
         public int delay { get; set; } = 150;  //150 - 10
+        public int winstInMunten { get; set; }
 
         public Game(int muntenIngezet, double autoCashOut)
         {
@@ -42,14 +43,15 @@ namespace CrashDomain
 
         public void VeranderDelay()
         {
-            if(delay <= 10)
+            if (delay <= 10)
             {
                 delay = 10;
-            } else
+            }
+            else
             {
                 delay = -(int)Math.Pow((1.2), multiplier + 25) + 245;
             }
-            
+
         }
 
         public void genereerRandomGetal()
@@ -73,6 +75,11 @@ namespace CrashDomain
             {
                 totalMultiplier = random.NextDouble() * 2 + 4;
             }
+        }
+
+        public void GeefWinstWeer()
+        {
+            this.winstInMunten = (int)((muntenIngezet * multiplier) - muntenIngezet);
         }
     }
 }
