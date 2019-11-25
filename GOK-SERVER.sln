@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HogerLagerDomain", "HogerEn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RouletteDomain", "RouletteDomain\RouletteDomain.csproj", "{DF59E88A-0D31-4BF2-9FC6-15501740CD39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CascadingClasses", "CascadingClasses\CascadingClasses.csproj", "{E479478A-960F-41C4-9754-B1D85AB49EAF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultClasses", "DefaultClasses\DefaultClasses.csproj", "{73EC1C83-6507-4533-9842-4007165487EC}"
 EndProject
 Global
@@ -55,10 +53,6 @@ Global
 		{DF59E88A-0D31-4BF2-9FC6-15501740CD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF59E88A-0D31-4BF2-9FC6-15501740CD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF59E88A-0D31-4BF2-9FC6-15501740CD39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E479478A-960F-41C4-9754-B1D85AB49EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E479478A-960F-41C4-9754-B1D85AB49EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E479478A-960F-41C4-9754-B1D85AB49EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E479478A-960F-41C4-9754-B1D85AB49EAF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73EC1C83-6507-4533-9842-4007165487EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73EC1C83-6507-4533-9842-4007165487EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73EC1C83-6507-4533-9842-4007165487EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
