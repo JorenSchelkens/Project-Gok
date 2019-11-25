@@ -1,0 +1,20 @@
+﻿@page "/admin"
+
+@for (int i = 0; i < gebruikers.Count; i++)
+{
+    <p>@gebruikers[i].Naam</p>
+}
+
+@code{
+    public string tekst = "";
+    public List<DefaultClasses.Gebruiker> gebruikers { get; set; } = new List<DefaultClasses.Gebruiker>();
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        DBConnection = new DefaultClasses.DBConnection();
+        gebruikers = DBConnection.GetAllGebruikers();
+
+        await Task.Delay(1);
+    }
+}
