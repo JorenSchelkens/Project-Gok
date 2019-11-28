@@ -22,10 +22,7 @@ else
     <br />
     <br />
 
-    <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
-    <br />
-    <br />
-    <MatNumericUpDownField Label="Munten overschrijven: 1$ = 100 munten"
+    <MatNumericUpDownField Label="Geld overschrijven: 1$ = 100 munten"
                            Style="width: 400px;"
                            @bind-Value=@UpDownFieldDeposit
                            DecimalPlaces=2
@@ -35,7 +32,7 @@ else
 
     </MatNumericUpDownField>
 
-    <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Munten overschrijven</MatButton>
+    <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Geld overschrijven</MatButton>
 }
 @code {
     public DefaultClasses.DBConnection DBConnection { get; set; }
