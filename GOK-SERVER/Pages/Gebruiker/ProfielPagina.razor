@@ -122,6 +122,7 @@
     public bool dialog4IsOpen = false;
 
     public bool oudWachtwoordJuisIngegeven = true;
+    public bool UpdateWachtwoord = false;
 
     public string nieuweGebruikersNaam = null;
     public string nieuwEmail = null;
@@ -174,12 +175,15 @@
         if (DefaultClasses.Encryption.EncryptString(oudeWachtwoord) == Gebruiker.Wachtwoord)
         {
             oudWachtwoordJuisIngegeven = true;
-            Gebruiker.Wachtwoord = DefaultClasses.Encryption.EncryptString(nieuwWachtwoord);
+            Gebruiker.Wachtwoord = nieuwWachtwoord;
             dialog2IsOpen = false;
+
+            UpdateWachtwoord = true;
         }
         else
         {
             oudWachtwoordJuisIngegeven = false;
+            UpdateWachtwoord = false;
         }
 
     }
@@ -207,6 +211,12 @@
     public void UpdateProfiel()
     {
         DBConnection.UpdateGebruiker(Gebruiker);
+
+        if (UpdateWachtwoord)
+        {
+            DBConnection.UpdateGebruikerWachtwoord(Gebruiker);
+        }
+
     }
 
 }
