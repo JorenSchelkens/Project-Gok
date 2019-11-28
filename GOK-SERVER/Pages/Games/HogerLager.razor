@@ -1,0 +1,131 @@
+﻿@page "/hoger_lager"
+@inject DefaultClasses.Gebruiker HuidigeGebruiker
+
+<div style="text-align: center;">
+    <h1 style="display: inline-block;"><label for="info">Hoger Lager</label></h1>
+    <MatIconButton OnClick="@veranderStatusInfo" Id="info" Icon="info"></MatIconButton>
+    <br />
+    <br />
+</div>
+
+<MatDialog @bind-IsOpen="@toonInfo">
+    <MatDialogContent>
+        <p>
+            Druk op 'start spel' om het spel te starten. Kies daarna het bedrag dat je wilt inzetten.
+            Druk daarna op 'trek kaart'. Jouw kaart staat rechts, de kaart van de computer staat links.
+            Diegene die de hoogste kaart heeft wint.
+        </p>
+    </MatDialogContent>
+</MatDialog>
+
+
+@if (HuidigeGebruiker.Saldo >= 0)
+{
+
+    <div style="text-align: center;">
+        <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="Munten inzetten"
+                               @bind-Value="@testingNullableDecimal2"
+                               DecimalPlaces=0
+                               Minimum=0 Maximum=@HuidigeGebruiker.Saldo>
+        </MatNumericUpDownField>
+        <br />
+        <MatButton Unelevated="true" Style="width: 278px; height: 56px; font-size: large" OnClick="@trekKaart" Disabled="@disabled">Trek kaart</MatButton>
+    </div>
+
+}
+
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        <div style="text-align: center; font-size: x-large;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4">Kaart computer</div>
+        <div style="text-align: center;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4"></div>
+        <div style="text-align: center; font-size: x-large;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4">Jouw kaart</div>
+        @if (toonKaarten)
+        {
+            <div style="text-align: center;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4"><img style="height: 400px;" src="@hogerLager.computerKaart.url" /></div>
+            <div style="text-align: center; font-size: x-large;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4 mat-layout-grid-cell-align-middle">
+                beste streak: @bestStreak
+                <br />
+                streak: @currentStreak
+                <br />
+                <br />
+                @hogerLager.resultaat
+            </div>
+            <div style="text-align: center;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4"><img style="height: 400px;" src="@hogerLager.spelerKaart.url" /></div>
+        }
+        else
+        {
+            <div style="text-align: center;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4"><img style="height: 400px;" src="img/Kaarten/Back/back.png" /></div>
+            <div style="text-align: center;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4"></div>
+            <div style="text-align: center;" class="mat-layout-grid-cell mat-layout-grid-cell-span-4"><img style="height: 400px;" src="img/Kaarten/Back/back.png" /></div>
+        }
+    </div>
+</div>
+
+@code{
+
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+
+    HogerLagerDomain.HogerLager hogerLager;
+
+    public bool toonInfo = false;
+
+    public bool disabled = false;
+    public bool toonKaarten = false;
+
+    public int currentStreak = 0;
+    public int bestStreak = 0;
+
+    decimal? testingNullableDecimal2 = 0;
+
+    protected override void OnInitialized()
+    {
+        DBConnection = new DefaultClasses.DBConnection();
+    }
+
+    public void veranderStatusInfo()
+    {
+        toonInfo = true;
+    }
+
+    public void checkIngevuldeWaarde()
+    {
+
+        if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
+        {
+            disabled = false;
+        }
+        else
+        {
+            disabled = true;
+        }
+    }
+
+    public void trekKaart()
+    {
+        hogerLager = new HogerLagerDomain.HogerLager((int)testingNullableDecimal2.Value);
+        HuidigeGebruiker.Saldo += hogerLager.StartSpel();
+        HuidigeGebruiker.Refresh();
+
+        if (hogerLager.resultaat == "Je hebt gewonnen")
+        {
+            currentStreak++;
+            if (currentStreak > bestStreak)
+            {
+                bestStreak = currentStreak;
+            }
+        }
+        else
+        {
+            currentStreak = 0;
+        }
+
+        updateGebruiker();
+        toonKaarten = true;
+    }
+
+    private void updateGebruiker()
+    {
+        DBConnection.UpdateGebruiker(HuidigeGebruiker);
+    }
+
+}
