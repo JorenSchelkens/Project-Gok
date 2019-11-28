@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DefaultClasses
+namespace DefaultClasses.DataBase
 {
     public class Gebruiker
     {

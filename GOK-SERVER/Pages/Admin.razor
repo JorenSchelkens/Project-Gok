@@ -1,4 +1,5 @@
 ﻿@page "/admin"
+@inject IMatToaster Toaster
 
 <MatAccordion>
 
@@ -7,33 +8,29 @@
             <MatExpansionPanelHeader>Bekijk alle gebruikers</MatExpansionPanelHeader>
         </MatExpansionPanelSummary>
         <MatExpansionPanelDetails>
-
-            @if (gebruikers.Count == 0 || gebruikers == null)
-            {
-                <table border="1">
-                    @foreach (DefaultClasses.Gebruiker gebruiker in gebruikers)
-                    {
-                        <tr>
-                            <td>
-                                <p>@gebruiker.Naam</p>
-                            </td>
-                            <td>
-                                <p>@gebruiker.Email</p>
-                            </td>
-                            <td>
-                                <p>@gebruiker.Gebruikersnaam</p>
-                            </td>
-                            <td>
-                                <MatButton Type="submit" OnClick="@(() => Verwijder(gebruiker))" Raised="true">Verwijderd</MatButton>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            }
-
-
+            <table border="1">
+                @foreach (DefaultClasses.DataBase.Gebruiker gebruiker in gebruikers)
+                {
+                    <tr>
+                        <td>
+                            <p>@gebruiker.Naam</p>
+                        </td>
+                        <td>
+                            <p>@gebruiker.Email</p>
+                        </td>
+                        <td>
+                            <p>@gebruiker.Gebruikersnaam</p>
+                        </td>
+                        <td>
+                            <MatButton Type="submit" OnClick="@(() => Verwijder(gebruiker))" Raised="true">Verwijderd</MatButton>
+                        </td>
+                    </tr>
+                }
+            </table>
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
+
+
 
     <MatExpansionPanel>
         <MatExpansionPanelSummary>
@@ -41,31 +38,42 @@
         </MatExpansionPanelSummary>
         <MatExpansionPanelDetails>
 
-            <MatTextField @bind-Value="@invulCode" Label="Invul code" FullWidth="true" Required="true"></MatTextField>
-
-            <MatNumericUpDownField Label="Aantal uses"
-                                   @bind-Value=@UpDownFieldUses
-                                   DecimalPlaces=0
-                                   Icon="account_balance_wallet"
-                                   Minimum="1"
-                                   Required="true">
-            </MatNumericUpDownField>
-
-            <MatNumericUpDownField Label="Procent"
-                                   @bind-Value=@UpDownFieldProcent
-                                   DecimalPlaces=0
-                                   Icon="account_balance_wallet"
-                                   Minimum="-1" Maximum="100">
-            </MatNumericUpDownField>
-
-            <MatNumericUpDownField Label="Ontvangen saldo"
-                                   @bind-Value=@UpDownFieldSaldo
-                                   DecimalPlaces=0
-                                   Icon="account_balance_wallet"
-                                   Minimum="-1">
-            </MatNumericUpDownField>
-
-            <MatButton Type="submit" OnClick="@maakGiftCard" Raised="true">Maak giftcard</MatButton>
+            <div class="mat-layout-grid">
+                <div class="mat-layout-grid-inner">
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        <MatTextField @bind-Value="@invulCode" Label="Invul code" FullWidth="true" Required="true"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        <MatNumericUpDownField Label="Aantal uses"
+                                               @bind-Value=@UpDownFieldUses
+                                               DecimalPlaces=0
+                                               Icon="account_balance_wallet"
+                                               Minimum="1"
+                                               Required="true">
+                        </MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        <MatNumericUpDownField Label="Procent (-1 indien niet te gebruiken)"
+                                               @bind-Value=@UpDownFieldProcent
+                                               Icon="account_balance_wallet"
+                                               Minimum="-1" Maximum="100"
+                                               Required="true">
+                        </MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        <MatNumericUpDownField Label="Ontvangen saldo (-1 indien niet te gebruiken)"
+                                               @bind-Value=@UpDownFieldSaldo
+                                               DecimalPlaces=0
+                                               Icon="account_balance_wallet"
+                                               Minimum="-1" Maximum="null"
+                                               Required="true">
+                        </MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        <MatButton Type="submit" OnClick="@maakGiftCard" Raised="true">Maak giftcard</MatButton>
+                    </div>
+                </div>
+            </div>
 
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
@@ -75,7 +83,7 @@
 
 @code{
 
-    public List<DefaultClasses.Gebruiker> gebruikers { get; set; } = new List<DefaultClasses.Gebruiker>();
+    public List<DefaultClasses.DataBase.Gebruiker> gebruikers { get; set; } = new List<DefaultClasses.DataBase.Gebruiker>();
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     public string invulCode = "";
@@ -83,13 +91,13 @@
     decimal? UpDownFieldProcent = null;
     decimal? UpDownFieldSaldo = null;
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         DBConnection = new DefaultClasses.DBConnection();
         gebruikers = DBConnection.GetAllGebruikers();
     }
 
-    public void Verwijder(DefaultClasses.Gebruiker gebruiker)
+    public void Verwijder(DefaultClasses.DataBase.Gebruiker gebruiker)
     {
         //TODO Popup
 
@@ -100,6 +108,7 @@
 
     public void maakGiftCard()
     {
-        DBConnection.AddGiftCard(invulCode, (int) UpDownFieldUses.Value, (int) UpDownFieldProcent.Value, (int) UpDownFieldSaldo.Value);
+        DBConnection.AddGiftCard(invulCode, (int)UpDownFieldUses.Value, (int)UpDownFieldProcent.Value, (int)UpDownFieldSaldo.Value);
+        Toaster.Add("Giftcard gemaakt!", MatToastType.Success, "Succes!");
     }
 }

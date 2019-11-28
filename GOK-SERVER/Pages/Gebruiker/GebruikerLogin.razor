@@ -1,7 +1,7 @@
 ﻿@page "/gebruiker/login"
 @inject NavigationManager NavigationManager
 @inject IMatToaster Toaster
-@inject DefaultClasses.Gebruiker HuidigeGebruiker
+@inject DefaultClasses.DataBase.Gebruiker HuidigeGebruiker
 
 <h1>Login</h1>
 
@@ -23,7 +23,7 @@ else
 @code {
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
-    public DefaultClasses.Gebruiker Gebruiker;
+    public DefaultClasses.DataBase.Gebruiker Gebruiker;
 
     string Naam;
     string Wachtwoord;

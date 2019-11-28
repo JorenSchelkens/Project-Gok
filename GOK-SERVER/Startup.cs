@@ -58,7 +58,7 @@ namespace GOK_SERVER
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddScoped<GebruikersService>();
 
-            services.AddScoped<DefaultClasses.Gebruiker>();
+            services.AddScoped<DefaultClasses.DataBase.Gebruiker>();
 
             services.AddFluentEmail("defaultsender@test.test")
                     .AddRazorRenderer()

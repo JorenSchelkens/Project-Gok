@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DefaultClasses.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -228,6 +229,44 @@ namespace DefaultClasses
             {
                 Error = e.ToString();
             }
+        }
+
+        public GiftCard GetGiftCard(string giftcardCode)
+        {
+            GiftCard giftCard = new GiftCard();
+            try
+            {
+                using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
+                {
+                    connection.Open();
+
+                    string sqlCode = "SELECT Nummer, InvulCode, UsesLeft, KortingProcent, TeOntvangenSaldo FROM GiftCards WHERE InvulCode = '" + giftcardCode + "';";
+                    using (var command = new SqlCommand(sqlCode, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                giftCard.Nummer = reader.GetInt32(0);
+                                giftCard.InvulCode = reader.GetString(1);
+                                giftCard.UsesLeft = reader.GetInt32(2);
+                                giftCard.KortingProcent = reader.GetInt32(3);
+                                giftCard.TeOntvangenSaldo = reader.GetInt32(4);
+                            }
+                        }
+                    }
+
+                    connection.Close();
+                }
+
+            }
+            catch (SqlException e)
+            {
+                Error = e.ToString();
+                giftCard = null;
+            }
+
+            return giftCard;
         }
 
     }
