@@ -56,17 +56,17 @@ namespace BlackJackDomain
                         som -= 10;
                         lijstKaartenSpeler[i].waardeBlackjack = 1;
                     }
-                    else
-                    {
-                        gewonnen = false;
-                    }
                 }
                 
                     
             }
+
             if (lijstKaartenSpeler.Count >= 6 && som <= 21)
             {
                 gewonnen = true;
+            }else if (som > 21)
+            {
+                gewonnen = false;
             }
 
             return huidigeKaart.waardeBlackjack;
@@ -95,10 +95,6 @@ namespace BlackJackDomain
                         lijstKaartenDealer[i].waardeBlackjack = 1;
                         somDealer -= 10;
                     }
-                    else
-                    {
-                        gewonnen = true;
-                    }
 
                 }
 
@@ -114,6 +110,10 @@ namespace BlackJackDomain
                 gewonnen = false;
             }
 
+            if(som == 21 && somDealer < 21)
+            {
+                gewonnen = true;
+            }
             return huidigeKaart.waardeBlackjack;
             
         }

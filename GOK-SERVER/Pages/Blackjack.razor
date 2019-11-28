@@ -212,12 +212,13 @@ public DefaultClasses.DBConnection DBConnection { get; set; }
     {
         hit = true;
         stand = true;
-        checkWinnaar = true;
+
         while (Game.somDealer < Game.som && Game.somDealer < 17)
         {
             Game.dealer();
         }
 
+        checkWinnaar = true;
         Game.winnaar();
         winnaar();
     }
