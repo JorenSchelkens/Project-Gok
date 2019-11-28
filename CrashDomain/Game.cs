@@ -83,7 +83,6 @@ namespace CrashDomain
 
         public void GeefWinstWeer()
         {
-
             this.winstInMunten = (int)((muntenIngezet * multiplier) - muntenIngezet);
         }
     }
