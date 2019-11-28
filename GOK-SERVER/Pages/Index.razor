@@ -1,5 +1,102 @@
 ﻿@page "/"
-
+<style>
+    table {
+            border-collapse: collapse;
+            border: 1px solid #C0C0C0;
+            margin-left: auto; 
+            margin-right: auto; 
+    }
+    td {
+        margin: 100px;
+    }
+    .demo-mat-card {
+        max-width: 400px;
+    }
+    .demo-mat-card-content {
+        padding: 1rem;
+    }
+    .demo-mat-card-clean-margin {
+        margin: 0px;
+    }
+</style>
 <h1>Casino</h1>
-
 <p>Welkom bij Casino!</p>
+<table>
+    <tr>
+        <td>
+            <MatCard class="demo-mat-card">
+                <MatCardContent>
+                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/hogerLager.jpg">
+                        <div class="demo-mat-card-content" style="color: white;">
+                            <MatHeadline6 class="demo-mat-card-clean-margin">
+                                Black Jack
+                            </MatHeadline6>
+                        </div>
+                    </MatCardMedia>
+                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                        Visit ten places on our planet that are undergoing the biggest changes today.
+                    </MatBody2>
+                </MatCardContent>
+            </MatCard>
+        </td>
+        <td>
+        </td>
+        <td>
+            <MatCard class="demo-mat-card">
+                <MatCardContent>
+                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/roulette.jpg">
+                        <div class="demo-mat-card-content" style="color: white;">
+                            <MatHeadline6 class="demo-mat-card-clean-margin">
+                                Black Jack
+                            </MatHeadline6>
+
+                        </div>
+                    </MatCardMedia>
+                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                        Visit ten places on our planet that are undergoing the biggest changes today.
+                    </MatBody2>
+                </MatCardContent>
+            </MatCard>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <MatCard class="demo-mat-card">
+                <MatCardContent>
+                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/blackJack.jpg">
+                        <div class="demo-mat-card-content" style="color: white;">
+                            <MatHeadline6 class="demo-mat-card-clean-margin">
+                                Black Jack
+                            </MatHeadline6>
+
+                        </div>
+                    </MatCardMedia>
+                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                        Visit ten places on our planet that are undergoing the biggest changes today.
+                    </MatBody2>
+                </MatCardContent>
+            </MatCard>
+        </td>
+      <td></td>
+        <td>
+            <MatCard class="demo-mat-card">
+                <MatCardContent>
+                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/hogerLager.jpg">
+                        <div class="demo-mat-card-content" style="color: white;">
+                            <MatHeadline6 class="demo-mat-card-clean-margin">
+                                Black Jack
+                            </MatHeadline6>
+
+                        </div>
+                    </MatCardMedia>
+                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                        Visit ten places on our planet that are undergoing the biggest changes today.
+                    </MatBody2>
+                </MatCardContent>
+            </MatCard>
+        </td>
+    </tr>
+</table>
+@code{
+
+}
