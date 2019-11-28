@@ -1,1 +1,62 @@
-﻿
+@page "/bank"
+@inject DefaultClasses.Gebruiker Gebruiker
+
+@if (Bank == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p>Huidige Balans: @Gebruiker.Saldo munten</p>
+
+    <MatNumericUpDownField Label="Geld terugzetten"
+                           Style="width: 400px;"
+                           @bind-Value=@UpDownFieldWithdrawal
+                           DecimalPlaces=0
+                           Icon="account_balance_wallet"
+                           Minimum="1" Maximum="@Gebruiker.Saldo">
+
+    </MatNumericUpDownField>
+    <MatButton OnClick="@Withdrawal" Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" Raised="true">Geld terugzetten</MatButton>
+
+    <br />
+    <br />
+
+    <MatNumericUpDownField Label="Geld overschrijven: 1$ = 100 munten"
+                           Style="width: 400px;"
+                           @bind-Value=@UpDownFieldDeposit
+                           DecimalPlaces=2
+                           Step="1.00m"
+                           Icon="attach_money"
+                           Minimum="5.00m" Maximum="1000">
+
+    </MatNumericUpDownField>
+
+    <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Geld overschrijven</MatButton>
+}
+@code {
+    public DefaultClasses.DBConnection DBConnection { get; set; }
+    public Bank Bank;
+    decimal? UpDownFieldWithdrawal = null;
+    decimal? UpDownFieldDeposit = null;
+    protected override void OnInitialized()
+    {
+        DBConnection = new DefaultClasses.DBConnection();
+        Bank = new Bank(Gebruiker.Saldo);
+    }
+    public void Deposit()
+    {
+        Gebruiker.Saldo = Bank.Storten((double)UpDownFieldDeposit.Value);
+        updateGebruiker();
+    }
+    public void Withdrawal()
+    {
+        Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
+        updateGebruiker();
+    }
+    private void updateGebruiker()
+    {
+        Gebruiker.Refresh();
+        DBConnection.UpdateGebruiker(Gebruiker);
+    }
+}

@@ -70,38 +70,43 @@
             </div>
         </div>
     }
-        @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
-        {
-            if (ronde)
-            {
-                <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 820px;" OnClick="@startSpel2">start ronde</MatButton>
-            }
-
-        }
-
-        @if (!spelGestart)
-        {
-            <div style="text-align: center; position: relative; top: 300px;">
-                <MatButton Unelevated="true" OnClick="@startSpel" Disabled="start">Start spel</MatButton>
-            </div>
-
-        }
-
-        @if (laatZien)
-        {
-            <div style="text-align: center; position: center;">
-                <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                                       @bind-Value=@testingNullableDecimal2
-                                       DecimalPlaces=0
-                                       Disabled="start"
-                                       Minimum=0 Maximum=500>
-                </MatNumericUpDownField>
-            </div>
-
+    @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
+    {
+        if (ronde)
+        {  
+            <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 820px;" OnClick="@startSpel2">start ronde</MatButton>
         }
 
     }
 
+    @if (!spelGestart)
+    {
+        <div style="text-align: center; position: relative; top: 300px;">
+            <MatButton Unelevated="true" OnClick="@startSpel" Disabled="start">Start spel</MatButton>
+        </div>
+
+    }
+
+    @if (laatZien)
+    {
+        @if (HuidigeGebruiker.Saldo > 0)
+        {
+            <div style="text-align: center; position: center;">
+                <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="Inzet: "
+                                       @bind-Value=@testingNullableDecimal2
+                                       DecimalPlaces=0
+                                       Disabled="start"
+                                       Minimum=0 Maximum=HuidigeGebruiker.Saldo>
+                </MatNumericUpDownField>
+            </div>
+        }
+        else
+        {
+            <p>U heeft niet genoeg geld om in te zetten en zal dus alleen kunnen testen</p>
+        }
+    }
+
+}
 
 
 
@@ -109,9 +114,10 @@
 
 
 
-    @code{
 
-public DefaultClasses.DBConnection DBConnection { get; set; }
+@code{
+
+    public DefaultClasses.DBConnection DBConnection { get; set; }
 
     decimal? testingNullableDecimal2 = 0;
 
@@ -156,7 +162,9 @@ public DefaultClasses.DBConnection DBConnection { get; set; }
     public void startSpel2()
     {
         laatZien = false;
-        Game = new BlackJackDomain.Game(HuidigeGebruiker.Saldo);
+        Game = new BlackJackDomain.Game((int)testingNullableDecimal2.Value);
+        HuidigeGebruiker.Saldo -= (int)testingNullableDecimal2.Value;
+        HuidigeGebruiker.Refresh();
         Game.extraKaart();
         urlKaartSpeler = Game.lijstKaartenSpeler[0].url;
         Game.extraKaart();
@@ -212,12 +220,13 @@ public DefaultClasses.DBConnection DBConnection { get; set; }
     {
         hit = true;
         stand = true;
-        checkWinnaar = true;
+
         while (Game.somDealer < Game.som && Game.somDealer < 17)
         {
             Game.dealer();
         }
 
+        checkWinnaar = true;
         Game.winnaar();
         winnaar();
     }
@@ -239,6 +248,17 @@ public DefaultClasses.DBConnection DBConnection { get; set; }
     {
         dealerShow = true;
         inzet += Game.winnaar();
+        int waarde = 0;
+        if (Game.gewonnen)
+        {
+            waarde += (int)(testingNullableDecimal2 * 2);
+        }
+        else
+        {
+            waarde = 0;
+        }
+        HuidigeGebruiker.Saldo += waarde;
+        HuidigeGebruiker.Refresh();
         await Task.Delay(6000);
         spelGestart = true;
         laatZien = true;
@@ -261,6 +281,7 @@ public DefaultClasses.DBConnection DBConnection { get; set; }
         plaatsKaart = 2;
         plaatsKaartDealer = 2;
 
+        DBConnection.UpdateGebruiker(HuidigeGebruiker);
         this.StateHasChanged();
     }
-    }
+}

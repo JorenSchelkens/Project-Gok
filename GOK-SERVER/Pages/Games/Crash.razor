@@ -6,7 +6,7 @@
 
 @if (temp)
 {
-    <div style="text-align: center; top: 600px;">
+    <div style="text-align: center; margin-top: 50px;">
         <MatNumericUpDownField Label="Inzet:"
                                @bind-Value=@testingNullableDecimal1
                                Step="10"
@@ -15,7 +15,7 @@
         </MatNumericUpDownField>
     </div>
 
-    <div style="text-align: center; top: 600px; left: 600px;">
+    <div style="text-align: center">
         <MatNumericUpDownField Label="Automatisch stoppen op:"
                                @bind-Value=@testingNullableDecimal2
                                Step="1.00m"
@@ -23,8 +23,8 @@
         </MatNumericUpDownField>
     </div>
 
-    <div style="text-align: center; position: relative; top: 100px;">
-        <MatButton OnClick="@Click" Raised="true">Start game</MatButton>
+    <div style="text-align: center; position: relative; margin-top: 50px;">
+        <MatButton OnClick="@Click" Raised="true">Start spel</MatButton>
     </div>
 
 }
@@ -64,10 +64,7 @@ else
     public bool doeBerekening = true;
     public bool progressBar = true;
     public String crash;
-    public bool cashOut;
-    public int afteller = 5;
-
-    public bool isGecrashed = false;
+    public bool cashOut = false;
 
     protected override void OnInitialized()
     {
@@ -78,6 +75,10 @@ else
     public async void Click()
     {
         Game.muntenIngezet = (int)testingNullableDecimal1.Value;
+        Gebruiker.Saldo -= Game.muntenIngezet;
+        Gebruiker.Refresh();
+        DBConnection.UpdateGebruiker(Gebruiker);
+
         temp = false;
 
         double i = 0.00;
@@ -88,7 +89,7 @@ else
         {
 
             Game.GeefDoor(i);
-            if (doeBerekening)
+            if (doeBerekening && Game.multiplier >= 1)
             {
                 Game.GeefWinstWeer();
             }
@@ -107,8 +108,6 @@ else
         cashOut = true;
 
         this.StateHasChanged();
-        isGecrashed = true;
-        CashOut();
 
         await Task.Delay(5000);
 
@@ -121,19 +120,8 @@ else
         temp2 = true;
         doeBerekening = false;
 
-        if (!cashOut)
-        {
-            if (isGecrashed)
-            {
-                Game.winstInMunten = - Game.muntenIngezet;
-                Gebruiker.Saldo -= Game.muntenIngezet;
-            }
-            else
-            {
-                cashOut = true;
-                Gebruiker.Saldo += Game.winstInMunten;
-            }
-        }
+        cashOut = true;
+        Gebruiker.Saldo += Game.winstInMunten + Game.muntenIngezet;
 
         Gebruiker.Refresh();
         DBConnection.UpdateGebruiker(Gebruiker);
@@ -148,8 +136,6 @@ else
         progressBar = true;
         crash = "";
         cashOut = false;
-        afteller = 5;
-        isGecrashed = false;
 
         Game = new Game();
 
