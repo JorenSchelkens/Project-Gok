@@ -7,21 +7,23 @@
 }
 else
 {
-    <p>Huidig Balans: @Gebruiker.Saldo munten</p>
+    <p>Huidige Balans: @Gebruiker.Saldo munten</p>
 
-    <MatNumericUpDownField Label="Withdrawal"
+    <MatNumericUpDownField Label="Geld terugzetten"
+                           Style="width: 400px;"
                            @bind-Value=@UpDownFieldWithdrawal
                            DecimalPlaces=0
                            Icon="account_balance_wallet"
                            Minimum="1" Maximum="@Gebruiker.Saldo">
 
     </MatNumericUpDownField>
-    <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
+    <MatButton OnClick="@Withdrawal" Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" Raised="true">Geld terugzetten</MatButton>
 
     <br />
     <br />
 
-    <MatNumericUpDownField Label="Deposit: 1$ = 100 munten"
+    <MatNumericUpDownField Label="Munten overschrijven: 1$ = 100 munten"
+                           Style="width: 400px;"
                            @bind-Value=@UpDownFieldDeposit
                            DecimalPlaces=2
                            Step="1.00m"
@@ -29,7 +31,7 @@ else
                            Minimum="5.00m" Maximum="1000">
 
     </MatNumericUpDownField>
-    <MatButton OnClick="@Deposit" Raised="true">Deposit</MatButton>
+    <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Munten overschrijven</MatButton>
 }
 
 @code {
