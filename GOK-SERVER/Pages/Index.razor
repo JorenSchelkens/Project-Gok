@@ -1,102 +1,114 @@
 ﻿@page "/"
+@inject DefaultClasses.Gebruiker Gebruiker
 <style>
     table {
-            border-collapse: collapse;
-            border: 1px solid #C0C0C0;
-            margin-left: auto; 
-            margin-right: auto; 
+        border-collapse: collapse;
+        border: 1px solid #C0C0C0;
+        margin-left: auto;
+        margin-right: auto;
     }
+
     td {
         margin: 100px;
     }
+
     .demo-mat-card {
         max-width: 400px;
+        min-height: 350px;
     }
+
     .demo-mat-card-content {
         padding: 1rem;
     }
+
     .demo-mat-card-clean-margin {
         margin: 0px;
     }
 </style>
 <h1>Casino</h1>
 <p>Welkom bij Casino!</p>
-<table>
-    <tr>
-        <td>
-            <MatCard class="demo-mat-card">
-                <MatCardContent>
-                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/hogerLager.jpg">
-                        <div class="demo-mat-card-content" style="color: white;">
-                            <MatHeadline6 class="demo-mat-card-clean-margin">
-                                Black Jack
-                            </MatHeadline6>
-                        </div>
-                    </MatCardMedia>
-                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                        Visit ten places on our planet that are undergoing the biggest changes today.
-                    </MatBody2>
-                </MatCardContent>
-            </MatCard>
-        </td>
-        <td>
-        </td>
-        <td>
-            <MatCard class="demo-mat-card">
-                <MatCardContent>
-                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/roulette.jpg">
-                        <div class="demo-mat-card-content" style="color: white;">
-                            <MatHeadline6 class="demo-mat-card-clean-margin">
-                                Black Jack
-                            </MatHeadline6>
+@if (!string.IsNullOrWhiteSpace(Gebruiker.Naam))
+{
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+                <NavLink class="nav-link" href="/crash">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/crash.jpg">
+                                <div class="demo-mat-card-content" style="color: white;">
+                                    <MatHeadline6 class="demo-mat-card-clean-margin">
+                                        Crash
+                                    </MatHeadline6>
+                                </div>
+                            </MatCardMedia>
+                            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                                <!--maxim gaat dit nog in orde brengen-->
+                                Het doel van het spel is om uit te cashen voor de random timer stopt en het bedrag dat je ingezet hebt krijg je maal het aantal getal. Als je onder 1 uitkomt verlies je het bedrag.
+                            </MatBody2>
+                        </MatCardContent>
+                    </MatCard>
+                </NavLink>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+                <NavLink class="nav-link" href="/roulette">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/roulette.jpg">
+                                <div class="demo-mat-card-content" style="color: white;">
+                                    <MatHeadline6 class="demo-mat-card-clean-margin">
+                                        Roulette
+                                    </MatHeadline6>
 
-                        </div>
-                    </MatCardMedia>
-                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                        Visit ten places on our planet that are undergoing the biggest changes today.
-                    </MatBody2>
-                </MatCardContent>
-            </MatCard>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <MatCard class="demo-mat-card">
-                <MatCardContent>
-                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/blackJack.jpg">
-                        <div class="demo-mat-card-content" style="color: white;">
-                            <MatHeadline6 class="demo-mat-card-clean-margin">
-                                Black Jack
-                            </MatHeadline6>
+                                </div>
+                            </MatCardMedia>
+                            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                                Het doel van het spel is de juiste uitkomst van het balletje in het rad te bepalen. Dit doe je door een inzet op één van de vele inzetmogelijkheden op de tafel te plaatsen. Komt je inzet overeen met de uitkomst, dan win je een x aantal keer het ingezette bedrag; afhankelijk van welke inzetmogelijkheid je hebt gebruikt.
+                            </MatBody2>
+                        </MatCardContent>
+                    </MatCard>
+                </NavLink>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+                <NavLink class="nav-link" href="/blackjack">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/blackJack.jpg">
+                                <div class="demo-mat-card-content" style="color: white;">
+                                    <MatHeadline6 class="demo-mat-card-clean-margin">
+                                        Black Jack
+                                    </MatHeadline6>
 
-                        </div>
-                    </MatCardMedia>
-                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                        Visit ten places on our planet that are undergoing the biggest changes today.
-                    </MatBody2>
-                </MatCardContent>
-            </MatCard>
-        </td>
-      <td></td>
-        <td>
-            <MatCard class="demo-mat-card">
-                <MatCardContent>
-                    <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/hogerLager.jpg">
-                        <div class="demo-mat-card-content" style="color: white;">
-                            <MatHeadline6 class="demo-mat-card-clean-margin">
-                                Black Jack
-                            </MatHeadline6>
-
-                        </div>
-                    </MatCardMedia>
-                    <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                        Visit ten places on our planet that are undergoing the biggest changes today.
-                    </MatBody2>
-                </MatCardContent>
-            </MatCard>
-        </td>
-    </tr>
-</table>
-@code{
-
+                                </div>
+                            </MatCardMedia>
+                            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                                Het doel van het spel is om de dealer te verslaan. Hierbij moet men proberen dichter bij de 21 punten te komen dan de bank. Als de speler boven de 21 punten uitkomt heeft hij verloren, ongeacht wat de bank heeft.
+                            </MatBody2>
+                        </MatCardContent>
+                    </MatCard>
+                </NavLink>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+                <NavLink class="nav-link" href="/hoger_lager">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/hogerLager.jpg">
+                                <div class="demo-mat-card-content" style="color: white;">
+                                    <MatHeadline6 class="demo-mat-card-clean-margin">
+                                        Hoger-lager
+                                    </MatHeadline6>
+                                </div>
+                            </MatCardMedia>
+                            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                                Het doel van het spel is dat jouw kaart die rechts staat hoger is dan kaart van de computer die links staat. Als dat is win je de game.
+                            </MatBody2>
+                        </MatCardContent>
+                    </MatCard>
+                </NavLink>
+            </div>
+        </div>
+    </div>
 }
+@code{}
