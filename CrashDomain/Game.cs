@@ -59,27 +59,30 @@ namespace CrashDomain
             Random random = new Random();
             var random1 = random.NextDouble();
 
-            if (random1 < 0.7)
+            if (random1 < 0.6)
             {
                 totalMultiplier = random.NextDouble();
             }
-            else if (random1 < 0.90)
+            else if (random1 < 0.80)
             {
                 totalMultiplier = random.NextDouble() + 1;
             }
-            else if (random1 < 0.95)
+            else if (random1 < 0.90)
             {
                 totalMultiplier = random.NextDouble() * 2 + 2;
             }
-            else
+            else if (random1 < 0.95)
             {
                 totalMultiplier = random.NextDouble() * 2 + 4;
+            }
+            else
+            {
+                totalMultiplier = random.NextDouble() * 2 + 6;
             }
         }
 
         public void GeefWinstWeer()
         {
-
             this.winstInMunten = (int)((muntenIngezet * multiplier) - muntenIngezet);
         }
     }
