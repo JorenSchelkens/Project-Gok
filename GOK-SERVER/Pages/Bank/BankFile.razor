@@ -22,6 +22,9 @@ else
     <br />
     <br />
 
+    <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
+    <br />
+    <br />
     <MatNumericUpDownField Label="Munten overschrijven: 1$ = 100 munten"
                            Style="width: 400px;"
                            @bind-Value=@UpDownFieldDeposit
@@ -31,40 +34,32 @@ else
                            Minimum="5.00m" Maximum="1000">
 
     </MatNumericUpDownField>
+
     <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Munten overschrijven</MatButton>
 }
-
 @code {
-
     public DefaultClasses.DBConnection DBConnection { get; set; }
-
     public Bank Bank;
-
     decimal? UpDownFieldWithdrawal = null;
     decimal? UpDownFieldDeposit = null;
-
     protected override void OnInitialized()
     {
         DBConnection = new DefaultClasses.DBConnection();
         Bank = new Bank(Gebruiker.Saldo);
     }
-
     public void Deposit()
     {
         Gebruiker.Saldo = Bank.Storten((double)UpDownFieldDeposit.Value);
         updateGebruiker();
     }
-
     public void Withdrawal()
     {
         Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
         updateGebruiker();
     }
-
     private void updateGebruiker()
     {
         Gebruiker.Refresh();
         DBConnection.UpdateGebruiker(Gebruiker);
     }
-
 }
