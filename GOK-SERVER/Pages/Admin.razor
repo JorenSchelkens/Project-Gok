@@ -100,6 +100,6 @@
 
     public void maakGiftCard()
     {
-        DBConnection.AddGiftCard("test", 5, -1, 500);
+        DBConnection.AddGiftCard(invulCode, (int) UpDownFieldUses.Value, (int) UpDownFieldProcent.Value, (int) UpDownFieldSaldo.Value);
     }
 }
