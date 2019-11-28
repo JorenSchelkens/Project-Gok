@@ -8,7 +8,6 @@
 else
 {
     <p>Huidig Balans: @Gebruiker.Saldo munten</p>
-
     <MatNumericUpDownField Label="Withdrawal"
                            @bind-Value=@UpDownFieldWithdrawal
                            DecimalPlaces=0
@@ -17,10 +16,8 @@ else
 
     </MatNumericUpDownField>
     <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
-
     <br />
     <br />
-
     <MatNumericUpDownField Label="Deposit: 1$ = 100 munten"
                            @bind-Value=@UpDownFieldDeposit
                            DecimalPlaces=2
@@ -31,38 +28,29 @@ else
     </MatNumericUpDownField>
     <MatButton OnClick="@Deposit" Raised="true">Deposit</MatButton>
 }
-
 @code {
-
     public DefaultClasses.DBConnection DBConnection { get; set; }
-
     public Bank Bank;
-
     decimal? UpDownFieldWithdrawal = null;
     decimal? UpDownFieldDeposit = null;
-
     protected override void OnInitialized()
     {
         DBConnection = new DefaultClasses.DBConnection();
         Bank = new Bank(Gebruiker.Saldo);
     }
-
     public void Deposit()
     {
         Gebruiker.Saldo = Bank.Storten((double)UpDownFieldDeposit.Value);
         updateGebruiker();
     }
-
     public void Withdrawal()
     {
         Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
         updateGebruiker();
     }
-
     private void updateGebruiker()
     {
         Gebruiker.Refresh();
         DBConnection.UpdateGebruiker(Gebruiker);
     }
-
 }
