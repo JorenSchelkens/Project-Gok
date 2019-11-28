@@ -1,35 +1,92 @@
 ﻿@page "/admin"
-    <table border="1">
-        @foreach (DefaultClasses.Gebruiker gebruiker in gebruikers)
-        {
-            <tr>
-                <td>
-                    <p>@gebruiker.Naam</p>
-                </td>
-                <td>
-                    <p>@gebruiker.Email</p>
-                </td>
-                <td>
-                    <p>@gebruiker.Gebruikersnaam</p>
-                </td>
-                <td>
-                    <MatButton Type="submit" OnClick="@(() => Verwijder(gebruiker))" Raised="true">Verwijderd</MatButton>
-                </td>
-            </tr>
-        }
-    </table>
+
+<MatAccordion>
+
+    <MatExpansionPanel>
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>Bekijk alle gebruikers</MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+
+            @if (gebruikers.Count == 0 || gebruikers == null)
+            {
+                <table border="1">
+                    @foreach (DefaultClasses.Gebruiker gebruiker in gebruikers)
+                    {
+                        <tr>
+                            <td>
+                                <p>@gebruiker.Naam</p>
+                            </td>
+                            <td>
+                                <p>@gebruiker.Email</p>
+                            </td>
+                            <td>
+                                <p>@gebruiker.Gebruikersnaam</p>
+                            </td>
+                            <td>
+                                <MatButton Type="submit" OnClick="@(() => Verwijder(gebruiker))" Raised="true">Verwijderd</MatButton>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+
+
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+
+    <MatExpansionPanel>
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>Voeg een giftcard toe</MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+
+            <MatTextField @bind-Value="@invulCode" Label="Invul code" FullWidth="true" Required="true"></MatTextField>
+
+            <MatNumericUpDownField Label="Aantal uses"
+                                   @bind-Value=@UpDownFieldUses
+                                   DecimalPlaces=0
+                                   Icon="account_balance_wallet"
+                                   Minimum="1"
+                                   Required="true">
+            </MatNumericUpDownField>
+
+            <MatNumericUpDownField Label="Procent"
+                                   @bind-Value=@UpDownFieldProcent
+                                   DecimalPlaces=0
+                                   Icon="account_balance_wallet"
+                                   Minimum="-1" Maximum="100">
+            </MatNumericUpDownField>
+
+            <MatNumericUpDownField Label="Ontvangen saldo"
+                                   @bind-Value=@UpDownFieldSaldo
+                                   DecimalPlaces=0
+                                   Icon="account_balance_wallet"
+                                   Minimum="-1">
+            </MatNumericUpDownField>
+
+            <MatButton Type="submit" OnClick="@maakGiftCard" Raised="true">Maak giftcard</MatButton>
+
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+
+</MatAccordion>
+
 
 @code{
 
     public List<DefaultClasses.Gebruiker> gebruikers { get; set; } = new List<DefaultClasses.Gebruiker>();
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
+    public string invulCode = "";
+    decimal? UpDownFieldUses = null;
+    decimal? UpDownFieldProcent = null;
+    decimal? UpDownFieldSaldo = null;
+
     protected async override Task OnInitializedAsync()
     {
         DBConnection = new DefaultClasses.DBConnection();
         gebruikers = DBConnection.GetAllGebruikers();
-
-        await Task.Delay(1);
     }
 
     public void Verwijder(DefaultClasses.Gebruiker gebruiker)
@@ -39,5 +96,10 @@
         DBConnection.RemoveGebruiker(gebruiker.Email);
         gebruikers.Remove(gebruiker);
         this.StateHasChanged();
+    }
+
+    public void maakGiftCard()
+    {
+        DBConnection.AddGiftCard("test", 5, -1, 500);
     }
 }

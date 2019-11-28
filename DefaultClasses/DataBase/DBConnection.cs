@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+
 namespace DefaultClasses
 {
     public class DBConnection
@@ -87,19 +88,44 @@ namespace DefaultClasses
         }
         public void UpdateGebruiker(Gebruiker gebruiker)
         {
-
             try
             {
                 using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
                 {
                     connection.Open();
 
-                    string sqlCode = "UPDATE Gebruikers SET Gebruikersnaam ='" + gebruiker.Gebruikersnaam + "', Naam ='" + gebruiker.Naam + "', Email ='" + gebruiker.Email + "', Wachtwoord ='" + Encryption.EncryptString(gebruiker.Wachtwoord) +"', Saldo =" + gebruiker.Saldo + ", DailyGiftDatum ='" + gebruiker.DailyGiftDatum.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', Admin = " + gebruiker.Admin + ", Nieuwsbrief = " + gebruiker.Nieuwsbrief + ", Notificaties = " + gebruiker.Notificaties + "WHERE Spelersnummer = " + gebruiker.Spelersnummer + ";";
+                    string sqlCode = "UPDATE Gebruikers SET Gebruikersnaam ='" + gebruiker.Gebruikersnaam + "', Naam ='" + gebruiker.Naam + "', Email ='" + gebruiker.Email + "', Saldo =" + gebruiker.Saldo + ", DailyGiftDatum ='" + gebruiker.DailyGiftDatum.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', Admin = " + gebruiker.Admin + ", Nieuwsbrief = " + gebruiker.Nieuwsbrief + ", Notificaties = " + gebruiker.Notificaties + "WHERE Spelersnummer = " + gebruiker.Spelersnummer + ";";
 
                     using (var command = new SqlCommand(sqlCode, connection))
                     {
                         int rowsAffected = command.ExecuteNonQuery();
-                        
+
+                    }
+
+                    connection.Close();
+                }
+
+            }
+            catch (SqlException e)
+            {
+                Error = e.ToString();
+            }
+
+        }
+        public void UpdateGebruikerWachtwoord(Gebruiker gebruiker)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
+                {
+                    connection.Open();
+
+                    string sqlCode = "UPDATE Gebruikers SET Wachtwoord ='" + Encryption.EncryptString(gebruiker.Wachtwoord) + "' WHERE Spelersnummer = " + gebruiker.Spelersnummer + ";";
+
+                    using (var command = new SqlCommand(sqlCode, connection))
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+
                     }
 
                     connection.Close();
@@ -178,5 +204,31 @@ namespace DefaultClasses
 
             return gebruikers;
         }
+        public void AddGiftCard(
+            string invulcode,
+            int usesLeft,
+            int kortingProcent,
+            int teOntvangenSaldo)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
+                {
+                    connection.Open();
+                    string sqlCode = "INSERT INTO GiftCards(InvulCode, UsesLeft, KortingProcent, TeOntvangenSaldo) VALUES('" + invulcode + "', " + usesLeft + ", " + kortingProcent + ", " + teOntvangenSaldo + ");";
+
+                    using (var command = new SqlCommand(sqlCode, connection))
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+                    }
+                    connection.Close();
+                }
+            }
+            catch (SqlException e)
+            {
+                Error = e.ToString();
+            }
+        }
+
     }
 }
