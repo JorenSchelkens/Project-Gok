@@ -73,7 +73,7 @@
     @if (testingNullableDecimal2.HasValue && (int)testingNullableDecimal2.Value >= 0)
     {
         if (ronde)
-        {
+        {  
             <MatButton Unelevated="true" Style=" position: absolute; left: 1400px; top: 820px;" OnClick="@startSpel2">start ronde</MatButton>
         }
 
@@ -89,15 +89,21 @@
 
     @if (laatZien)
     {
-        <div style="text-align: center; position: center;">
-            <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="coins inzetten"
-                                   @bind-Value=@testingNullableDecimal2
-                                   DecimalPlaces=0
-                                   Disabled="start"
-                                   Minimum=0 Maximum=HuidigeGebruiker.Saldo>
-            </MatNumericUpDownField>
-        </div>
-
+        @if (HuidigeGebruiker.Saldo > 0)
+        {
+            <div style="text-align: center; position: center;">
+                <MatNumericUpDownField OnFocusOut="@checkIngevuldeWaarde" Label="Inzet: "
+                                       @bind-Value=@testingNullableDecimal2
+                                       DecimalPlaces=0
+                                       Disabled="start"
+                                       Minimum=0 Maximum=HuidigeGebruiker.Saldo>
+                </MatNumericUpDownField>
+            </div>
+        }
+        else
+        {
+            <p>U heeft niet genoeg geld om in te zetten en zal dus alleen kunnen testen</p>
+        }
     }
 
 }
