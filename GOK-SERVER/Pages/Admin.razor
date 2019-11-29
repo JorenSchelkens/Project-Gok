@@ -103,6 +103,34 @@
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
 
+    <MatExpansionPanel>
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>Bekijk alle giftcards</MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+            <div class="mat-layout-grid">
+                <div class="mat-layout-grid-inner">
+                    @foreach (DefaultClasses.DataBase.GiftCard giftCard in GiftCards)
+                    {
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatTextField Label="Invul code" ReadOnly="true" Value="@giftCard.InvulCode"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatTextField Label="Uses left" ReadOnly="true" Value="@giftCard.UsesLeft.ToString()"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatTextField Label="Korting procent" ReadOnly="true" Value="@giftCard.KortingProcent.ToString()"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatTextField Label="Te ontvangen saldo" ReadOnly="true" Value="@giftCard.TeOntvangenSaldo.ToString()"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+                    }
+                </div>
+            </div>
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+
 </MatAccordion>
 
 
