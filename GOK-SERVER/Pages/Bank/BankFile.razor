@@ -13,8 +13,9 @@ else
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
                 <p>Huidig Balans: @Gebruiker.Saldo munten</p>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-                <MatNumericUpDownField Label="Withdrawal"
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <MatNumericUpDownField Label="Munten afhalen"
+                                       FullWidth="true"
                                        @bind-Value=@UpDownFieldWithdrawal
                                        DecimalPlaces=0
                                        Icon="account_balance_wallet"
@@ -22,11 +23,13 @@ else
 
                 </MatNumericUpDownField>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-                <MatButton OnClick="@Withdrawal" Raised="true">Withdrawal</MatButton>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Withdrawal" Raised="true">Munten Afhalen</MatButton>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-                <MatNumericUpDownField Label="Deposit: 1$ = 100 munten"
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <MatNumericUpDownField Label="Geld overschrijven: 1$ = 100 munten"
+                                       FullWidth="true"
                                        @bind-Value=@UpDownFieldDeposit
                                        DecimalPlaces=2
                                        Step="1.00m"
@@ -35,11 +38,12 @@ else
 
                 </MatNumericUpDownField>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-                <MatButton OnClick="@Deposit" Raised="true">Deposit</MatButton>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Geld overschrijven</MatButton>
             </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
-                <MatButton OnClick="@OpenDialog" Raised="true">Giftcard gebruiken</MatButton>
+                <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@OpenDialog" Raised="true">Giftcard gebruiken</MatButton>
 
                 <MatDialog @bind-IsOpen="@dialogIsOpen">
                     <MatDialogTitle>Giftcard</MatDialogTitle>
@@ -60,7 +64,7 @@ else
 @code {
 
     public DefaultClasses.DBConnection DBConnection { get; set; }
-    public DefaultClasses.DataBase.GiftCard GiftCard { get; set; }
+    public DefaultClasses.DataBase.GiftCard GiftCard { get; set; } = null;
     public Bank Bank;
 
     public decimal? UpDownFieldWithdrawal = null;
@@ -87,7 +91,7 @@ else
 
         Toaster.Add("Bedrag toegevoegd", MatToastType.Success, "Succes");
 
-        Reset();
+        Reset(true);
     }
 
     public void Withdrawal()
@@ -97,7 +101,7 @@ else
 
         Toaster.Add("Bedrag afgehaald", MatToastType.Success, "Succes");
 
-        Reset();
+        Reset(false);
     }
 
     public void OpenDialog()
@@ -110,26 +114,49 @@ else
     {
         GiftCard = DBConnection.GetGiftCard(giftcode);
 
-        if (GiftCard.isSaldo())
+        if (GiftCard != null)
         {
-            Gebruiker.Saldo += GiftCard.TeOntvangenSaldo;
-            updateGebruiker();
+            if (GiftCard.UsesLeft > 0)
+            {
+                if (GiftCard.isSaldo())
+                {
+                    Gebruiker.Saldo += GiftCard.TeOntvangenSaldo;
+                    updateGebruiker();
 
-            Toaster.Add("Bedrag Toegevoegd", MatToastType.Success, "Succes");
+                    Toaster.Add("Bedrag Toegevoegd", MatToastType.Success, "Succes");
+                }
+                else
+                {
+                    procent = (GiftCard.KortingProcent / 100.00) + 1.00;
+                    Toaster.Add("Korting toegevoegd", MatToastType.Success, "Succes");
+                }
+
+                DBConnection.UpdateGiftcard(GiftCard);
+            }
+            else
+            {
+                Toaster.Add("Giftcard niet meer geldig", MatToastType.Danger, "Te laat!");
+            }
+
         }
         else
         {
-            procent = (GiftCard.KortingProcent / 100) + 1;
+            Toaster.Add("Giftcard bestaat niet", MatToastType.Danger, "Error");
         }
 
-        Reset();
+        Reset(false);
     }
 
-    public void Reset()
+    public void Reset(bool resetProcent)
     {
-        procent = 1;
+        if (resetProcent)
+        {
+            procent = 1;
+        }
+
         giftcode = "";
         dialogIsOpen = false;
+        GiftCard = null;
     }
 
     private void updateGebruiker()

@@ -2,115 +2,142 @@
 @inject NavigationManager NavigationManager
 @inject DefaultClasses.Gebruiker Gebruiker
 
-<div class="mat-layout-grid mat-layout-grid-align-left">
-    <div class="mat-layout-grid-inner">
+<MatAccordion>
+    <MatExpansionPanel>
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>Persoonlijke gegevens</MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+            <div class="mat-layout-grid mat-layout-grid-align-left">
+                <div class="mat-layout-grid-inner">
 
-        @* Deel 1 *@
+                    @* Deel 1 *@
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField ReadOnly="true" Value="@Gebruiker.Gebruikersnaam" FullWidth="true"></MatTextField>
-        </div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-            <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton>
-        </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                        <MatTextField ReadOnly="true" Value="@Gebruiker.Gebruikersnaam" FullWidth="true"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                        <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderGebruikersnaam" Raised="true">Verander Gebruikersnaam</MatButton>
+                    </div>
 
-        <MatDialog @bind-IsOpen="@dialog1IsOpen">
-            <MatDialogTitle>Geef de nieuwe gebruikersnaam in</MatDialogTitle>
-            <MatDialogContent>
-                <MatTextField @bind-Value="@nieuweGebruikersNaam"></MatTextField>
-            </MatDialogContent>
-            <MatDialogActions>
-                <MatButton OnClick="@(e => { dialog1IsOpen = false; })">Cancel</MatButton>
-                <MatButton OnClick="@OkClick1">Submit</MatButton>
-            </MatDialogActions>
-        </MatDialog>
+                    <MatDialog @bind-IsOpen="@dialog1IsOpen">
+                        <MatDialogTitle>Geef de nieuwe gebruikersnaam in</MatDialogTitle>
+                        <MatDialogContent>
+                            <MatTextField @bind-Value="@nieuweGebruikersNaam"></MatTextField>
+                        </MatDialogContent>
+                        <MatDialogActions>
+                            <MatButton OnClick="@(e => { dialog1IsOpen = false; })">Cancel</MatButton>
+                            <MatButton OnClick="@OkClick1">Submit</MatButton>
+                        </MatDialogActions>
+                    </MatDialog>
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
-        @* Deel 1.1 *@
+                    @* Deel 1.1 *@
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField ReadOnly="true" Value="@Gebruiker.Naam" FullWidth="true"></MatTextField>
-        </div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-            <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderNaam" Raised="true">Verander Naam</MatButton>
-        </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                        <MatTextField ReadOnly="true" Value="@Gebruiker.Naam" FullWidth="true"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                        <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderNaam" Raised="true">Verander Naam</MatButton>
+                    </div>
 
-        <MatDialog @bind-IsOpen="@dialog4IsOpen">
-            <MatDialogTitle>Geef de nieuwe naam in</MatDialogTitle>
-            <MatDialogContent>
-                <MatTextField @bind-Value="@nieuweNaam"></MatTextField>
-            </MatDialogContent>
-            <MatDialogActions>
-                <MatButton OnClick="@(e => { dialog4IsOpen = false; })">Cancel</MatButton>
-                <MatButton OnClick="@OkClick4">Submit</MatButton>
-            </MatDialogActions>
-        </MatDialog>
+                    <MatDialog @bind-IsOpen="@dialog4IsOpen">
+                        <MatDialogTitle>Geef de nieuwe naam in</MatDialogTitle>
+                        <MatDialogContent>
+                            <MatTextField @bind-Value="@nieuweNaam"></MatTextField>
+                        </MatDialogContent>
+                        <MatDialogActions>
+                            <MatButton OnClick="@(e => { dialog4IsOpen = false; })">Cancel</MatButton>
+                            <MatButton OnClick="@OkClick4">Submit</MatButton>
+                        </MatDialogActions>
+                    </MatDialog>
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
-        @* Deel 2 *@
+                    @* Deel 2 *@
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField Type="password" ReadOnly="true" Value="@Gebruiker.Wachtwoord" FullWidth="true"></MatTextField>
-        </div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-            <MatButton Style="height: 50px; width: 230px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton>
-        </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                        <MatTextField Type="password" ReadOnly="true" Value="@Gebruiker.Wachtwoord" FullWidth="true"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                        <MatButton Style="height: 50px; width: 230px;" OnClick="@veranderWachtwoord" Raised="true">Verander Wachtwoord</MatButton>
+                    </div>
 
-        <MatDialog @bind-IsOpen="@dialog2IsOpen">
-            <MatDialogTitle>Geef je oude wachtwoord in</MatDialogTitle>
-            <MatDialogContent>
-                <MatTextField Required="true" @bind-Value="@oudeWachtwoord" Type="password"></MatTextField>
-            </MatDialogContent>
-            @if (!oudWachtwoordJuisIngegeven)
-            {
-                <MatDialogContent>
-                    <p style="color: red;">Foute inloggegevens</p>
-                </MatDialogContent>
-            }
-            <MatDialogTitle>Geef je nieuwe wachtwoord in</MatDialogTitle>
-            <MatDialogContent>
-                <MatTextField Required="true" @bind-Value="@nieuwWachtwoord" Type="password"></MatTextField>
-            </MatDialogContent>
-            <MatDialogActions>
-                <MatButton OnClick="@(e => { dialog2IsOpen = false; })">Cancel</MatButton>
-                <MatButton OnClick="@OkClick2">Submit</MatButton>
-            </MatDialogActions>
-        </MatDialog>
+                    <MatDialog @bind-IsOpen="@dialog2IsOpen">
+                        <MatDialogTitle>Geef je oude wachtwoord in</MatDialogTitle>
+                        <MatDialogContent>
+                            <MatTextField Required="true" @bind-Value="@oudeWachtwoord" Type="password"></MatTextField>
+                        </MatDialogContent>
+                        @if (!oudWachtwoordJuisIngegeven)
+                        {
+                            <MatDialogContent>
+                                <p style="color: red;">Foute inloggegevens</p>
+                            </MatDialogContent>
+                        }
+                        <MatDialogTitle>Geef je nieuwe wachtwoord in</MatDialogTitle>
+                        <MatDialogContent>
+                            <MatTextField Required="true" @bind-Value="@nieuwWachtwoord" Type="password"></MatTextField>
+                        </MatDialogContent>
+                        <MatDialogActions>
+                            <MatButton OnClick="@(e => { dialog2IsOpen = false; })">Cancel</MatButton>
+                            <MatButton OnClick="@OkClick2">Submit</MatButton>
+                        </MatDialogActions>
+                    </MatDialog>
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
-        @* Deel 3 *@
+                    @* Deel 3 *@
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-            <MatTextField ReadOnly="true" Value="@Gebruiker.Email" FullWidth="true"></MatTextField>
-        </div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
-            <MatButton Style="height: 50px; width: 230px;" OnClick="@veranderEmail" Raised="true">Verander Email</MatButton>
-        </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                        <MatTextField ReadOnly="true" Value="@Gebruiker.Email" FullWidth="true"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                        <MatButton Style="height: 50px; width: 230px;" OnClick="@veranderEmail" Raised="true">Verander Email</MatButton>
+                    </div>
 
-        <MatDialog @bind-IsOpen="@dialog3IsOpen">
-            <MatDialogTitle>Geef het nieuwe email adres in</MatDialogTitle>
-            <MatDialogContent>
-                <MatTextField Required="true" Type="email" @bind-Value="@nieuwEmail"></MatTextField>
-            </MatDialogContent>
-            <MatDialogActions>
-                <MatButton OnClick="@(e => { dialog3IsOpen = false; })">Cancel</MatButton>
-                <MatButton OnClick="@OkClick3">Submit</MatButton>
-            </MatDialogActions>
-        </MatDialog>
+                    <MatDialog @bind-IsOpen="@dialog3IsOpen">
+                        <MatDialogTitle>Geef het nieuwe email adres in</MatDialogTitle>
+                        <MatDialogContent>
+                            <MatTextField Required="true" Type="email" @bind-Value="@nieuwEmail"></MatTextField>
+                        </MatDialogContent>
+                        <MatDialogActions>
+                            <MatButton OnClick="@(e => { dialog3IsOpen = false; })">Cancel</MatButton>
+                            <MatButton OnClick="@OkClick3">Submit</MatButton>
+                        </MatDialogActions>
+                    </MatDialog>
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
 
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
-            <MatButton Style="height: 50px; width: 230px;" OnClick="@UpdateProfiel" Raised="true">Update profiel</MatButton>
-        </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        <MatButton Style="height: 50px; width: 230px;" OnClick="@UpdateProfiel" Raised="true">Update profiel</MatButton>
+                    </div>
 
-    </div>
-</div>
+                </div>
+            </div>
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+    <MatExpansionPanel>
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>Achievments</MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+            <div class="mat-layout-grid">
+                <div class="mat-layout-grid-inner">
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+
+</MatAccordion>
 
 @code{
 
