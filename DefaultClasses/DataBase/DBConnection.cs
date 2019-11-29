@@ -268,6 +268,72 @@ namespace DefaultClasses
 
             return giftCard;
         }
+        public void UpdateGiftcard(GiftCard giftCard)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
+                {
+                    connection.Open();
+
+                    string sqlCode = "UPDATE GiftCards SET UsesLeft = " + (giftCard.UsesLeft - 1) + " WHERE Nummer = " + giftCard.Nummer + ";";
+
+                    using (var command = new SqlCommand(sqlCode, connection))
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                    }
+
+                    connection.Close();
+                }
+
+            }
+            catch (SqlException e)
+            {
+                Error = e.ToString();
+            }
+
+        }
+
+        public List<GiftCard> GetAllGiftCards()
+        {
+            List<GiftCard> giftCards = new List<GiftCard>();
+
+            try
+            {
+                using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
+                {
+                    connection.Open();
+                    string sqlCode = "SELECT Nummer, InvulCode, UsesLeft, KortingProcent, TeOntvangenSaldo FROM GiftCards";
+                    using (var command = new SqlCommand(sqlCode, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                GiftCard tempGiftCard = new GiftCard();
+
+                                tempGiftCard.Nummer = reader.GetInt32(0);
+                                tempGiftCard.InvulCode = reader.GetString(1);
+                                tempGiftCard.UsesLeft = reader.GetInt32(2);
+                                tempGiftCard.KortingProcent = reader.GetInt32(3);
+                                tempGiftCard.TeOntvangenSaldo = reader.GetInt32(4);
+
+                                giftCards.Add(tempGiftCard);
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch (SqlException e)
+            {
+                Error = e.ToString();
+                giftCards = null;
+            }
+
+            return giftCards;
+        }
 
     }
 }
