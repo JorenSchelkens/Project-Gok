@@ -9,7 +9,7 @@
         </MatExpansionPanelSummary>
         <MatExpansionPanelDetails>
             <table border="1">
-                @foreach (DefaultClasses.DataBase.Gebruiker gebruiker in gebruikers)
+                @foreach (DefaultClasses.Gebruiker gebruiker in gebruikers)
                 {
                     <tr>
                         <td>
@@ -83,7 +83,7 @@
 
 @code{
 
-    public List<DefaultClasses.DataBase.Gebruiker> gebruikers { get; set; } = new List<DefaultClasses.DataBase.Gebruiker>();
+    public List<DefaultClasses.Gebruiker> gebruikers { get; set; } = new List<DefaultClasses.Gebruiker>();
     public DefaultClasses.DBConnection DBConnection { get; set; }
 
     public string invulCode = "";
@@ -97,7 +97,7 @@
         gebruikers = DBConnection.GetAllGebruikers();
     }
 
-    public void Verwijder(DefaultClasses.DataBase.Gebruiker gebruiker)
+    public void Verwijder(DefaultClasses.Gebruiker gebruiker)
     {
         //TODO Popup
 
