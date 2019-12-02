@@ -12,7 +12,7 @@
                                Step="10"
                                DecimalPlaces="0"
                                Minimum="0" Maximum="Gebruiker.Saldo">
-        </MatNumericUpDownField>
+        </MatNumericUpDownField>ss
     </div>
 
     <div style="text-align: center">
@@ -33,9 +33,18 @@ else
     <p style="text-align: center; font-size:100px; margin-top:100px;">@Game.multiplier</p>
     <MatProgressBar Indeterminate="@progressBar"></MatProgressBar>
 
-    <div style="text-align: center; margin-top: 25px">
-        <MatButton OnClick="@CashOut" Raised="true" Disabled="@cashOut">Cash Out</MatButton>
-    </div>
+    if (autoCash)
+    {
+        <div style="text-align: center; margin-top: 25px">
+            <MatButton OnClick="@VeranderWaarde" Raised="true">Stop automatisch uitcashen</MatButton>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: center; margin-top: 25px">
+            <MatButton OnClick="@CashOut" Raised="true" Disabled="@cashOut">Cash Out</MatButton>
+        </div>
+    }
 
     <div style="text-align: center; margin-top: 100px">
         <p style="font-size: 75px; color: #e31e00">@crash</p>
@@ -65,6 +74,7 @@ else
     public bool progressBar = true;
     public String crash;
     public bool cashOut = false;
+    public bool autoCash = false;
 
     protected override void OnInitialized()
     {
@@ -74,44 +84,80 @@ else
 
     public async void Click()
     {
-        Game.muntenIngezet = (int)testingNullableDecimal1.Value;
-        Gebruiker.Saldo -= Game.muntenIngezet;
-        Gebruiker.Refresh();
-        DBConnection.UpdateGebruiker(Gebruiker);
 
-        temp = false;
-
-        double i = 0.00;
-
-        Game.genereerRandomGetal();
-
-        while (i + 0.01 <= Game.totalMultiplier)
+        if (testingNullableDecimal1.Value <= Gebruiker.Saldo)
         {
 
-            Game.GeefDoor(i);
-            if (doeBerekening && Game.multiplier >= 1)
+            if (!testingNullableDecimal1.HasValue)
             {
-                Game.GeefWinstWeer();
+                Game.muntenIngezet = 0;
             }
+            else
+            {
+                Game.muntenIngezet = (int)testingNullableDecimal1.Value;
+            }
+
+            if ((double) testingNullableDecimal2.Value != 0)
+            {
+                Game.autoCashOut = (double)testingNullableDecimal2.Value;
+                autoCash = true;
+            }
+
+            Gebruiker.Saldo -= Game.muntenIngezet;
+            Gebruiker.Refresh();
+            DBConnection.UpdateGebruiker(Gebruiker);
+
+            temp = false;
+
+            double i = 0.00;
+
+            Game.genereerRandomGetal();
+
+            while (i + 0.01 <= Game.totalMultiplier)
+            {
+
+                Game.GeefDoor(i);
+                if (doeBerekening)
+                {
+                    Game.GeefWinstWeer();
+                }
+
+                if (autoCash && Game.multiplier == Game.autoCashOut)
+                {
+                    CashOut();
+                }
+
+                this.StateHasChanged();
+
+                await Task.Delay(Game.delay);
+
+                i += 0.01;
+
+            }
+
+            crash = "Crashed @ " + Game.multiplier;
+            temp2 = true;
+            progressBar = false;
+            doeBerekening = false;
+            cashOut = true;
+
             this.StateHasChanged();
 
-            await Task.Delay(Game.delay);
+            await Task.Delay(5000);
 
-            i += 0.01;
+            reset();
+
+            if (autoCash)
+            {
+                Click();
+            }
 
         }
+        else
+        {
+            testingNullableDecimal1 = 0;
+        }
 
-        temp2 = true;
-        progressBar = false;
-        doeBerekening = false;
-        crash = "Crashed @ " + Game.multiplier;
-        cashOut = true;
-
-        this.StateHasChanged();
-
-        await Task.Delay(5000);
-
-        reset();
 
     }
 
@@ -137,9 +183,21 @@ else
         crash = "";
         cashOut = false;
 
+        if (!autoCash)
+        {
+            testingNullableDecimal1 = 0;
+            testingNullableDecimal2 = 0;
+        }
+
+
         Game = new Game();
 
         this.StateHasChanged();
+    }
+
+    public void VeranderWaarde()
+    {
+        autoCash = false;
     }
 
 }

@@ -16,7 +16,7 @@
 
     <p style="margin: 0; color: red; visibility: @toonError;">Je moet 18+ zijn om een account te kunnen aanmaken.</p>
     
-    <MatCheckbox @bind-Checked="@Nieuwsbrief">Nieuwsbrief?</MatCheckbox>
+    <MatCheckbox @bind-Checked="@Nieuwsbrief" Label="Nieuwbrief?"></MatCheckbox>
     <br />
     <MatCheckbox @bind-Checked="@Notificaties" Label="Notificaties?"></MatCheckbox>
 
@@ -29,6 +29,12 @@ else
 {
     <MatButton OnClick="@GaNaarLogin" Raised="true">Klik hier om in te loggen</MatButton>
 }
+
+<style>
+    label{
+        margin: 0;
+    }
+</style>
 
 
 @code {
