@@ -11,21 +11,34 @@ else
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
-                <p>Huidig Balans: @Gebruiker.Saldo munten</p>
+                <p>Huidige Balans: @Gebruiker.Saldo munten</p>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
-                <MatNumericUpDownField Label="Munten afhalen"
-                                       FullWidth="true"
-                                       @bind-Value=@UpDownFieldWithdrawal
-                                       DecimalPlaces=0
-                                       Icon="account_balance_wallet"
-                                       Minimum="1" Maximum="@Gebruiker.Saldo">
 
-                </MatNumericUpDownField>
-            </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Withdrawal" Raised="true">Munten Afhalen</MatButton>
-            </div>
+            @if (Gebruiker.Saldo > 0)
+            {
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                    <MatNumericUpDownField Label="Munten afhalen"
+                                           FullWidth="true"
+                                           @bind-Value=@UpDownFieldWithdrawal
+                                           DecimalPlaces=0
+                                           Icon="account_balance_wallet"
+                                           Minimum="1" Maximum="@Gebruiker.Saldo">
+
+                    </MatNumericUpDownField>
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                    <MatButton Style="width: 203px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Withdrawal" Raised="true">Munten Afhalen</MatButton>
+                </div>
+            }
+            else
+            {
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                    <p>
+                        U heeft niet genoeg munten. Gelieve eerst geld over te schrijven.
+                    </p>
+                </div>
+            }
+
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                 <MatNumericUpDownField Label="Geld overschrijven: 1$ = 100 munten"
@@ -39,11 +52,11 @@ else
                 </MatNumericUpDownField>
             </div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Geld overschrijven</MatButton>
+                <MatButton Style="width: 203px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Deposit" Raised="true">Geld overschrijven</MatButton>
             </div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
-                <MatButton Style="width: 175px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@OpenDialog" Raised="true">Giftcard gebruiken</MatButton>
+                <MatButton Style="width: 203px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@OpenDialog" Raised="true">Giftcard gebruiken</MatButton>
 
                 <MatDialog @bind-IsOpen="@dialogIsOpen">
                     <MatDialogTitle>Giftcard</MatDialogTitle>
@@ -84,24 +97,38 @@ else
 
     public void Deposit()
     {
-        double temp = (double)UpDownFieldDeposit.Value * procent;
+        if (UpDownFieldDeposit.HasValue)
+        {
+            double temp = (double)UpDownFieldDeposit.Value * procent;
 
-        Gebruiker.Saldo = Bank.Storten(temp);
-        updateGebruiker();
+            Gebruiker.Saldo = Bank.Storten(temp);
+            updateGebruiker();
 
-        Toaster.Add("Bedrag toegevoegd", MatToastType.Success, "Succes");
+            Toaster.Add("Bedrag toegevoegd", MatToastType.Success, "Succes");
 
-        Reset(true);
+            Reset(true);
+        }
+        else
+        {
+            Toaster.Add("Geen waarde gevonden", MatToastType.Danger, "Error");
+        }
     }
 
     public void Withdrawal()
     {
-        Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
-        updateGebruiker();
+        if (UpDownFieldWithdrawal.HasValue)
+        {
+            Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
+            updateGebruiker();
 
-        Toaster.Add("Bedrag afgehaald", MatToastType.Success, "Succes");
+            Toaster.Add("Bedrag afgehaald", MatToastType.Success, "Succes");
 
-        Reset(false);
+            Reset(false);
+        }
+        else
+        {
+            Toaster.Add("Geen waarde gevonden", MatToastType.Danger, "Error");
+        }
     }
 
     public void OpenDialog()
@@ -157,6 +184,8 @@ else
         giftcode = "";
         dialogIsOpen = false;
         GiftCard = null;
+
+        this.StateHasChanged();
     }
 
     private void updateGebruiker()

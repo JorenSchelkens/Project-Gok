@@ -1,6 +1,7 @@
 ﻿@page "/gebruiker/profiel"
 @inject NavigationManager NavigationManager
 @inject DefaultClasses.Gebruiker Gebruiker
+@inject IMatToaster Toaster
 
 <MatAccordion>
     <MatExpansionPanel>
@@ -109,6 +110,27 @@
 
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
+                    @* Deel 4 *@
+
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                        <MatCheckbox Disabled="true" @bind-Checked="@notificaties" Label="Notificaties"></MatCheckbox>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                        <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderNotificaties" Raised="true">Verander Notificaties</MatButton>
+                    </div>
+
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
+                    @* Deel 5 *@
+
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                        <MatCheckbox Disabled="true" @bind-Checked="@nieuwsbrief" Label="Nieuwsbrief"></MatCheckbox>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                        <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderNieuwsbrief" Raised="true">Verander Nieuwsbrief</MatButton>
+                    </div>
+
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
 
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
@@ -117,6 +139,14 @@
 
                 </div>
             </div>
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+    <MatExpansionPanel>
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>Totaal balans</MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
     <MatExpansionPanel>
@@ -136,7 +166,6 @@
             </div>
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
-
 </MatAccordion>
 
 @code{
@@ -151,6 +180,9 @@
     public bool oudWachtwoordJuisIngegeven = true;
     public bool UpdateWachtwoord = false;
 
+    public bool notificaties;
+    public bool nieuwsbrief;
+
     public string nieuweGebruikersNaam = null;
     public string nieuwEmail = null;
     public string nieuweNaam = null;
@@ -163,6 +195,9 @@
     {
         CheckGebruiker();
         DBConnection = new DefaultClasses.DBConnection();
+
+        notificaties = (Gebruiker.Notificaties == 1) ? true : false;
+        nieuwsbrief = (Gebruiker.Nieuwsbrief == 1) ? true : false;
     }
 
     public void VeranderGebruikersnaam()
@@ -188,6 +223,18 @@
     {
         dialog4IsOpen = true;
         nieuweNaam = null;
+    }
+
+    public void VeranderNotificaties()
+    {
+        notificaties = !notificaties;
+        Gebruiker.Notificaties = (notificaties) ? Gebruiker.Notificaties = 1 : Gebruiker.Notificaties = 0;
+    }
+
+    public void VeranderNieuwsbrief()
+    {
+        nieuwsbrief = !nieuwsbrief;
+        Gebruiker.Nieuwsbrief = (nieuwsbrief) ? Gebruiker.Nieuwsbrief = 1 : Gebruiker.Nieuwsbrief = 0;
     }
 
     public void OkClick1()
@@ -243,6 +290,8 @@
         {
             DBConnection.UpdateGebruikerWachtwoord(Gebruiker);
         }
+
+        Toaster.Add("Profiel opgeslagen", MatToastType.Success, "Opgeslagen!");
 
     }
 

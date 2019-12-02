@@ -29,7 +29,6 @@
             </table>
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
-
     <MatExpansionPanel>
         <MatExpansionPanelSummary>
             <MatExpansionPanelHeader>Voeg een giftcard toe</MatExpansionPanelHeader>
@@ -45,26 +44,29 @@
                         <MatNumericUpDownField Label="Aantal uses"
                                                @bind-Value=@UpDownFieldUses
                                                DecimalPlaces=0
-                                               Icon="account_balance_wallet"
+                                               Icon="loop"
                                                Minimum="1"
-                                               Required="true">
+                                               Required="true"
+                                               FullWidth="true">
                         </MatNumericUpDownField>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
                         <MatNumericUpDownField Label="Procent (-1 indien niet te gebruiken)"
                                                @bind-Value=@UpDownFieldProcent
-                                               Icon="account_balance_wallet"
+                                               Icon="%"
                                                Minimum="-1" Maximum="100"
-                                               Required="true">
+                                               Required="true"
+                                               FullWidth="true">
                         </MatNumericUpDownField>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
                         <MatNumericUpDownField Label="Ontvangen saldo (-1 indien niet te gebruiken)"
                                                @bind-Value=@UpDownFieldSaldo
                                                DecimalPlaces=0
-                                               Icon="account_balance_wallet"
+                                               Icon="attach_money"
                                                Minimum="-1" Maximum="null"
-                                               Required="true">
+                                               Required="true"
+                                               FullWidth="true">
                         </MatNumericUpDownField>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
@@ -102,32 +104,12 @@
             </div>
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
-
     <MatExpansionPanel>
         <MatExpansionPanelSummary>
-            <MatExpansionPanelHeader>Bekijk alle giftcards</MatExpansionPanelHeader>
+            <MatExpansionPanelHeader>Voeg achievment toe</MatExpansionPanelHeader>
         </MatExpansionPanelSummary>
         <MatExpansionPanelDetails>
-            <div class="mat-layout-grid">
-                <div class="mat-layout-grid-inner">
-                    @foreach (DefaultClasses.DataBase.GiftCard giftCard in GiftCards)
-                    {
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                            <MatTextField Label="Invul code" ReadOnly="true" Value="@giftCard.InvulCode"></MatTextField>
-                        </div>
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                            <MatTextField Label="Uses left" ReadOnly="true" Value="@giftCard.UsesLeft.ToString()"></MatTextField>
-                        </div>
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                            <MatTextField Label="Korting procent" ReadOnly="true" Value="@giftCard.KortingProcent.ToString()"></MatTextField>
-                        </div>
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                            <MatTextField Label="Te ontvangen saldo" ReadOnly="true" Value="@giftCard.TeOntvangenSaldo.ToString()"></MatTextField>
-                        </div>
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
-                    }
-                </div>
-            </div>
+            
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
 
@@ -154,11 +136,11 @@
 
     public void Verwijder(DefaultClasses.Gebruiker gebruiker)
     {
-        //TODO Popup
-
         DBConnection.RemoveGebruiker(gebruiker.Email);
         gebruikers.Remove(gebruiker);
         this.StateHasChanged();
+
+        Toaster.Add("Gebruiker verwijdert", MatToastType.Success, "Verwijdert!");
     }
 
     public void maakGiftCard()
