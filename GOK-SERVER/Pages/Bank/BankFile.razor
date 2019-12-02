@@ -13,19 +13,32 @@ else
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
                 <p>Huidige Balans: @Gebruiker.Saldo munten</p>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
-                <MatNumericUpDownField Label="Munten afhalen"
-                                       FullWidth="true"
-                                       @bind-Value=@UpDownFieldWithdrawal
-                                       DecimalPlaces=0
-                                       Icon="account_balance_wallet"
-                                       Minimum="1" Maximum="@Gebruiker.Saldo">
 
-                </MatNumericUpDownField>
-            </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
-                <MatButton Style="width: 203px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Withdrawal" Raised="true">Munten Afhalen</MatButton>
-            </div>
+            @if (Gebruiker.Saldo > 0)
+            {
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                    <MatNumericUpDownField Label="Munten afhalen"
+                                           FullWidth="true"
+                                           @bind-Value=@UpDownFieldWithdrawal
+                                           DecimalPlaces=0
+                                           Icon="account_balance_wallet"
+                                           Minimum="1" Maximum="@Gebruiker.Saldo">
+
+                    </MatNumericUpDownField>
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                    <MatButton Style="width: 203px; height: 50px; margin-bottom: 16px; margin-left: 10px;" OnClick="@Withdrawal" Raised="true">Munten Afhalen</MatButton>
+                </div>
+            }
+            else
+            {
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                    <p>
+                        U heeft niet genoeg munten. Geliven eerst geld te storten.
+                    </p>
+                </div>
+            }
+
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                 <MatNumericUpDownField Label="Geld overschrijven: 1$ = 100 munten"
@@ -157,6 +170,8 @@ else
         giftcode = "";
         dialogIsOpen = false;
         GiftCard = null;
+
+        this.StateHasChanged();
     }
 
     private void updateGebruiker()
