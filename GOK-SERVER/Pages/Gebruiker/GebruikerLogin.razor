@@ -47,6 +47,7 @@ else
             Gebruiker = DBConnection.LogGebruikerIn(Naam, Wachtwoord);
             HuidigeGebruiker.Update(Gebruiker.Spelersnummer, Gebruiker.Gebruikersnaam, Gebruiker.Naam, Gebruiker.Email, Gebruiker.Wachtwoord, Gebruiker.Saldo, Gebruiker.DailyGiftDatum, Gebruiker.Admin, Gebruiker.Nieuwsbrief, Gebruiker.Notificaties);
 
+            CheckDailyGift();
             CheckGebruiker();
         }
 
@@ -70,6 +71,24 @@ else
         {
             this.Login();
         }
+    }
+
+    public void CheckDailyGift()
+    {
+        DateTime now = DateTime.Now;
+        DateTime dateTimeGebruiker = HuidigeGebruiker.DailyGiftDatum;
+        dateTimeGebruiker = dateTimeGebruiker.AddDays(1);
+
+        if (now.Date >= dateTimeGebruiker.Date)
+        {
+            HuidigeGebruiker.Saldo += 5;
+
+            Toaster.Add("U heeft 5 munten ontvangen", MatToastType.Success, "Dailygift ontvangen!");
+            Gebruiker.Refresh();
+        }
+
+        HuidigeGebruiker.DailyGiftDatum = DateTime.Now;
+        DBConnection.UpdateGebruiker(HuidigeGebruiker);
     }
 
     public void GaNaarVolgende()
