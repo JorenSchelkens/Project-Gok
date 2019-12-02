@@ -12,7 +12,7 @@
                                Step="10"
                                DecimalPlaces="0"
                                Minimum="0" Maximum="Gebruiker.Saldo">
-        </MatNumericUpDownField>ss
+        </MatNumericUpDownField>
     </div>
 
     <div style="text-align: center">
@@ -75,6 +75,7 @@ else
     public String crash;
     public bool cashOut = false;
     public bool autoCash = false;
+    public int winstWaarde;
 
     protected override void OnInitialized()
     {
@@ -84,20 +85,19 @@ else
 
     public async void Click()
     {
+        if (!testingNullableDecimal1.HasValue || testingNullableDecimal1 == null)
+        {
+            Game.muntenIngezet = 0;
+        }
+        else
+        {
+            Game.muntenIngezet = (int)testingNullableDecimal1.Value;
+        }
 
-        if (testingNullableDecimal1.Value <= Gebruiker.Saldo)
+        if (Game.muntenIngezet <= Gebruiker.Saldo)
         {
 
-            if (!testingNullableDecimal1.HasValue)
-            {
-                Game.muntenIngezet = 0;
-            }
-            else
-            {
-                Game.muntenIngezet = (int)testingNullableDecimal1.Value;
-            }
-
-            if ((double) testingNullableDecimal2.Value != 0)
+            if (testingNullableDecimal2.HasValue && (double)testingNullableDecimal2.Value != 0)
             {
                 Game.autoCashOut = (double)testingNullableDecimal2.Value;
                 autoCash = true;
@@ -125,6 +125,11 @@ else
                 if (autoCash && Game.multiplier == Game.autoCashOut)
                 {
                     CashOut();
+                }
+
+                if (Game.winstInMunten > 0)
+                {
+                    winstWaarde = Game.winstInMunten;
                 }
 
                 this.StateHasChanged();
@@ -158,7 +163,6 @@ else
             testingNullableDecimal1 = 0;
         }
 
-
     }
 
     public void CashOut()
@@ -189,15 +193,17 @@ else
             testingNullableDecimal2 = 0;
         }
 
-
         Game = new Game();
 
         this.StateHasChanged();
+
+        //TODO 0 inzet en autocashout werkt niet
     }
 
     public void VeranderWaarde()
     {
         autoCash = false;
+        cashOut = true;
     }
 
 }
