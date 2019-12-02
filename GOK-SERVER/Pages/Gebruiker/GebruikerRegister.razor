@@ -1,5 +1,6 @@
 ﻿@page "/gebruiker/register"
 @inject NavigationManager NavigationManager
+@inject IMatToaster Toaster
 
 <h1>Register</h1>
 
@@ -74,7 +75,7 @@ else
             }
             else if (datumAangeduid.Value.Month == achtienTerug.Month)
             {
-                if(datumAangeduid.Value.Day + 1 <= achtienTerug.Day)
+                if (datumAangeduid.Value.Day + 1 <= achtienTerug.Day)
                 {
                     leeftijdHogerDan18 = true;
                 }
@@ -97,11 +98,35 @@ else
 
     private void Register()
     {
-        if (leeftijdHogerDan18)
+
+        if (string.IsNullOrEmpty(GebruikersNaam))
         {
-            DBConnection.RegistreerGebruiker(Naam, Email, Wachtwoord, GebruikersNaam, Nieuwsbrief ? 1 : 0, Notificaties ? 1 : 0);
+            Toaster.Add("Gebruikersnaam is verplicht", MatToastType.Danger, "Error");
         }
-        done = true;
+        else if (string.IsNullOrEmpty(Email))
+        {
+            Toaster.Add("Email is verplicht", MatToastType.Danger, "Error");
+        }
+        else if (string.IsNullOrEmpty(Naam))
+        {
+            Toaster.Add("Naam is verplicht", MatToastType.Danger, "Error");
+        }
+        else if (string.IsNullOrEmpty(Wachtwoord))
+        {
+            Toaster.Add("Wachtwoord is verplicht", MatToastType.Danger, "Error");
+        }
+        else
+        {
+            if (leeftijdHogerDan18)
+            {
+                DBConnection.RegistreerGebruiker(Naam, Email, Wachtwoord, GebruikersNaam, Nieuwsbrief ? 1 : 0, Notificaties ? 1 : 0);
+                done = true;
+            }
+            else
+            {
+                Toaster.Add("U bent niet oud genoeg", MatToastType.Danger, "Error");
+            }
+        }
     }
 
     public void GaNaarLogin()
