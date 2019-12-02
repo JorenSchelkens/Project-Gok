@@ -97,24 +97,38 @@ else
 
     public void Deposit()
     {
-        double temp = (double)UpDownFieldDeposit.Value * procent;
+        if (UpDownFieldDeposit.HasValue)
+        {
+            double temp = (double)UpDownFieldDeposit.Value * procent;
 
-        Gebruiker.Saldo = Bank.Storten(temp);
-        updateGebruiker();
+            Gebruiker.Saldo = Bank.Storten(temp);
+            updateGebruiker();
 
-        Toaster.Add("Bedrag toegevoegd", MatToastType.Success, "Succes");
+            Toaster.Add("Bedrag toegevoegd", MatToastType.Success, "Succes");
 
-        Reset(true);
+            Reset(true);
+        }
+        else
+        {
+            Toaster.Add("Geen waarde gevonden", MatToastType.Danger, "Error");
+        }
     }
 
     public void Withdrawal()
     {
-        Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
-        updateGebruiker();
+        if (UpDownFieldWithdrawal.HasValue)
+        {
+            Gebruiker.Saldo = Bank.Afhalen((int)UpDownFieldWithdrawal.Value);
+            updateGebruiker();
 
-        Toaster.Add("Bedrag afgehaald", MatToastType.Success, "Succes");
+            Toaster.Add("Bedrag afgehaald", MatToastType.Success, "Succes");
 
-        Reset(false);
+            Reset(false);
+        }
+        else
+        {
+            Toaster.Add("Geen waarde gevonden", MatToastType.Danger, "Error");
+        }
     }
 
     public void OpenDialog()
