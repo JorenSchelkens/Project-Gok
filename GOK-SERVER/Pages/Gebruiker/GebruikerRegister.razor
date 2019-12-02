@@ -2,7 +2,7 @@
 @inject NavigationManager NavigationManager
 @inject IMatToaster Toaster
 
-<h1>Register</h1>
+<h1 style="margin-bottom: 15px;">Register</h1>
 
 @if (!done)
 {
@@ -13,11 +13,9 @@
     <br />
     <MatDatePicker @bind-Value="datumAangeduid" Label="Geboortedatum" Outlined="true" Required="true" @onchange="@checkLeeftijd"></MatDatePicker>
     <br />
-    if (!leeftijdHogerDan18 && leeftijdGekozen)
-    {
-        <p style="margin: 0; color: red">Je moet 18+ zijn om een account te kunnen aanmaken.</p>
-    }
 
+    <p style="margin: 0; color: red; visibility: @toonError;">Je moet 18+ zijn om een account te kunnen aanmaken.</p>
+    
     <MatCheckbox @bind-Checked="@Nieuwsbrief" Label="Nieuwsbrief?"></MatCheckbox>
     <br />
     <MatCheckbox @bind-Checked="@Notificaties" Label="Notificaties?"></MatCheckbox>
@@ -47,6 +45,7 @@ else
     public bool leeftijdGekozen = false;
     public bool Nieuwsbrief;
     public bool Notificaties;
+    public string toonError = "hidden";
 
     public bool done = false;
 
@@ -92,6 +91,11 @@ else
         else
         {
             leeftijdHogerDan18 = false;
+        }
+
+        if(!leeftijdHogerDan18 && leeftijdGekozen)
+        {
+            toonError = "visible";
         }
 
     }

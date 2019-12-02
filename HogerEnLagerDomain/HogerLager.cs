@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace HogerLagerDomain
 {
-
     public class HogerLager
     {
 
