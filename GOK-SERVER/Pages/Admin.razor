@@ -8,25 +8,26 @@
             <MatExpansionPanelHeader>Bekijk alle gebruikers</MatExpansionPanelHeader>
         </MatExpansionPanelSummary>
         <MatExpansionPanelDetails>
-            <table border="1">
-                @foreach (DefaultClasses.Gebruiker gebruiker in gebruikers)
-                {
-                    <tr>
-                        <td>
-                            <p>@gebruiker.Naam</p>
-                        </td>
-                        <td>
-                            <p>@gebruiker.Email</p>
-                        </td>
-                        <td>
-                            <p>@gebruiker.Gebruikersnaam</p>
-                        </td>
-                        <td>
-                            <MatButton Type="submit" OnClick="@(() => Verwijder(gebruiker))" Raised="true">Verwijderd</MatButton>
-                        </td>
-                    </tr>
-                }
-            </table>
+            <div class="mat-layout-grid">
+                <div class="mat-layout-grid-inner">
+                    @foreach (DefaultClasses.Gebruiker gebruiker in gebruikers)
+                    {
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatTextField Label="Naam" ReadOnly="true" Value="@gebruiker.Naam"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatTextField Label="Gebruikersnaam" ReadOnly="true" Value="@gebruiker.Gebruikersnaam"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatTextField Style="min-width: 300px;" Label="Email" ReadOnly="true" Value="@gebruiker.Email"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                            <MatButton Type="submit" OnClick="@(() => Verwijder(gebruiker))" Raised="true">Verwijder</MatButton>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+                    }
+                </div>
+            </div>
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
     <MatExpansionPanel>
@@ -86,17 +87,23 @@
                 <div class="mat-layout-grid-inner">
                     @foreach (DefaultClasses.DataBase.GiftCard giftCard in GiftCards)
                     {
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                             <MatTextField Label="Invul code" ReadOnly="true" Value="@giftCard.InvulCode"></MatTextField>
                         </div>
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                             <MatTextField Label="Uses left" ReadOnly="true" Value="@giftCard.UsesLeft.ToString()"></MatTextField>
                         </div>
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
+
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                             <MatTextField Label="Korting procent" ReadOnly="true" Value="@giftCard.KortingProcent.ToString()"></MatTextField>
                         </div>
-                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-3">
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                             <MatTextField Label="Te ontvangen saldo" ReadOnly="true" Value="@giftCard.TeOntvangenSaldo.ToString()"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                            <MatButton Type="submit" OnClick="@(() => VerwijderGiftCard(giftCard))" Raised="true">Verwijder</MatButton>
                         </div>
                         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
                     }
@@ -146,6 +153,16 @@
     public void maakGiftCard()
     {
         DBConnection.AddGiftCard(invulCode, (int)UpDownFieldUses.Value, (int)UpDownFieldProcent.Value, (int)UpDownFieldSaldo.Value);
+        this.StateHasChanged();
         Toaster.Add("Giftcard gemaakt!", MatToastType.Success, "Succes!");
+    }
+
+    public void VerwijderGiftCard(DefaultClasses.DataBase.GiftCard giftCard)
+    {
+        DBConnection.RemoveGiftCard(giftCard.InvulCode);
+        GiftCards.Remove(giftCard);
+        this.StateHasChanged();
+
+        Toaster.Add("Giftcard verwijdert", MatToastType.Success, "Verwijdert!");
     }
 }

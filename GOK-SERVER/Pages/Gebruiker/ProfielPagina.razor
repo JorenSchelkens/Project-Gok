@@ -113,7 +113,7 @@
                     @* Deel 4 *@
 
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-                        <MatCheckbox Disabled="true" @bind-Checked="@notificaties" Label="Notificaties"></MatCheckbox>
+                        <MatCheckbox Disabled="true" @bind-Value="@notificaties" Label="Notificaties"></MatCheckbox>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                         <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderNotificaties" Raised="true">Verander Notificaties</MatButton>
@@ -124,7 +124,7 @@
                     @* Deel 5 *@
 
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-                        <MatCheckbox Disabled="true" @bind-Checked="@nieuwsbrief" Label="Nieuwsbrief"></MatCheckbox>
+                        <MatCheckbox Disabled="true" @bind-Value="@nieuwsbrief" Label="Nieuwsbrief"></MatCheckbox>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
                         <MatButton Style="height: 50px; width: 230px;" OnClick="@VeranderNieuwsbrief" Raised="true">Verander Nieuwsbrief</MatButton>

@@ -15,7 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GOK_SERVER.Areas.Identity;
 using GOK_SERVER.Data;
-using EmbeddedBlazorContent;
 using MatBlazor;
 
 namespace GOK_SERVER
@@ -87,8 +86,6 @@ namespace GOK_SERVER
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseEmbeddedBlazorContent(typeof(MatBlazor.BaseMatComponent).Assembly);
 
             app.UseEndpoints(endpoints =>
             {

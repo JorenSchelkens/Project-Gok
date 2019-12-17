@@ -294,7 +294,6 @@ namespace DefaultClasses
             }
 
         }
-
         public List<GiftCard> GetAllGiftCards()
         {
             List<GiftCard> giftCards = new List<GiftCard>();
@@ -334,7 +333,28 @@ namespace DefaultClasses
 
             return giftCards;
         }
+        public void RemoveGiftCard(string invulcode)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(DataBaseInfo.ConnectionString))
+                {
+                    connection.Open();
+                    string sqlCode = "DELETE FROM Giftcards WHERE InvulCode = '" + invulcode + "'";
+                    using (var command = new SqlCommand(sqlCode, connection))
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+                    }
 
+                    connection.Close();
+                }
+            }
+            catch (SqlException e)
+            {
+                Error = e.ToString();
+            }
+
+        }
         public void AddAchievement(
             string omschrijving,
             int spelerNummer,
