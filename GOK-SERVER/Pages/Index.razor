@@ -1,5 +1,7 @@
 ﻿@page "/"
 @inject DefaultClasses.Gebruiker Gebruiker
+@inject NavigationManager nav
+@inject IMatToaster Toaster
 <style>
     table {
         border-collapse: collapse;
@@ -113,8 +115,38 @@
                         </MatCardContent>
                     </MatCard>
                 </NavLink>
+
+                <MatButton OnClick="@RandomGetal" Unelevated="true">Random game</MatButton>
             </div>
         </div>
     </div>
 }
-@code{}
+@code{
+
+    int randomgetal;
+
+    private void RandomGetal()
+    {
+        randomgetal = new Random().Next(1, 5);
+
+        switch (randomgetal)
+        {
+            case 1:
+                nav.NavigateTo("/crash");
+                break;
+            case 2:
+                nav.NavigateTo("/roulette");
+                break;
+            case 3:
+                nav.NavigateTo("/blackjack");
+                break;
+            case 4:
+                nav.NavigateTo("/hoger_lager");
+                break;
+            default:
+                Toaster.Add("Error", MatToastType.Danger, "Error");
+                break;
+        }
+    }
+
+}
