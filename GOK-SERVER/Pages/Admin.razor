@@ -39,7 +39,7 @@
             <div class="mat-layout-grid">
                 <div class="mat-layout-grid-inner">
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
-                        <MatTextField @bind-Value="@invulCode" Label="Invul code" FullWidth="true" Required="true"></MatTextField>
+                        <MatTextField @bind-Value="@invulCode" Label="Invul code" Style="width: 100%;" Required="true"></MatTextField>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
                         <MatNumericUpDownField Label="Aantal uses"
@@ -48,7 +48,7 @@
                                                Icon="loop"
                                                Minimum="1"
                                                Required="true"
-                                               FullWidth="true">
+                                               Style="width: 100%;">
                         </MatNumericUpDownField>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
@@ -57,7 +57,7 @@
                                                Icon="%"
                                                Minimum="-1" Maximum="100"
                                                Required="true"
-                                               FullWidth="true">
+                                               Style="width: 100%;">
                         </MatNumericUpDownField>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
@@ -67,7 +67,7 @@
                                                Icon="attach_money"
                                                Minimum="-1" Maximum="null"
                                                Required="true"
-                                               FullWidth="true">
+                                               Style="width: 100%;">
                         </MatNumericUpDownField>
                     </div>
                     <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
@@ -116,7 +116,7 @@
             <MatExpansionPanelHeader>Voeg achievment toe</MatExpansionPanelHeader>
         </MatExpansionPanelSummary>
         <MatExpansionPanelDetails>
-            
+
         </MatExpansionPanelDetails>
     </MatExpansionPanel>
 
@@ -134,6 +134,8 @@
     decimal? UpDownFieldProcent = null;
     decimal? UpDownFieldSaldo = null;
 
+    public int test = 0;
+
     protected override void OnInitialized()
     {
         DBConnection = new DefaultClasses.DBConnection();
@@ -150,9 +152,13 @@
         Toaster.Add("Gebruiker verwijdert", MatToastType.Success, "Verwijdert!");
     }
 
-    public void maakGiftCard()
+    public async void maakGiftCard()
     {
         DBConnection.AddGiftCard(invulCode, (int)UpDownFieldUses.Value, (int)UpDownFieldProcent.Value, (int)UpDownFieldSaldo.Value);
+        await Task.Delay(5);
+        GiftCards = DBConnection.GetAllGiftCards();
+        await Task.Delay(5);
+
         this.StateHasChanged();
         Toaster.Add("Giftcard gemaakt!", MatToastType.Success, "Succes!");
     }

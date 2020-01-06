@@ -18,7 +18,7 @@ else
             {
                 <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                     <MatNumericUpDownField Label="Munten afhalen"
-                                           FullWidth="true"
+                                           Style="width: 100%;"
                                            @bind-Value=@UpDownFieldWithdrawal
                                            DecimalPlaces=0
                                            Icon="account_balance_wallet"
@@ -42,7 +42,7 @@ else
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                 <MatNumericUpDownField Label="Geld overschrijven: 1$ = 100 munten"
-                                       FullWidth="true"
+                                       Style="width: 100%;"
                                        @bind-Value=@UpDownFieldDeposit
                                        DecimalPlaces=2
                                        Step="1.00m"
