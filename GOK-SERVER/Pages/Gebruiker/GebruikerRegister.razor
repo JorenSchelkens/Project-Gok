@@ -11,10 +11,8 @@
     <MatTextField @bind-Value="@Naam" Label="Naam" FullWidth="true" Required="true"></MatTextField>
     <MatTextField @bind-Value="@Wachtwoord" Label="Wachtwoord" FullWidth="true" Type="password" Required="true"></MatTextField>
     <br />
-    <MatDatePicker @bind-Value="datumAangeduid" Label="Geboortedatum" Outlined="true" Required="true" @onchange="@checkLeeftijd"></MatDatePicker>
+    <MatDatePicker Format="dd-MM-yy" @bind-Value="datumAangeduid" Label="Geboortedatum" Outlined="true" Required="true"></MatDatePicker>
     <br />
-
-    <p style="margin: 0; color: red; visibility: @toonError;">Je moet 18+ zijn om een account te kunnen aanmaken.</p>
     
     <MatCheckbox @bind-Value="@Nieuwsbrief" Label="Nieuwbrief?"></MatCheckbox>
     <br />
@@ -47,10 +45,8 @@ else
     public string Wachtwoord;
     public string GebruikersNaam;
     public bool leeftijdHogerDan18 = false;
-    public bool leeftijdGekozen = false;
     public bool Nieuwsbrief;
     public bool Notificaties;
-    public string toonError = "hidden";
 
     public bool done = false;
 
@@ -64,7 +60,6 @@ else
     public void checkLeeftijd()
     {
 
-        leeftijdGekozen = true;
         DateTime achtienTerug = DateTime.Now.AddYears(-18);
 
         if (datumAangeduid.Value.Year < achtienTerug.Year)
@@ -98,19 +93,11 @@ else
             leeftijdHogerDan18 = false;
         }
 
-        if(!leeftijdHogerDan18 && leeftijdGekozen)
-        {
-            toonError = "visible";
-        }
-        else
-        {
-            toonError = "hidden";
-        }
-
     }
 
     private void Register()
     {
+        checkLeeftijd();
 
         if (string.IsNullOrEmpty(GebruikersNaam))
         {
