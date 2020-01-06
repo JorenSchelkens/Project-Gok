@@ -3,7 +3,7 @@
 @inject IMatToaster Toaster
 @inject DefaultClasses.Gebruiker HuidigeGebruiker
 
-<h1 style="margin-bottom: 15px;">Login</h1>
+<h1 style="margin-bottom: 15px;">Inloggen</h1>
 
 @if (HuidigeGebruiker.Gebruikersnaam == null)
 {
@@ -12,7 +12,7 @@
 
     <br />
 
-    <MatButton Type="submit" Style="width: 110px; height: 40px;" OnClick="@Login" Raised="true">Login</MatButton>
+    <MatButton Type="submit" Style="width: 110px; height: 40px;" OnClick="@Login" Raised="true">Inloggen</MatButton>
 }
 else
 {

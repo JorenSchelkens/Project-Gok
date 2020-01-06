@@ -10,14 +10,14 @@
     <div class="top-row px-4">
         @if (Gebruiker.Gebruikersnaam == null)
         {
-            <a href="/gebruiker/login">Log In</a>
-            <a href="/gebruiker/register">Registreer</a>
+            <a href="/gebruiker/login">Inloggen</a>
+            <a href="/gebruiker/register">Registreren</a>
         }
         else
         {
             <a>@Gebruiker.Saldo coins</a>
             <a href="/gebruiker/profiel">Profiel</a>
-            <a href="/gebruiker/logout">Log Uit</a>
+            <a href="/gebruiker/logout">Uitloggen</a>
         }
     </div>
 
