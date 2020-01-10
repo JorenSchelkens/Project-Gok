@@ -123,7 +123,7 @@ else
 
     private void RandomGetal()
     {
-        randomgetal = new Random().Next(1, 5);
+        randomgetal = new Random().Next(1, 4);
 
         switch (randomgetal)
         {
@@ -131,13 +131,10 @@ else
                 nav.NavigateTo("/crash");
                 break;
             case 2:
-                nav.NavigateTo("/roulette");
+                nav.NavigateTo("/hoger_lager");
                 break;
             case 3:
                 nav.NavigateTo("/blackjack");
-                break;
-            case 4:
-                nav.NavigateTo("/hoger_lager");
                 break;
             default:
                 Toaster.Add("Error", MatToastType.Danger, "Error");
