@@ -56,8 +56,6 @@
 
     HogerLagerDomain.HogerLager hogerLager;
 
-    public bool toonInfo = false;
-
     public bool disabled = false;
     public bool toonKaarten = false;
 
@@ -69,11 +67,6 @@
     protected override void OnInitialized()
     {
         DBConnection = new DefaultClasses.DBConnection();
-    }
-
-    public void veranderStatusInfo()
-    {
-        toonInfo = true;
     }
 
     public void checkIngevuldeWaarde()
