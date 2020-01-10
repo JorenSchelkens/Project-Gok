@@ -1,0 +1,84 @@
+﻿@page "/roulettev2"
+
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+            <h1>Roulette</h1>
+        </div>
+
+        @if (getallen != null)
+        {
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
+
+            @for (int i = 0; i < getallen.Count; i++)
+            {
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
+                    <MatCheckbox @bind-Value="@getallen[i]" Label="@i.ToString()" @onclick="@(() => Verander(i))"></MatCheckbox>
+                </div>
+            }
+
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                <MatButton Type="submit" Style="width: 110px; height: 40px;" OnClick="@Show" Raised="true">Show</MatButton>
+            </div>
+
+            @if (bool1)
+            {
+                @for (int i = 0; i < getallen.Count; i++)
+                {
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-1">
+                        <span>@i : @getallen[i]</span>
+                    </div>
+                }
+            }
+
+        }
+
+    </div>
+</div>
+
+@code{
+
+    public List<bool> getallen { get; set; }
+
+    public bool bool1 { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Reset();
+        FillArray();
+    }
+
+    private void FillArray()
+    {
+        for (int i = 0; i <= 36; i++)
+        {
+            if(i % 2 == 1)
+            {
+                getallen.Add(false);
+            }
+            else
+            {
+                getallen.Add(true);
+            }
+        }
+    }
+
+    public void Verander(int index)
+    {
+        getallen[index] = !getallen[index];
+    }
+
+    private void Show()
+    {
+        bool1 = true;
+        this.StateHasChanged();
+    }
+
+    private void Reset()
+    {
+        getallen = new List<bool>();
+        bool1 = false;
+    }
+
+}

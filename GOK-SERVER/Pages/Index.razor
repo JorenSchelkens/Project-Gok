@@ -27,19 +27,19 @@
         margin: 0px;
     }
 </style>
-<h1>Casino</h1>
-<p>Welkom bij Casino!</p>
 @if (!string.IsNullOrWhiteSpace(Gebruiker.Naam))
 {
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                <h1>Casino</h1>
+                <p>Welkom bij Casino!</p>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                 <MatButton Style="margin-left: 16.58px;" OnClick="@RandomGetal" Unelevated="true">Ik doe een gok</MatButton>
             </div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12"></div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                 <NavLink class="nav-link" href="/crash">
                     <MatCard class="demo-mat-card">
                         <MatCardContent>
@@ -58,29 +58,7 @@
                     </MatCard>
                 </NavLink>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
-                <NavLink class="nav-link" href="/roulette">
-                    <MatCard class="demo-mat-card">
-                        <MatCardContent>
-                            <MatCardMedia Wide="true" ImageUrl="/img/IndexFotos/roulette.jpg">
-                                <div class="demo-mat-card-content" style="color: white;">
-                                    <MatHeadline6 class="demo-mat-card-clean-margin">
-                                        Roulette
-                                    </MatHeadline6>
-
-                                </div>
-                            </MatCardMedia>
-                            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                                Slaag jij erin de juiste uitkomst van het balletje in het rad te bepalen?
-                                Zet in op één van de vele inzetmogelijkheden op de tafel.
-                                Komt je inzet overeen met de uitkomst, dan win je x aantal keer het ingezet bedrag.
-                            </MatBody2>
-                        </MatCardContent>
-                    </MatCard>
-                </NavLink>
-            </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                 <NavLink class="nav-link" href="/blackjack">
                     <MatCard class="demo-mat-card">
                         <MatCardContent>
@@ -101,7 +79,7 @@
                     </MatCard>
                 </NavLink>
             </div>
-            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-5">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
                 <NavLink class="nav-link" href="/hoger_lager">
                     <MatCard class="demo-mat-card">
                         <MatCardContent>
@@ -124,6 +102,21 @@
         </div>
     </div>
 }
+else
+{
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                <h1>Casino</h1>
+                <p>Welkom bij Casino!</p>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                <p>Log in om te starten met spelen!</p>
+            </div>
+        </div>
+    </div>
+}
+
 @code{
 
     int randomgetal;
