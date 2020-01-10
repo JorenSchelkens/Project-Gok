@@ -20,7 +20,17 @@ namespace BankDomain
 
         public int OmzettenGeldNaarMunten(double geld)
         {
-            int aantalMunten = Convert.ToInt32(geld * 100);
+            int aantalMunten = 0;
+
+            try
+            {
+                aantalMunten = Convert.ToInt32(geld * 100);
+            } 
+            catch (SystemException e)
+            {
+                
+            }
+
             return aantalMunten;
         }
 

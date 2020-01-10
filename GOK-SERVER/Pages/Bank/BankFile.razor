@@ -101,10 +101,19 @@ else
         {
             double temp = (double)UpDownFieldDeposit.Value * procent;
 
-            Gebruiker.Saldo = Bank.Storten(temp);
-            updateGebruiker();
+            int temp2 = Bank.Storten(temp);
 
-            Toaster.Add("Bedrag toegevoegd", MatToastType.Success, "Succes");
+            if (Gebruiker.Saldo == temp2)
+            {
+                Toaster.Add("Bedrag niet geldig", MatToastType.Danger, "Error");
+            }
+            else
+            {
+                Gebruiker.Saldo = temp2;
+                updateGebruiker();
+
+                Toaster.Add("Bedrag toegevoegd", MatToastType.Success, "Succes");
+            }
 
             Reset(true);
         }
