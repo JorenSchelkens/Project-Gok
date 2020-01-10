@@ -11,14 +11,14 @@ namespace BankDomain
             this.Saldo = saldo;
         }
 
-        public int Storten(float geld)
+        public int Storten(double geld)
         {
             int munten = OmzettenGeldNaarMunten(geld);
             Saldo += munten;
             return Saldo;
         }
 
-        public int OmzettenGeldNaarMunten(float geld)
+        public int OmzettenGeldNaarMunten(double geld)
         {
             int aantalMunten = Convert.ToInt32(geld * 100);
             return aantalMunten;
